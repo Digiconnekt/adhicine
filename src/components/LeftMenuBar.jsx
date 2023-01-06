@@ -104,12 +104,12 @@ const LeftMenuBar = () => {
             </a>
           </li>
 
-          <li class="side-nav__devider my-6"></li>
-          <li class="side-nav__devider my-6"></li>
-          <li class="side-nav__devider my-6"></li>
-          <li class="side-nav__devider my-6"></li>
-          <li class="side-nav__devider my-6"></li>
-          <li class="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
 
           <li>
             <a href="side-menu-light-chat.html" className="side-menu">
