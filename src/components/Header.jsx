@@ -10,7 +10,7 @@ const Header = () => {
         <div className="h-full flex items-center">
           <a
             href=""
-            className="logo -intro-x hidden md:flex xl:w-[180px] block"
+            className="logo -intro-x hidden md:flex xl:w-[180px] block mr-auto"
           >
             <img
               alt="Midone - HTML Admin Template"
@@ -19,7 +19,8 @@ const Header = () => {
             />
             <span className="logo__text text-white text-lg ml-3">Adhicine</span>
           </a>
-          <nav aria-label="breadcrumb" className="-intro-x h-[45px] mr-auto">
+
+          {/* <nav aria-label="breadcrumb" className="-intro-x h-[45px] mr-auto">
             <ol className="breadcrumb breadcrumb-light">
               <li className="breadcrumb-item">
                 <a href="#">Application</a>
@@ -28,8 +29,9 @@ const Header = () => {
                 Dashboard
               </li>
             </ol>
-          </nav>
-          <div className="intro-x relative mr-3 sm:mr-6">
+          </nav> */}
+
+          {/* <div className="intro-x relative mr-3 sm:mr-6">
             <div className="search hidden sm:block">
               <input
                 type="text"
@@ -42,11 +44,10 @@ const Header = () => {
               ></i>
             </div>
             <a className="notification notification--light sm:hidden" href="">
-              {" "}
               <i
                 data-lucide="search"
                 className="notification__icon dark:text-slate-500"
-              ></i>{" "}
+              ></i>
             </a>
             <div className="search-result">
               <div className="search-result__content">
@@ -54,22 +55,19 @@ const Header = () => {
                 <div className="mb-5">
                   <a href="" className="flex items-center">
                     <div className="w-8 h-8 bg-success/20 dark:bg-success/10 text-success flex items-center justify-center rounded-full">
-                      {" "}
-                      <i className="w-4 h-4" data-lucide="inbox"></i>{" "}
+                      <i className="w-4 h-4" data-lucide="inbox"></i>
                     </div>
                     <div className="ml-3">Mail Settings</div>
                   </a>
                   <a href="" className="flex items-center mt-2">
                     <div className="w-8 h-8 bg-pending/10 text-pending flex items-center justify-center rounded-full">
-                      {" "}
-                      <i className="w-4 h-4" data-lucide="users"></i>{" "}
+                      <i className="w-4 h-4" data-lucide="users"></i>
                     </div>
                     <div className="ml-3">Users & Permissions</div>
                   </a>
                   <a href="" className="flex items-center mt-2">
                     <div className="w-8 h-8 bg-primary/10 dark:bg-primary/20 text-primary/80 flex items-center justify-center rounded-full">
-                      {" "}
-                      <i className="w-4 h-4" data-lucide="credit-card"></i>{" "}
+                      <i className="w-4 h-4" data-lucide="credit-card"></i>
                     </div>
                     <div className="ml-3">Transactions Report</div>
                   </a>
@@ -184,19 +182,158 @@ const Header = () => {
                 </a>
               </div>
             </div>
+          </div> */}
+
+          <div className="intro-x dropdown mr-4 w-8 h-8">
+            <div
+              className="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110"
+              role="button"
+              aria-expanded="false"
+              data-tw-toggle="dropdown"
+            >
+              <img
+                alt="Midone - HTML Admin Template"
+                src="dist/images/profile-5.jpg"
+              />
+            </div>
+            <div className="dropdown-menu w-56">
+              <ul className="dropdown-content bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
+                <li className="p-2">
+                  <div className="font-medium">Christian Bale</div>
+                  <div className="text-xs text-white/60 mt-0.5 dark:text-slate-500">
+                    Backend Engineer
+                  </div>
+                </li>
+                <li>
+                  <hr className="dropdown-divider border-white/[0.08]" />
+                </li>
+                <li>
+                  <a href="" className="dropdown-item hover:bg-white/5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                      style={{ marginRight: "8px" }}
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                      />
+                    </svg>
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="" className="dropdown-item hover:bg-white/5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                      style={{ marginRight: "8px" }}
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                      />
+                    </svg>
+                    Add Account
+                  </a>
+                </li>
+                <li>
+                  <a href="" className="dropdown-item hover:bg-white/5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                      style={{ marginRight: "8px" }}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                      />
+                    </svg>
+                    Reset Password
+                  </a>
+                </li>
+                <li>
+                  <a href="" className="dropdown-item hover:bg-white/5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                      style={{ marginRight: "8px" }}
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                      />
+                    </svg>
+                    Help
+                  </a>
+                </li>
+                <li>
+                  <hr className="dropdown-divider border-white/[0.08]" />
+                </li>
+                <li>
+                  <a href="" className="dropdown-item hover:bg-white/5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                      style={{ marginRight: "8px" }}
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                      />
+                    </svg>
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="intro-x dropdown mr-4 sm:mr-6">
+          <div className="intro-x dropdown sm:mr-6">
             <div
               className="dropdown-toggle notification notification--bullet cursor-pointer"
               role="button"
               aria-expanded="false"
               data-tw-toggle="dropdown"
             >
-              {" "}
-              <i
-                data-lucide="bell"
-                className="notification__icon dark:text-slate-500"
-              ></i>{" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                />
+              </svg>
             </div>
             <div className="notification-content pt-2 dropdown-menu">
               <div className="notification-content__box dropdown-content">
@@ -222,7 +359,7 @@ const Header = () => {
                     <div className="w-full truncate text-slate-500 mt-0.5">
                       It is a long established fact that a reader will be
                       distracted by the readable content of a page when looking
-                      at its layout. The point of using Lorem{" "}
+                      at its layout. The point of using Lorem
                     </div>
                   </div>
                 </div>
@@ -327,78 +464,6 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="intro-x dropdown w-8 h-8">
-            <div
-              className="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110"
-              role="button"
-              aria-expanded="false"
-              data-tw-toggle="dropdown"
-            >
-              <img
-                alt="Midone - HTML Admin Template"
-                src="dist/images/profile-5.jpg"
-              />
-            </div>
-            <div className="dropdown-menu w-56">
-              <ul className="dropdown-content bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
-                <li className="p-2">
-                  <div className="font-medium">Christian Bale</div>
-                  <div className="text-xs text-white/60 mt-0.5 dark:text-slate-500">
-                    Backend Engineer
-                  </div>
-                </li>
-                <li>
-                  <hr className="dropdown-divider border-white/[0.08]" />
-                </li>
-                <li>
-                  <a href="" className="dropdown-item hover:bg-white/5">
-                    {" "}
-                    <i
-                      data-lucide="user"
-                      className="w-4 h-4 mr-2"
-                    ></i> Profile{" "}
-                  </a>
-                </li>
-                <li>
-                  <a href="" className="dropdown-item hover:bg-white/5">
-                    {" "}
-                    <i data-lucide="edit" className="w-4 h-4 mr-2"></i> Add
-                    Account{" "}
-                  </a>
-                </li>
-                <li>
-                  <a href="" className="dropdown-item hover:bg-white/5">
-                    {" "}
-                    <i data-lucide="lock" className="w-4 h-4 mr-2"></i> Reset
-                    Password{" "}
-                  </a>
-                </li>
-                <li>
-                  <a href="" className="dropdown-item hover:bg-white/5">
-                    {" "}
-                    <i
-                      data-lucide="help-circle"
-                      className="w-4 h-4 mr-2"
-                    ></i>{" "}
-                    Help{" "}
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider border-white/[0.08]" />
-                </li>
-                <li>
-                  <a href="" className="dropdown-item hover:bg-white/5">
-                    {" "}
-                    <i
-                      data-lucide="toggle-right"
-                      className="w-4 h-4 mr-2"
-                    ></i>{" "}
-                    Logout{" "}
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
