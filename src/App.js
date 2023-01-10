@@ -1,7 +1,9 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import LeftMenuBar from "./components/LeftMenuBar";
+import AddDoctor from "./pages/AddDoctor";
 import Dashboard from "./pages/Dashboard";
 
 const App = () => {
@@ -10,7 +12,10 @@ const App = () => {
       <Header />
       <div className="flex overflow-hidden">
         <LeftMenuBar />
-        <Dashboard />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/add-doctor" element={<AddDoctor />} />
+        </Routes>
       </div>
     </>
   );
