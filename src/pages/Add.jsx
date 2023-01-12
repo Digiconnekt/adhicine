@@ -1,47 +1,52 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
-const AddDoctor = () => {
+const Add = () => {
+  const { id } = useParams();
+
   return (
     <>
       <div className="content">
         <div className="intro-y flex items-center mt-8">
-          <h2 className="text-lg font-medium mr-auto">Add a Doctor</h2>
+          <h2 className="text-lg font-medium mr-auto">
+            Add a <span className="capitalize">{id}</span>
+          </h2>
         </div>
 
         {/* form start */}
         <div className="grid grid-cols-12 gap-6 mt-5">
           <div className="intro-y col-span-12 lg:col-span-6">
             <div className="intro-y box p-5">
-              <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500 mb-5">
+              <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500 mb-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
-                  class="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
+                  className="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                   />
                 </svg>
                 <input
                   id="crud-form-1"
                   type="text"
-                  class="form-control w-full pl-10"
-                  placeholder="Doctor Name"
+                  className="form-control w-full pl-10"
+                  placeholder={`${id} name`}
                 />
               </div>
-              <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+              <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  class="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
+                  className="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
                 >
                   <path
                     strokeLinecap="round"
@@ -52,12 +57,12 @@ const AddDoctor = () => {
                 <input
                   id="crud-form-1"
                   type="text"
-                  class="form-control w-full pl-10"
-                  placeholder="Email"
+                  className="form-control w-full pl-10"
+                  placeholder="email"
                 />
               </div>
-              <div class="text-right mt-5">
-                <button type="button" class="btn btn-primary w-34">
+              <div className="text-right mt-5">
+                <button type="button" className="btn btn-primary w-34">
                   Send Request
                 </button>
               </div>
@@ -70,4 +75,4 @@ const AddDoctor = () => {
   );
 };
 
-export default AddDoctor;
+export default Add;
