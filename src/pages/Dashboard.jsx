@@ -160,9 +160,9 @@ const Dashboard = () => {
               </div>
               {/* 3 blocks end */}
 
-              {/* hospital table start */}
+              {/* table start */}
               <Table type={type} />
-              {/* hospital table end */}
+              {/* table end */}
             </div>
           </div>
         </div>
