@@ -19,8 +19,9 @@ export const AxiosPost = (url, data) => {
         localStorage.setItem("email", userData.email);
         localStorage.setItem("accessToken", userData.accessToken);
         localStorage.setItem("profilePhotoUrl", userData.profilePhotoUrl);
-        window.location.href = "/";
+        // window.location.href = "/";
       }
+      console.log(res);
     })
     .catch((err) => {
       const apiErrors = err.response.data.errors;
@@ -32,5 +33,17 @@ export const AxiosPost = (url, data) => {
         apiErrors.password &&
           apiErrors.password.map((elem) => toast.error(elem));
       }
+    });
+};
+
+export const AxiosGet = (url, headers) => {
+  axios
+    .get(process.env.REACT_APP_BASE_URL + url, headers)
+    .then((res) => {
+      console.log(res.data.data);
+      // console.log(res.data.data);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
