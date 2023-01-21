@@ -19,7 +19,7 @@ export const AxiosPost = (url, data) => {
         localStorage.setItem("email", userData.email);
         localStorage.setItem("accessToken", userData.accessToken);
         localStorage.setItem("profilePhotoUrl", userData.profilePhotoUrl);
-        // window.location.href = "/";
+        window.location.href = "/";
       }
       console.log(res);
     })
