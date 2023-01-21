@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { AppContext } from "../provider";
 import MobileMenu from "./MobileMenu";
 
 const Header = () => {
+  const user = useContext(AppContext);
+
   return (
     <>
       <MobileMenu />
 
       <div className="top-bar-boxed h-[70px] md:h-[65px] z-[51] border-b border-white/[0.08] mt-12 md:mt-0 -mx-3 sm:-mx-8 md:-mx-0 px-3 md:border-b-0 relative md:fixed md:inset-x-0 md:top-0 sm:px-8 md:px-10 md:pt-10 md:bg-gradient-to-b md:from-slate-100 md:to-transparent dark:md:from-darkmode-700">
         <div className="h-full flex items-center">
-          <a
-            href="/"
+          <NavLink
+            to="/"
             className="logo -intro-x hidden md:flex xl:w-[180px] block mr-auto"
           >
             <img
@@ -18,7 +22,7 @@ const Header = () => {
               src="../dist/images/logo.svg"
             />
             <span className="logo__text text-white text-lg ml-3">Adhicine</span>
-          </a>
+          </NavLink>
 
           {/* <nav aria-label="breadcrumb" className="-intro-x h-[45px] mr-auto">
             <ol className="breadcrumb breadcrumb-light">
@@ -193,15 +197,15 @@ const Header = () => {
             >
               <img
                 alt="Midone - HTML Admin Template"
-                src="../dist/images/profile-5.jpg"
+                src={user.profilePhotoUrl}
               />
             </div>
             <div className="dropdown-menu w-56">
               <ul className="dropdown-content bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
                 <li className="p-2">
-                  <div className="font-medium">Christian Bale</div>
+                  <div className="font-medium">{user.name}</div>
                   <div className="text-xs text-white/60 mt-0.5 dark:text-slate-500">
-                    Backend Engineer
+                    {user.email}
                   </div>
                 </li>
                 <li>
@@ -228,7 +232,7 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="" className="dropdown-item hover:bg-white/5">
+                  <a href="/sign-up" className="dropdown-item hover:bg-white/5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -291,7 +295,7 @@ const Header = () => {
                   <hr className="dropdown-divider border-white/[0.08]" />
                 </li>
                 <li>
-                  <a href="" className="dropdown-item hover:bg-white/5">
+                  <a href="/sign-in" className="dropdown-item hover:bg-white/5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

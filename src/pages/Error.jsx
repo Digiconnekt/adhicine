@@ -6,7 +6,7 @@ const Error = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container" style={{ backgroundColor: "rgb(27, 27, 59)" }}>
         <div className="error-page flex flex-col lg:flex-row items-center justify-center h-screen text-center lg:text-left">
           <div className="-intro-x lg:mr-20">
             <img
@@ -16,27 +16,15 @@ const Error = () => {
             />
           </div>
           <div className="text-white mt-10 lg:mt-0">
-            <div
-              className="intro-x text-8xl font-medium"
-              style={{ color: "rgb(27,37,59)" }}
-            >
-              404
-            </div>
-            <div
-              className="intro-x text-xl lg:text-3xl font-medium mt-5"
-              style={{ color: "rgb(27,37,59)" }}
-            >
+            <div className="intro-x text-8xl font-medium">404</div>
+            <div className="intro-x text-xl lg:text-3xl font-medium mt-5">
               Oops. This page has gone missing.
             </div>
-            <div
-              className="intro-x text-lg mt-3"
-              style={{ color: "rgb(27,37,59)" }}
-            >
+            <div className="intro-x text-lg mt-3">
               You may have mistyped the address or the page may have moved.
             </div>
             <button
               onClick={() => navigate("/")}
-              style={{ color: "rgb(27,37,59)", borderColor: "rgb(27,37,59)" }}
               className="intro-x btn py-3 px-4 text-white border-white dark:border-darkmode-400 dark:text-slate-200 mt-10"
             >
               Back to Home

@@ -1,8 +1,53 @@
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { AxiosPost } from "../API";
+
+const initialValues = {
+  fullName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  userType: "doctor",
+  agree: "",
+};
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  // form validation start
+  const signUpSchema = Yup.object({
+    fullName: Yup.string()
+      .min(2)
+      .max(20)
+      .required("Please enter your Full Name"),
+    email: Yup.string().email().required("Please enter your Email"),
+    password: Yup.string().min(6).required("Please enter your Password"),
+    confirmPassword: Yup.string()
+      .required("Please enter your Confirm Password")
+      .oneOf([Yup.ref("password"), null], "Password must be match"),
+  });
+  // form validation end
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: signUpSchema,
+      onSubmit: (values̥, action) => {
+        AxiosPost("register", {
+          name: values.fullName,
+          email: values.email,
+          password: values.password,
+          device_name: "web",
+          userType: values.userType,
+        });
+
+        console.log("🚀 ~ file: SignUp.jsx:24 ~ SignUp ~ values̥", values̥);
+        // action.resetForm();
+      },
+    });
+  // console.log(errors);
 
   return (
     <>
@@ -51,40 +96,88 @@ const SignUp = () => {
                   <input
                     type="text"
                     className="intro-x login__input form-control py-3 px-4 block"
-                    placeholder="First Name"
+                    placeholder="Full Name"
+                    name="fullName"
+                    value={values.fullName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
-                  <input
+                  {errors.fullName && touched.fullName ? (
+                    <p className="form-error">{errors.fullName}</p>
+                  ) : null}
+
+                  {/* <input
                     type="text"
                     className="intro-x login__input form-control py-3 px-4 block mt-4"
                     placeholder="Last Name"
+                    name="lastName"
+                    value={values.lastName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {errors.lastName && touched.lastName ? (
+                    <p className="form-error">{errors.lastName}</p>
+                  ) : null} */}
+
                   <input
                     type="text"
                     className="intro-x login__input form-control py-3 px-4 block mt-4"
                     placeholder="Email"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {errors.email && touched.email ? (
+                    <p className="form-error">{errors.email}</p>
+                  ) : null}
+
                   <input
-                    type="text"
+                    type="password"
                     className="intro-x login__input form-control py-3 px-4 block mt-4"
                     placeholder="Password"
+                    name="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {errors.password && touched.password ? (
+                    <p className="form-error">{errors.password}</p>
+                  ) : null}
 
                   <input
-                    type="text"
+                    type="password"
                     className="intro-x login__input form-control py-3 px-4 block mt-4"
                     placeholder="Confirm Password"
+                    name="confirmPassword"
+                    value={values.confirmPassword}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {errors.confirmPassword && touched.confirmPassword ? (
+                    <p className="form-error">{errors.confirmPassword}</p>
+                  ) : null}
 
-                  <select class="form-control py-3 px-4 mt-4 form-select">
+                  <select
+                    className="form-control py-3 px-4 mt-4 form-select"
+                    name="userType"
+                    value={values.userType}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  >
                     <option value="doctor">Doctor</option>
                     <option value="hospital">Hospital</option>
                   </select>
                 </div>
-                <div className="intro-x flex items-center text-slate-600 dark:text-slate-500 mt-4 text-xs sm:text-sm">
+                {/* <div className="intro-x flex items-center text-slate-600 dark:text-slate-500 mt-4 text-xs sm:text-sm">
                   <input
                     id="remember-me"
                     type="checkbox"
                     className="form-check-input border mr-2"
+                    name="agree"
+                    value={values.agree}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                   <label
                     className="cursor-pointer select-none"
@@ -96,9 +189,13 @@ const SignUp = () => {
                     Privacy Policy
                   </a>
                   .
-                </div>
+                </div> */}
                 <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                  <button className="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">
+                  <button
+                    className="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top"
+                    type="submit"
+                    onClick={handleSubmit}
+                  >
                     Register
                   </button>
                   <button

@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AxiosPost } from "../API";
+
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const navigate = useNavigate();
+
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const onChangeHandler = (e) => {
+    const handlerName = e.target.name;
+    const handlerValue = e.target.value;
+
+    setLoginData(() => ({ ...loginData, [handlerName]: handlerValue }));
+  };
+
+  const submitLoginData = () => {
+    AxiosPost("login", {
+      email: loginData.email,
+      password: loginData.password,
+      device_name: "web",
+    });
+
+    console.log(loginData);
+  };
+
+  // const notify = () => toast("Wow so easy!");
 
   return (
     <>
@@ -52,15 +79,22 @@ const SignIn = () => {
                     type="text"
                     className="intro-x login__input form-control py-3 px-4 block"
                     placeholder="Email"
+                    name="email"
+                    onChange={onChangeHandler}
                   />
+                  {/* <p className="form-error">email error</p> */}
+
                   <input
                     type="password"
                     className="intro-x login__input form-control py-3 px-4 block mt-4"
                     placeholder="Password"
+                    name="password"
+                    onChange={onChangeHandler}
                   />
+                  {/* <p className="form-error">password error</p> */}
                 </div>
                 <div className="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
-                  <div className="flex items-center mr-auto">
+                  {/* <div className="flex items-center mr-auto">
                     <input
                       id="remember-me"
                       type="checkbox"
@@ -72,19 +106,24 @@ const SignIn = () => {
                     >
                       Remember me
                     </label>
-                  </div>
+                  </div> */}
                   <a href="">Forgot Password?</a>
                 </div>
                 <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                  <button className="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">
+                  <button
+                    className="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top"
+                    onClick={submitLoginData}
+                  >
                     Sign In
                   </button>
                   <button
-                    onClick={() => navigate("/register")}
+                    onClick={() => navigate("/sign-up")}
                     className="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top"
                   >
                     Register
                   </button>
+
+                  {/* <button onClick={notify}>Notify!</button> */}
                 </div>
                 <div className="intro-x mt-10 xl:mt-24 text-slate-600 dark:text-slate-500 text-center xl:text-left">
                   By SignIn up, you agree to our{" "}
