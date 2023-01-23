@@ -36,14 +36,14 @@ export const AxiosPost = (url, data) => {
     });
 };
 
-export const AxiosGet = (url, headers) => {
-  axios
-    .get(process.env.REACT_APP_BASE_URL + url, headers)
-    .then((res) => {
-      console.log(res.data.data);
-      // console.log(res.data.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const AxiosGet = async (url, headers) => {
+  try {
+    const response = await axios.get(
+      process.env.REACT_APP_BASE_URL + url,
+      headers
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };

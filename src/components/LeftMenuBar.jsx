@@ -182,7 +182,7 @@ const LeftMenuBar = () => {
             </a>
           </li>
           <li>
-            <a href="side-menu-light-post.html" className="side-menu">
+            <a href="/sign-in" className="side-menu">
               <div className="side-menu__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

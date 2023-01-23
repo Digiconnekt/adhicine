@@ -1,28 +1,37 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { AxiosGet } from "../API";
 import ReportChart from "../components/ReportChart";
-import Table from "../components/Table";
 import { AppContext } from "../provider";
 
 const Report = () => {
   const user = useContext(AppContext);
   const [reportData, setReportData] = useState([]);
-
   const header = {
     headers: { Authorization: `Bearer ${user.accessToken}` },
   };
 
+  // dates start
+  const [date, setDate] = useState({
+    from: "",
+    to: "",
+  });
+
+  const dateOnChangeHandler = (e) => {
+    const handlerName = e.target.name;
+    const handlerValue = e.target.value;
+
+    setDate(() => ({ ...date, [handlerName]: handlerValue }));
+  };
+  const formattedFromDate = date.from.replace(/\//g, "-");
+  const formattedToDate = date.to.replace(/\//g, "-");
+
+  console.log(formattedFromDate, formattedToDate);
+
+  // dates end
+
   const getReportData = async (url, headers) => {
-    try {
-      const res = await axios.get(
-        process.env.REACT_APP_BASE_URL + url,
-        headers
-      );
-      const data = await res.data.data;
-      setReportData(data);
-    } catch (error) {
-      console.log(error);
-    }
+    const { data } = await AxiosGet(url, headers);
+    setReportData(data);
   };
 
   useEffect(() => {
@@ -85,7 +94,7 @@ const Report = () => {
               <div className="col-span-12 mt-8">
                 <div className="intro-y flex items-center h-10">
                   <h2 className="text-lg font-medium truncate mr-5">
-                    James Cordon
+                    {user.name}
                   </h2>
                 </div>
                 {/* 4 blocks start */}
@@ -146,13 +155,22 @@ const Report = () => {
               {/* ---- report start ---- */}
               {/* left block start */}
               <div className="col-span-12 lg:col-span-8 mt-8">
-                <div className="intro-y block sm:flex items-center h-10">
+                {/* <div className="intro-y block sm:flex items-center h-10">
                   <h2 className="text-lg font-medium truncate mr-5">Report</h2>
-                </div>
-                <div className="intro-y box p-5 mt-12 sm:mt-5">
+                </div> */}
+                <div className="intro-y box p-5">
+                  <h2 className="text-lg font-medium truncate mb-5">Report</h2>
                   <div className="flex flex-col md:flex-row md:items-center">
-                    <div className="flex">
-                      <button
+                    <div className="flex items-center">
+                      <label htmlFor="from">From: </label>
+                      <input
+                        type="date"
+                        className="form-control sm:w-40 box ml-2"
+                        id="from"
+                        name="from"
+                        onChange={dateOnChangeHandler}
+                      />
+                      {/* <button
                         className="dropdown-toggle btn px-2  btn-primary shadow-md"
                         aria-expanded="false"
                         data-tw-toggle="dropdown"
@@ -162,13 +180,21 @@ const Report = () => {
                           7
                         </div>
                         Medicines
-                      </button>
+                      </button> */}
 
                       {/* vertical line break start */}
                       <div className="w-px h-10 border border-r border-dashed border-slate-200 dark:border-darkmode-300 mx-4 xl:mx-5"></div>
                       {/* vertical line break end */}
 
-                      <button
+                      <label htmlFor="to">To: </label>
+                      <input
+                        type="date"
+                        className="form-control sm:w-40 box ml-2"
+                        id="to"
+                        name="to"
+                        onChange={dateOnChangeHandler}
+                      />
+                      {/* <button
                         className="dropdown-toggle btn px-2  btn-primary shadow-md"
                         aria-expanded="false"
                         data-tw-toggle="dropdown"
@@ -178,61 +204,39 @@ const Report = () => {
                           1
                         </div>
                         Types
-                      </button>
+                      </button> */}
                     </div>
 
                     {/* calendar start */}
-                    <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        icon-name="calendar"
-                        data-lucide="calendar"
-                        className="lucide lucide-calendar w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                      >
-                        <rect
-                          x="3"
-                          y="4"
-                          width="18"
-                          height="18"
-                          rx="2"
-                          ry="2"
-                        ></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                      </svg>
+                    {/* <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                      <label htmlFor="from">From: </label>
                       <input
-                        type="text"
-                        className="datepicker form-control sm:w-56 box pl-10"
-                        fdprocessedid="1jyi3i"
+                        type="date"
+                        className="form-control sm:w-40 box mr-5"
+                        id="from"
+                        name="from"
+                        onChange={dateOnChangeHandler}
                       />
-                    </div>
+
+                      <label htmlFor="to">To: </label>
+                      <input
+                        type="date"
+                        className="form-control sm:w-40 box"
+                        id="to"
+                        name="to"
+                        onChange={dateOnChangeHandler}
+                      />
+                    </div> */}
                     {/* calendar end */}
                   </div>
 
                   {/* graph start */}
-                  <div className="">
-                    <ReportChart />
-                    {/* <canvas
-                        id="report-line-chart"
-                        className="mt-6 -mb-6"
-                        width="500"
-                        height="343"
-                        style={{
-                          display: "block",
-                          boxSizing: "border-box",
-                          height: "274.4px",
-                          width: "400px",
-                        }}
-                      ></canvas> */}
+                  <div className="mt-5">
+                    <ReportChart
+                      from="2022-12-02"
+                      to="2023-01-02"
+                      APIDATA={reportData}
+                    />
                   </div>
                   {/* graph end */}
                 </div>
@@ -251,7 +255,7 @@ const Report = () => {
                       />
                     </div>
                     <div className="ml-4 mr-auto">
-                      <div className="font-medium text-base">James Cordon</div>
+                      <div className="font-medium text-base">{user.name}</div>
                       <div className="text-slate-500">Active</div>
                     </div>
                     <div className="dropdown">
@@ -455,7 +459,7 @@ const Report = () => {
                         Email
                       </div>
                       <div className="w-full sm:w-auto flex items-center">
-                        jamescordon@gmail.com
+                        {user.email}
                       </div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-center mt-5">
