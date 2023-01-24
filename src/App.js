@@ -13,6 +13,7 @@ import Error from "./pages/Error";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashboardContent from "./components/DashboardContent";
+import MachineLogs from "./pages/MachineLogs";
 
 const App = () => {
   const location = window.location.pathname;
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/" element={<DashboardContent />} />
           <Route path="/add/:id" element={<Add />} />
           <Route path="/report" element={<Report />} />
+          <Route path="/machine-logs" element={<MachineLogs />} />
         </Route>
 
         <Route path="*" element={<Error />} />

@@ -11,6 +11,7 @@ const Dashboard = () => {
         <NavLink to="/" />
         <NavLink to="/add/:id" />
         <NavLink to="/report" />
+        <NavLink to="/machine-logs" />
 
         <Outlet />
       </div>

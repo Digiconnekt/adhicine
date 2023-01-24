@@ -11,9 +11,16 @@ const Report = () => {
   };
 
   // dates start
+  let today = new Date();
+  let todayFormatted = today.toISOString().slice(0, 10);
+
+  let thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(today.getDate() - 30);
+  let thirtyDaysAgoFormatted = thirtyDaysAgo.toISOString().slice(0, 10);
+
   const [date, setDate] = useState({
-    from: "",
-    to: "",
+    from: thirtyDaysAgoFormatted,
+    to: todayFormatted,
   });
 
   const dateOnChangeHandler = (e) => {
@@ -22,23 +29,28 @@ const Report = () => {
 
     setDate(() => ({ ...date, [handlerName]: handlerValue }));
   };
-  const formattedFromDate = date.from.replace(/\//g, "-");
-  const formattedToDate = date.to.replace(/\//g, "-");
 
-  console.log(formattedFromDate, formattedToDate);
+  // const formattedFromDate = date.from.replace(/\//g, "-");
+  // const formattedToDate = date.to.replace(/\//g, "-");
+
+  // console.log(formattedFromDate, formattedToDate);
 
   // dates end
 
   const getReportData = async (url, headers) => {
-    const { data } = await AxiosGet(url, headers);
-    setReportData(data);
+    try {
+      const { data } = await AxiosGet(url, headers);
+      setReportData(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
-    getReportData("track?startDate=2022-12-02&endDate=2023-01-02", header);
-  }, []);
+    getReportData(`track?startDate=${date.from}&endDate=${date.to}`, header);
+  }, [date.from, date.to]);
 
-  console.log(reportData);
+  console.log("reportData: ", reportData);
 
   //number of total medicines
   const totalMedicines = reportData.reduce((acc, obj) => acc + obj.dosage, 0);
@@ -162,7 +174,12 @@ const Report = () => {
                   <h2 className="text-lg font-medium truncate mb-5">Report</h2>
                   <div className="flex flex-col md:flex-row md:items-center">
                     <div className="flex items-center">
-                      <label htmlFor="from">From: </label>
+                      <label
+                        htmlFor="from"
+                        className="text-base text-slate-500"
+                      >
+                        From:{" "}
+                      </label>
                       <input
                         type="date"
                         className="form-control sm:w-40 box ml-2"
@@ -186,7 +203,9 @@ const Report = () => {
                       <div className="w-px h-10 border border-r border-dashed border-slate-200 dark:border-darkmode-300 mx-4 xl:mx-5"></div>
                       {/* vertical line break end */}
 
-                      <label htmlFor="to">To: </label>
+                      <label htmlFor="to" className="text-base text-slate-500">
+                        To:{" "}
+                      </label>
                       <input
                         type="date"
                         className="form-control sm:w-40 box ml-2"
@@ -230,11 +249,15 @@ const Report = () => {
                     {/* calendar end */}
                   </div>
 
+                  <div className="text-base text-slate-500 mt-3">
+                    Showing results for {date.from} to {date.to}
+                  </div>
+
                   {/* graph start */}
                   <div className="mt-5">
                     <ReportChart
-                      from="2022-12-02"
-                      to="2023-01-02"
+                      from={date.from}
+                      to={date.to}
                       APIDATA={reportData}
                     />
                   </div>
