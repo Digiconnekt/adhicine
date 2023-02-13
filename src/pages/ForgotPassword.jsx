@@ -1,33 +1,45 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AxiosPost } from "../API";
+import { toast } from "react-toastify";
 
-const SignIn = () => {
-  const navigate = useNavigate();
-
-  const [loginData, setLoginData] = useState({
+const ForgotPassword = () => {
+  const [forgotPassData, setForgotPassData] = useState({
     email: "",
-    password: "",
   });
 
   const onChangeHandler = (e) => {
     const handlerName = e.target.name;
     const handlerValue = e.target.value;
 
-    setLoginData(() => ({ ...loginData, [handlerName]: handlerValue }));
+    setForgotPassData(() => ({
+      ...forgotPassData,
+      [handlerName]: handlerValue,
+    }));
   };
 
-  const submitLoginData = () => {
-    AxiosPost("login", {
-      email: loginData.email,
-      password: loginData.password,
-      device_name: "web",
-    });
+  const sendDataToAPI = async () => {
+    try {
+      const res = await axios.post(
+        process.env.REACT_APP_BASE_URL + "forgot-password",
+        {
+          email: forgotPassData.email,
+        }
+      );
+      console.log(res);
 
-    console.log(loginData);
+      toast.success(res.data.status);
+    } catch (error) {
+      console.log(error);
+
+      toast.error(error.response.data.email);
+    }
   };
 
-  // const notify = () => toast("Wow so easy!");
+  const submitForgotPassData = () => {
+    sendDataToAPI();
+
+    console.log(forgotPassData);
+  };
 
   return (
     <>
@@ -66,11 +78,12 @@ const SignIn = () => {
             <div className="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
               <div className="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
                 <h2 className="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
-                  Sign In
+                  Forgot Password?
                 </h2>
-                <div className="intro-x mt-2 text-slate-400 xl:hidden text-center">
-                  A few more clicks to sign in to your account. Manage all your
-                  e-commerce accounts in one place
+                <div className="intro-x mt-2 text-slate-400">
+                  Forgot your password? No problem. Just let us know your email
+                  address and we will email you a password reset link that will
+                  allow you to choose a new one.
                 </div>
                 <div className="intro-x mt-8">
                   <input
@@ -82,56 +95,18 @@ const SignIn = () => {
                   />
                   {/* <p className="form-error">email error</p> */}
 
-                  <input
-                    type="password"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Password"
-                    name="password"
-                    onChange={onChangeHandler}
-                  />
                   {/* <p className="form-error">password error</p> */}
                 </div>
-                <div className="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
-                  {/* <div className="flex items-center mr-auto">
-                    <input
-                      id="remember-me"
-                      type="checkbox"
-                      className="form-check-input border mr-2"
-                    />
-                    <label
-                      className="cursor-pointer select-none"
-                      htmlFor="remember-me"
-                    >
-                      Remember me
-                    </label>
-                  </div> */}
-                  <a href="/forgot-password">Forgot Password?</a>
-                </div>
+
                 <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                   <button
-                    className="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top"
-                    onClick={submitLoginData}
+                    className="btn btn-primary py-3 px-4 w-full xl:mr-3 align-top"
+                    onClick={submitForgotPassData}
                   >
-                    Sign In
-                  </button>
-                  <button
-                    onClick={() => navigate("/sign-up")}
-                    className="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top"
-                  >
-                    Register
+                    Email Password Reset Link
                   </button>
 
                   {/* <button onClick={notify}>Notify!</button> */}
-                </div>
-                <div className="intro-x mt-10 xl:mt-24 text-slate-600 dark:text-slate-500 text-center xl:text-left">
-                  By SignIn up, you agree to our{" "}
-                  <a className="text-primary dark:text-slate-200" href="">
-                    Terms and Conditions{" "}
-                  </a>
-                  &{" "}
-                  <a className="text-primary dark:text-slate-200" href="">
-                    Privacy Policy
-                  </a>
                 </div>
               </div>
             </div>
@@ -143,4 +118,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default ForgotPassword;

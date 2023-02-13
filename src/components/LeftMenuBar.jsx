@@ -18,7 +18,7 @@ const LeftMenuBar = () => {
       <nav className="side-nav">
         <ul>
           <li>
-            <a href="#" className="side-menu side-menu--active">
+            <a href="/" className="side-menu side-menu--active">
               <div className="side-menu__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

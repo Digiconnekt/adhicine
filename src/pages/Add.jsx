@@ -1,15 +1,51 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { AxiosPost } from "../API";
 
 const Add = () => {
-  const { id } = useParams();
+  const { type } = useParams();
+
+  const [patientRequest, setPatientRequest] = useState({
+    email: "",
+  });
+
+  const onChangeHandler = (e) => {
+    const handlerName = e.target.name;
+    const handlerValue = e.target.value;
+
+    setPatientRequest(() => ({
+      ...patientRequest,
+      [handlerName]: handlerValue,
+    }));
+  };
+
+  const sendDataToAPI = async () => {
+    try {
+      const res = await axios.post(
+        process.env.REACT_APP_BASE_URL + `invite/patients?device_name=web`,
+        {
+          email: patientRequest.email,
+        }
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitPatientRequestData = () => {
+    sendDataToAPI();
+
+    console.log(patientRequest);
+  };
 
   return (
     <>
       <div className="content">
         <div className="intro-y flex items-center mt-8">
           <h2 className="text-lg font-medium mr-auto">
-            Add a <span className="capitalize">{id}</span>
+            Add a <span className="capitalize">{type}</span>
           </h2>
         </div>
 
@@ -17,7 +53,7 @@ const Add = () => {
         <div className="grid grid-cols-12 gap-6 mt-5">
           <div className="intro-y col-span-12 lg:col-span-6">
             <div className="intro-y box p-5">
-              <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500 mb-5">
+              {/* <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500 mb-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -36,9 +72,9 @@ const Add = () => {
                   id="crud-form-1"
                   type="text"
                   className="form-control w-full pl-10"
-                  placeholder={`${id} name`}
+                  placeholder={`${type} name`}
                 />
-              </div>
+              </div> */}
               <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -59,10 +95,16 @@ const Add = () => {
                   type="text"
                   className="form-control w-full pl-10"
                   placeholder="email"
+                  name="email"
+                  onChange={onChangeHandler}
                 />
               </div>
               <div className="text-right mt-5">
-                <button type="button" className="btn btn-primary w-34">
+                <button
+                  type="button"
+                  className="btn btn-primary w-34"
+                  onClick={submitPatientRequestData}
+                >
                   Send Request
                 </button>
               </div>

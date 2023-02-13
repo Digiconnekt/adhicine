@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../provider";
-import Table from "./Table";
+import DoctorsTable from "./DoctorsTable ";
+import HospitalsTable from "./HospitalsTable ";
+import PatientsTable from "./PatientsTable";
 
 const DashboardContent = () => {
   const user = useContext(AppContext);
@@ -163,7 +165,14 @@ const DashboardContent = () => {
               {/* 3 blocks end */}
 
               {/* table start */}
-              <Table type={type} />
+              {type === "hospital" ? (
+                <HospitalsTable type={type} />
+              ) : type === "doctor" ? (
+                <DoctorsTable type={type} />
+              ) : (
+                <PatientsTable type={type} />
+              )}
+
               {/* table end */}
             </div>
           </div>

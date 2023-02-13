@@ -24,9 +24,9 @@ export const AxiosPost = (url, data) => {
       console.log(res);
     })
     .catch((err) => {
-      const apiErrors = err.response.data.errors;
       console.log("🚀 ~ file: API.js:13 ~ AxiosPost ~ err", err);
 
+      const apiErrors = err.response.data.errors;
       if (apiErrors) {
         apiErrors.name && apiErrors.name.map((elem) => toast.error(elem));
         apiErrors.email && apiErrors.email.map((elem) => toast.error(elem));

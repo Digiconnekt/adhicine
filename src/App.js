@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
@@ -14,22 +14,33 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashboardContent from "./components/DashboardContent";
 import MachineLogs from "./pages/MachineLogs";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
   const location = window.location.pathname;
 
+  const [noHeader, setNoHeader] = useState(true);
+
+  useEffect(() => {
+    (location === "/sign-up" ||
+      location === "/sign-in" ||
+      location === "/forgot-password") &&
+      setNoHeader(false);
+  }, []);
+
   return (
     <>
       <ScrollToTop />
-      {location !== "/sign-up" && location !== "/sign-in" && <Header />}
+      {noHeader && <Header />}
 
       <Routes>
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route path="/" element={<Dashboard />}>
           <Route path="/" element={<DashboardContent />} />
-          <Route path="/add/:id" element={<Add />} />
+          <Route path="/add/:type" element={<Add />} />
           <Route path="/report" element={<Report />} />
           <Route path="/machine-logs" element={<MachineLogs />} />
         </Route>

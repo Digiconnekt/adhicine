@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LeftMenuBar from "../components/LeftMenuBar";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { AppContext } from "../provider";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const user = useContext(AppContext);
+  const [validUser, setValidUser] = useState(false);
+
+  useEffect(() => {
+    user.accessToken ? setValidUser(true) : navigate("/sign-in");
+  }, []);
+
   return (
-    <>
-      <div className="flex overflow-hidden">
-        <LeftMenuBar />
+    validUser && (
+      <>
+        <div className="flex overflow-hidden">
+          <LeftMenuBar />
 
-        <NavLink to="/" />
-        <NavLink to="/add/:id" />
-        <NavLink to="/report" />
-        <NavLink to="/machine-logs" />
+          <NavLink to="/" />
+          <NavLink to="/add/:type" />
+          <NavLink to="/report" />
+          <NavLink to="/machine-logs" />
 
-        <Outlet />
-      </div>
-    </>
+          <Outlet />
+        </div>
+      </>
+    )
   );
 };
 
