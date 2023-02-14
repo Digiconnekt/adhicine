@@ -1,42 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AxiosGet } from "../API";
-import { AppContext } from "../provider";
 
-const HospitalsTable = ({ type }) => {
-  const user = useContext(AppContext);
+const HospitalDoctorsTable = ({ type }) => {
   const navigate = useNavigate();
 
   const redirect = () => {
     navigate(`/add/${type}`);
   };
 
-  const [hospitalsData, setHospitalsData] = useState([]);
-  const header = {
-    headers: { Authorization: `Bearer ${user.accessToken}` },
-  };
-
-  const getHospitalsData = async (url, headers) => {
-    try {
-      const { data } = await AxiosGet(url, headers);
-      setHospitalsData(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getHospitalsData(`hospitals`, header);
-  }, []);
-
-  console.log("hospitalsData: ", hospitalsData);
-
   return (
     <>
       <div className="col-span-12 mt-6">
         <div className="intro-y block sm:flex items-center h-10">
           <h2 className="text-lg font-medium truncate mr-5 capitalize">
-            Hospital
+            Doctor
           </h2>
         </div>
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
@@ -490,15 +467,12 @@ const HospitalsTable = ({ type }) => {
             <tbody>
               <tr className="intro-x">
                 <td className="w-40">
-                  <a
-                    href="/hospital/1"
-                    className="font-medium whitespace-nowrap"
-                  >
+                  <a href="" className="font-medium whitespace-nowrap">
                     name
                   </a>
                   {/* <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                                Sport &amp; Outdoor
-                              </div> */}
+                              Sport &amp; Outdoor
+                            </div> */}
                 </td>
                 <td className="w-40">
                   <a href="" className="font-medium whitespace-nowrap">
@@ -746,4 +720,4 @@ const HospitalsTable = ({ type }) => {
   );
 };
 
-export default HospitalsTable;
+export default HospitalDoctorsTable;

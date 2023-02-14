@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
+import HospitalDoctorsTable from "../components/HospitalDoctorsTable";
+import HospitalPatientsTable from "../components/HospitalPatientsTable";
 import { AppContext } from "../provider";
-import DoctorsTable from "./DoctorsTable ";
-import HospitalsTable from "./HospitalsTable ";
-import PatientsTable from "./PatientsTable";
 
-const DashboardContent = () => {
+const HospitalDetails = () => {
   const user = useContext(AppContext);
-  const [type, setType] = useState("hospital");
+  const [type, setType] = useState("doctor");
 
   const typeClick = (name) => {
     setType(name);
@@ -59,42 +58,6 @@ const DashboardContent = () => {
                   <div
                     className="col-span-12 sm:col-span-6 xl:col-span-4 intro-y"
                     onClick={() => {
-                      typeClick("hospital");
-                    }}
-                  >
-                    <div className="zoom-in">
-                      <div
-                        className="box p-5"
-                        style={
-                          type === "hospital" ? borderBottomActive : border
-                        }
-                      >
-                        <div
-                          className="flex"
-                          style={{
-                            alignItems: "center",
-                            justifyContent: "space-around",
-                          }}
-                        >
-                          <div>
-                            <div className="text-base text-slate-500">
-                              Total Hospitals
-                            </div>
-                            <div className="text-3xl font-medium leading-8 mt-3">
-                              23
-                            </div>
-                          </div>
-                          <img
-                            src="./dist/images/dashboard/hospital.png"
-                            alt="Hospital"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="col-span-12 sm:col-span-6 xl:col-span-4 intro-y"
-                    onClick={() => {
                       typeClick("doctor");
                     }}
                   >
@@ -119,7 +82,7 @@ const DashboardContent = () => {
                             </div>
                           </div>
                           <img
-                            src="./dist/images/dashboard/doctor.png"
+                            src="../dist/images/dashboard/doctor.png"
                             alt="Doctors"
                           />
                         </div>
@@ -153,7 +116,7 @@ const DashboardContent = () => {
                             </div>
                           </div>
                           <img
-                            src="./dist/images/dashboard/patient.png"
+                            src="../dist/images/dashboard/patient.png"
                             alt="Patients"
                           />
                         </div>
@@ -165,12 +128,10 @@ const DashboardContent = () => {
               {/* 3 blocks end */}
 
               {/* table start */}
-              {type === "hospital" ? (
-                <HospitalsTable type={type} />
-              ) : type === "doctor" ? (
-                <DoctorsTable type={type} />
+              {type === "doctor" ? (
+                <HospitalDoctorsTable type={type} />
               ) : (
-                <PatientsTable type={type} />
+                <HospitalPatientsTable type={type} />
               )}
               {/* table end */}
             </div>
@@ -181,4 +142,4 @@ const DashboardContent = () => {
   );
 };
 
-export default DashboardContent;
+export default HospitalDetails;

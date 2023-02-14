@@ -1,12 +1,16 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AxiosPost } from "../API";
+import { AppContext } from "../provider";
 
 const Add = () => {
+  const user = useContext(AppContext);
   const { type } = useParams();
+  const header = {
+    headers: { Authorization: `Bearer ${user.accessToken}` },
+  };
 
-  const [patientRequest, setPatientRequest] = useState({
+  const [request, setRequest] = useState({
     email: "",
   });
 
@@ -14,8 +18,8 @@ const Add = () => {
     const handlerName = e.target.name;
     const handlerValue = e.target.value;
 
-    setPatientRequest(() => ({
-      ...patientRequest,
+    setRequest(() => ({
+      ...request,
       [handlerName]: handlerValue,
     }));
   };
@@ -23,10 +27,9 @@ const Add = () => {
   const sendDataToAPI = async () => {
     try {
       const res = await axios.post(
-        process.env.REACT_APP_BASE_URL + `invite/patients?device_name=web`,
-        {
-          email: patientRequest.email,
-        }
+        process.env.REACT_APP_BASE_URL + `invite/${type}?device_name=web`,
+        request,
+        header
       );
       console.log(res);
     } catch (error) {
@@ -34,10 +37,10 @@ const Add = () => {
     }
   };
 
-  const submitPatientRequestData = () => {
+  const submitRequestData = () => {
     sendDataToAPI();
 
-    console.log(patientRequest);
+    console.log(request);
   };
 
   return (
@@ -103,7 +106,7 @@ const Add = () => {
                 <button
                   type="button"
                   className="btn btn-primary w-34"
-                  onClick={submitPatientRequestData}
+                  onClick={submitRequestData}
                 >
                   Send Request
                 </button>

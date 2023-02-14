@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
+  const [resetLink, setResetLink] = useState(false);
   const [forgotPassData, setForgotPassData] = useState({
     email: "",
   });
@@ -28,9 +29,11 @@ const ForgotPassword = () => {
       console.log(res);
 
       toast.success(res.data.status);
+      setResetLink(true);
     } catch (error) {
       console.log(error);
 
+      toast.error(error.response.data.message);
       toast.error(error.response.data.email);
     }
   };
@@ -75,41 +78,95 @@ const ForgotPassword = () => {
             {/* left side end */}
 
             {/* right side start */}
-            <div className="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
-              <div className="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
-                <h2 className="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
-                  Forgot Password?
-                </h2>
-                <div className="intro-x mt-2 text-slate-400">
-                  Forgot your password? No problem. Just let us know your email
-                  address and we will email you a password reset link that will
-                  allow you to choose a new one.
-                </div>
-                <div className="intro-x mt-8">
-                  <input
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block"
-                    placeholder="Email"
-                    name="email"
-                    onChange={onChangeHandler}
-                  />
-                  {/* <p className="form-error">email error</p> */}
+            {resetLink ? (
+              <div className="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                <div className="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+                  {/* <h2 className="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                    Forgot Password?
+                  </h2>
+                  <div className="intro-x mt-2 text-slate-400">
+                    Lorem ipsum 
+                  </div> */}
+                  <div className="intro-x mt-8">
+                    <input
+                      type="text"
+                      className="intro-x login__input form-control py-3 px-4 block"
+                      placeholder="Email"
+                      name="email"
+                      onChange={onChangeHandler}
+                    />
+                    {/* <p className="form-error">email error</p> */}
+                  </div>
+                  <div className="intro-x mt-8">
+                    <input
+                      type="password"
+                      className="intro-x login__input form-control py-3 px-4 block"
+                      placeholder="Password"
+                      name="password"
+                      onChange={onChangeHandler}
+                    />
 
-                  {/* <p className="form-error">password error</p> */}
-                </div>
+                    {/* <p className="form-error">password error</p> */}
+                  </div>
+                  <div className="intro-x mt-8">
+                    <input
+                      type="password"
+                      className="intro-x login__input form-control py-3 px-4 block"
+                      placeholder="Confirm Password"
+                      name="confirmPassword"
+                      onChange={onChangeHandler}
+                    />
 
-                <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                  <button
-                    className="btn btn-primary py-3 px-4 w-full xl:mr-3 align-top"
-                    onClick={submitForgotPassData}
-                  >
-                    Email Password Reset Link
-                  </button>
+                    {/* <p className="form-error">password error</p> */}
+                  </div>
 
-                  {/* <button onClick={notify}>Notify!</button> */}
+                  <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                    <button className="btn btn-primary py-3 px-4 w-full xl:mr-3 align-top">
+                      Reset Password
+                    </button>
+
+                    {/* <button onClick={notify}>Notify!</button> */}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                <div className="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+                  <h2 className="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                    Forgot Password?
+                  </h2>
+                  <div className="intro-x mt-2 text-slate-400">
+                    Forgot your password? No problem. Just let us know your
+                    email address and we will email you a password reset link
+                    that will allow you to choose a new one.
+                  </div>
+                  <div className="intro-x mt-8">
+                    <input
+                      type="text"
+                      className="intro-x login__input form-control py-3 px-4 block"
+                      placeholder="Email"
+                      name="email"
+                      onChange={onChangeHandler}
+                    />
+                    {/* <p className="form-error">email error</p> */}
+
+                    {/* <p className="form-error">password error</p> */}
+                  </div>
+
+                  <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                    <button
+                      className="btn btn-primary py-3 px-4 w-full xl:mr-3 align-top"
+                      onClick={submitForgotPassData}
+                    >
+                      Email Password Reset Link
+                    </button>
+
+                    {/* <button onClick={notify}>Notify!</button> */}
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* right side end */}
           </div>
         </div>

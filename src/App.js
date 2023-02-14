@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 import Header from "./components/Header";
 import ScrollToTop from "./components/ScrollToTop";
@@ -9,29 +10,23 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Report from "./pages/Report";
 import Error from "./pages/Error";
-
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashboardContent from "./components/DashboardContent";
 import MachineLogs from "./pages/MachineLogs";
 import ForgotPassword from "./pages/ForgotPassword";
+import { AppContext } from "./provider";
+import PatientRequests from "./pages/PatientRequests";
+import HospitalDetails from "./pages/HospitalDetails";
 
 const App = () => {
   const location = window.location.pathname;
-
-  const [noHeader, setNoHeader] = useState(true);
-
-  useEffect(() => {
-    (location === "/sign-up" ||
-      location === "/sign-in" ||
-      location === "/forgot-password") &&
-      setNoHeader(false);
-  }, []);
+  const user = useContext(AppContext);
 
   return (
     <>
       <ScrollToTop />
-      {noHeader && <Header />}
+
+      {user.accessToken && <Header />}
 
       <Routes>
         <Route path="/sign-up" element={<SignUp />} />
@@ -43,6 +38,8 @@ const App = () => {
           <Route path="/add/:type" element={<Add />} />
           <Route path="/report" element={<Report />} />
           <Route path="/machine-logs" element={<MachineLogs />} />
+          <Route path="/patient-requests" element={<PatientRequests />} />
+          <Route path="/hospital/:id" element={<HospitalDetails />} />
         </Route>
 
         <Route path="*" element={<Error />} />

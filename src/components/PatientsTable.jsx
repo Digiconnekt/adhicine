@@ -7,7 +7,6 @@ const PatientsTable = ({ type }) => {
   const user = useContext(AppContext);
   const navigate = useNavigate();
   const [patientsData, setPatientsData] = useState([]);
-  const [requestsData, setRequestsData] = useState([]);
   const header = {
     headers: { Authorization: `Bearer ${user.accessToken}` },
   };
@@ -21,22 +20,8 @@ const PatientsTable = ({ type }) => {
     }
   };
 
-  const getRequestsData = async (url, headers) => {
-    try {
-      const { data } = await AxiosGet(url, headers);
-      setRequestsData(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const requestAcceptHandler = () => {
-    console.log("clicked..");
-  };
-
   useEffect(() => {
     getPatientsData(`patients?device_name=web`, header);
-    getRequestsData(`patients/requests?device_name=web`, header);
   }, []);
 
   // console.log("patientsData: ", patientsData);
@@ -110,97 +95,24 @@ const PatientsTable = ({ type }) => {
           <div className="w-full xl:w-auto flex items-center mt-3 xl:mt-0">
             {/* right single block start */}
             <div className="intro-x dropdown sm:mr-6">
-              <div
-                className="btn btn-primary dropdown-toggle notification cursor-pointer"
-                role="button"
-                aria-expanded="false"
-                data-tw-toggle="dropdown"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
-                  />
-                </svg>
-              </div>
-              <div className="notification-content pt-2 dropdown-menu pb-2">
-                <div className="notification-content__box dropdown-content">
-                  <div className="notification-content__title">Requests</div>
-                  {requestsData.map((curElem) => (
-                    <div
-                      className="relative flex items-center"
-                      key={curElem.id}
-                    >
-                      <div className="w-12 h-12 flex-none image-fit mr-5">
-                        <img
-                          alt="Midone - HTML Admin Template"
-                          className="rounded-full"
-                          src="../dist/images/profile-15.jpg"
-                        />
-                      </div>
-                      <div className="overflow-hidden flex items-center pr-1">
-                        <div className="flex flex-col mr-6">
-                          <a href="#" className="font-medium truncate mb-1">
-                            {curElem.name}
-                          </a>
-                          {/* <div className="text-xs text-slate-400 whitespace-nowrap">
-                            28 Minutes ago
-                          </div> */}
-                        </div>
-                        <button
-                          type="button"
-                          className="btn btn-primary w-34 mr-2 p-1"
-                          fdprocessedid="rzq8ho"
-                          onClick={requestAcceptHandler}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M4.5 12.75l6 6 9-13.5"
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          type="button"
-                          className="btn w-34 p-1"
-                          fdprocessedid="rzq8ho"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <a href="/patient-requests">
+                <button className="btn btn-primary shadow-md">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+                    />
+                  </svg>
+                </button>
+              </a>
             </div>
             {/* right single block end */}
 
@@ -272,7 +184,7 @@ const PatientsTable = ({ type }) => {
                 return (
                   <tr className="intro-x" key={curElem.id}>
                     <td className="w-40">
-                      <a href="" className="font-medium whitespace-nowrap">
+                      <a href="#" className="font-medium whitespace-nowrap">
                         {curElem.name}
                       </a>
                     </td>
