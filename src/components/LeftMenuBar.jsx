@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
+import { AxiosGet } from "../API";
+import { AppContext } from "../provider";
 
 const LeftMenuBar = () => {
+  const user = useContext(AppContext);
+  const [isDropDown, setIsDropDown] = useState(false);
+  const [hospitalsData, setHospitalsData] = useState([]);
+  const header = {
+    headers: { Authorization: `Bearer ${user.accessToken}` },
+  };
+
+  const getHospitalsData = async (url, headers) => {
+    try {
+      const { data } = await AxiosGet(url, headers);
+      setHospitalsData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const dropDownStyle = {
     display: "block",
   };
 
-  const [isDropDown, setIsDropDown] = useState(false);
-
   const dropDownHandler = () => {
-    console.log("clicked");
+    getHospitalsData(`hospitals`, header);
     setIsDropDown(!isDropDown);
+  };
+
+  const logoutHandler = () => {
+    localStorage.removeItem("accessToken");
   };
 
   return (
@@ -45,7 +65,7 @@ const LeftMenuBar = () => {
           </li>
           <li>
             {/* <a href="" className="side-menu"> */}
-            <div className="side-menu" onClick={dropDownHandler}>
+            <div className="side-menu cursor-pointer" onClick={dropDownHandler}>
               <div className="side-menu__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +92,7 @@ const LeftMenuBar = () => {
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      class="w-6 h-6"
+                      className="w-6 h-6"
                     >
                       <path
                         strokeLinecap="round"
@@ -101,39 +121,16 @@ const LeftMenuBar = () => {
             </div>
             {/* </a> */}
             <ul className="" style={isDropDown ? dropDownStyle : null}>
-              <li>
-                <a
-                  href="side-menu-light-dashboard-overview-1.html"
-                  className="side-menu"
-                >
-                  <div className="side-menu__icon">
-                    <i data-lucide="activity"></i>
-                  </div>
-                  <div className="side-menu__title"> Side Menu </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="simple-menu-light-dashboard-overview-1.html"
-                  className="side-menu"
-                >
-                  <div className="side-menu__icon">
-                    <i data-lucide="activity"></i>
-                  </div>
-                  <div className="side-menu__title"> Simple Menu </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="top-menu-light-dashboard-overview-1.html"
-                  className="side-menu"
-                >
-                  <div className="side-menu__icon">
-                    <i data-lucide="activity"></i>
-                  </div>
-                  <div className="side-menu__title"> Top Menu </div>
-                </a>
-              </li>
+              {hospitalsData.map((curElem) => (
+                <li key={curElem.id}>
+                  <a href={`/hospital/${curElem.id}`} className="side-menu">
+                    <div className="side-menu__icon">
+                      <i data-lucide="activity"></i>
+                    </div>
+                    <div className="side-menu__title">{curElem.name}</div>
+                  </a>
+                </li>
+              ))}
             </ul>
           </li>
           <li>
@@ -183,50 +180,12 @@ const LeftMenuBar = () => {
               <div className="side-menu__title">Machine Logs</div>
             </a>
           </li>
-          <li>
-            <a href="side-menu-light-file-manager.html" className="side-menu">
-              <div className="side-menu__icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 8.25V18a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 18V8.25m-18 0V6a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 6v2.25m-18 0h18M5.25 6h.008v.008H5.25V6zM7.5 6h.008v.008H7.5V6zm2.25 0h.008v.008H9.75V6z"
-                  />
-                </svg>
-              </div>
-              <div className="side-menu__title">Hill Point Clinic</div>
-            </a>
-          </li>
-          <li>
-            <a href="side-menu-light-point-of-sale.html" className="side-menu">
-              <div className="side-menu__icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 8.25V18a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 18V8.25m-18 0V6a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 6v2.25m-18 0h18M5.25 6h.008v.008H5.25V6zM7.5 6h.008v.008H7.5V6zm2.25 0h.008v.008H9.75V6z"
-                  />
-                </svg>
-              </div>
-              <div className="side-menu__title">Cure Hospital</div>
-            </a>
-          </li>
 
           {/* space start */}
+          <li className="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
+          <li className="side-nav__devider my-6"></li>
           <li className="side-nav__devider my-6"></li>
           <li className="side-nav__devider my-6"></li>
           <li className="side-nav__devider my-6"></li>
@@ -264,7 +223,7 @@ const LeftMenuBar = () => {
               <div className="side-menu__title">Settings</div>
             </a>
           </li>
-          <li>
+          <li onClick={logoutHandler}>
             <a href="/sign-in" className="side-menu">
               <div className="side-menu__icon">
                 <svg

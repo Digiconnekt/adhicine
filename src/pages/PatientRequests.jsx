@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { AxiosGet } from "../API";
 import { AppContext } from "../provider";
 
@@ -26,6 +27,8 @@ const PatientRequests = () => {
         { patientId: id },
         header
       );
+      toast.success("Request Accepted Successfully");
+
       console.log(res);
     } catch (error) {
       console.log(error);

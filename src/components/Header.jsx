@@ -200,7 +200,7 @@ const Header = () => {
                 src={user.profilePhotoUrl}
               />
             </div>
-            <div className="dropdown-menu w-56">
+            {/* <div className="dropdown-menu w-56">
               <ul className="dropdown-content bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
                 <li className="p-2">
                   <div className="font-medium">{user.name}</div>
@@ -315,9 +315,17 @@ const Header = () => {
                   </a>
                 </li>
               </ul>
+            </div> */}
+          </div>
+
+          <div className="intro-x  mr-3 sm:mr-6">
+            <div className="font-medium text-white">{user.name}</div>
+            <div className="text-xs text-white/60 mt-0.5 dark:text-slate-500">
+              {user.email}
             </div>
           </div>
-          <div className="intro-x dropdown sm:mr-6">
+
+          {/* <div className="intro-x dropdown sm:mr-6">
             <div
               className="dropdown-toggle notification notification--bullet cursor-pointer"
               role="button"
@@ -469,7 +477,7 @@ const Header = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

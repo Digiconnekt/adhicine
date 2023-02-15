@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AppContext } from "../provider";
 
 const Add = () => {
@@ -11,6 +12,7 @@ const Add = () => {
   };
 
   const [request, setRequest] = useState({
+    name: "",
     email: "",
   });
 
@@ -28,11 +30,15 @@ const Add = () => {
     try {
       const res = await axios.post(
         process.env.REACT_APP_BASE_URL + `invite/${type}?device_name=web`,
-        request,
+        type === "hospital" ? { name: request.name } : { email: request.email },
         header
       );
+      toast.success("Added Successfully");
+
       console.log(res);
     } catch (error) {
+      toast.error(error.response.data.message);
+
       console.log(error);
     }
   };
@@ -40,7 +46,7 @@ const Add = () => {
   const submitRequestData = () => {
     sendDataToAPI();
 
-    console.log(request);
+    // console.log(request);
   };
 
   return (
@@ -56,59 +62,65 @@ const Add = () => {
         <div className="grid grid-cols-12 gap-6 mt-5">
           <div className="intro-y col-span-12 lg:col-span-6">
             <div className="intro-y box p-5">
-              {/* <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500 mb-5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              {type === "hospital" ? (
+                <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500 mb-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
+                  </svg>
+                  <input
+                    id="crud-form-1"
+                    type="text"
+                    className="form-control w-full pl-10"
+                    placeholder={`${type} name`}
+                    name="name"
+                    onChange={onChangeHandler}
                   />
-                </svg>
-                <input
-                  id="crud-form-1"
-                  type="text"
-                  className="form-control w-full pl-10"
-                  placeholder={`${type} name`}
-                />
-              </div> */}
-              <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                >
-                  <path
-                    strokeLinecap="round"
-                    d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25"
-                  />
-                </svg>
+                </div>
+              ) : (
+                <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25"
+                    />
+                  </svg>
 
-                <input
-                  id="crud-form-1"
-                  type="text"
-                  className="form-control w-full pl-10"
-                  placeholder="email"
-                  name="email"
-                  onChange={onChangeHandler}
-                />
-              </div>
+                  <input
+                    id="crud-form-1"
+                    type="text"
+                    className="form-control w-full pl-10"
+                    placeholder="email"
+                    name="email"
+                    onChange={onChangeHandler}
+                  />
+                </div>
+              )}
+
               <div className="text-right mt-5">
                 <button
                   type="button"
-                  className="btn btn-primary w-34"
+                  className="btn btn-primary w-34 capitalize"
                   onClick={submitRequestData}
                 >
-                  Send Request
+                  Add {type}
                 </button>
               </div>
             </div>

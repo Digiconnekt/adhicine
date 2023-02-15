@@ -52,7 +52,7 @@ const HospitalDetails = () => {
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12">
             <div className="grid grid-cols-12 gap-6">
-              {/* 3 blocks start */}
+              {/* 2 blocks start */}
               <div className="col-span-12 mt-8">
                 <div className="grid grid-cols-12 gap-6 mt-5">
                   <div
@@ -78,7 +78,7 @@ const HospitalDetails = () => {
                               Total Doctors
                             </div>
                             <div className="text-3xl font-medium leading-8 mt-3">
-                              25
+                              00
                             </div>
                           </div>
                           <img
@@ -112,7 +112,7 @@ const HospitalDetails = () => {
                               Total Patients
                             </div>
                             <div className="text-3xl font-medium leading-8  mt-3">
-                              33
+                              00
                             </div>
                           </div>
                           <img
@@ -125,7 +125,7 @@ const HospitalDetails = () => {
                   </div>
                 </div>
               </div>
-              {/* 3 blocks end */}
+              {/* 2 blocks end */}
 
               {/* table start */}
               {type === "doctor" ? (

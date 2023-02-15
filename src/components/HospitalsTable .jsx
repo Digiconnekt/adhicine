@@ -29,7 +29,7 @@ const HospitalsTable = ({ type }) => {
     getHospitalsData(`hospitals`, header);
   }, []);
 
-  console.log("hospitalsData: ", hospitalsData);
+  // console.log("hospitalsData: ", hospitalsData);
 
   return (
     <>
@@ -477,151 +477,140 @@ const HospitalsTable = ({ type }) => {
           <table className="table table-report sm:mt-2">
             <thead>
               <tr>
-                <th className="whitespace-nowrap">{type} Name</th>
+                <th className="whitespace-nowrap">Hospital Name</th>
                 <th className="whitespace-nowrap">Email</th>
                 <th className="text-center whitespace-nowrap">Contact</th>
-                <th className="text-center whitespace-nowrap">Total Doctors</th>
-                <th className="text-center whitespace-nowrap">
-                  Total Patients
-                </th>
-                <th className="text-center whitespace-nowrap">Actions</th>
+                {/* <th className="text-center whitespace-nowrap">Actions</th> */}
               </tr>
             </thead>
             <tbody>
-              <tr className="intro-x">
-                <td className="w-40">
-                  <a
-                    href="/hospital/1"
-                    className="font-medium whitespace-nowrap"
-                  >
-                    name
-                  </a>
-                  {/* <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                                Sport &amp; Outdoor
-                              </div> */}
-                </td>
-                <td className="w-40">
-                  <a href="" className="font-medium whitespace-nowrap">
-                    email
-                  </a>
-                </td>
-                <td className="text-center">phone</td>
-                <td className="w-40 text-center">401</td>
-                <td className="w-40 text-center">5671</td>
-                <td
-                  className="table-report__action w-56"
-                  style={{ textAlign: "center" }}
-                >
-                  <div className="dropdown">
-                    <button
-                      className="dropdown-toggle btn px-2 box"
-                      aria-expanded="false"
-                      data-tw-toggle="dropdown"
+              {hospitalsData.map((curElem) => (
+                <tr className="intro-x" key={curElem.id}>
+                  <td className="">
+                    <a
+                      href={`/hospital/${curElem.id}`}
+                      className="font-medium whitespace-nowrap capitalize"
                     >
-                      <span className="w-5 h-5 flex items-center justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                    <div className="dropdown-menu w-40">
-                      <ul className="dropdown-content">
-                        <li>
-                          <a href="" className="dropdown-item">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
+                      {curElem.name}
+                    </a>
+                  </td>
+                  <td className="">email</td>
+                  <td className="text-center">phone</td>
+                  {/* <td
+                    className="table-report__action w-56"
+                    style={{ textAlign: "center" }}
+                  >
+                    <div className="dropdown">
+                      <button
+                        className="dropdown-toggle btn px-2 box"
+                        aria-expanded="false"
+                        data-tw-toggle="dropdown"
+                      >
+                        <span className="w-5 h-5 flex items-center justify-center">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              icon-name="printer"
-                              data-lucide="printer"
-                              className="lucide lucide-printer w-4 h-4 mr-2"
-                            >
-                              <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                              <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path>
-                              <rect x="6" y="14" width="12" height="8"></rect>
-                            </svg>
-                            Print
-                          </a>
-                        </li>
-                        <li>
-                          <a href="" className="dropdown-item">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              icon-name="file-text"
-                              data-lucide="file-text"
-                              className="lucide lucide-file-text w-4 h-4 mr-2"
-                            >
-                              <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
-                              <polyline points="14 2 14 8 20 8"></polyline>
-                              <line x1="16" y1="13" x2="8" y2="13"></line>
-                              <line x1="16" y1="17" x2="8" y2="17"></line>
-                              <line x1="10" y1="9" x2="8" y2="9"></line>
-                            </svg>
-                            Export to Excel
-                          </a>
-                        </li>
-                        <li>
-                          <a href="" className="dropdown-item">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              icon-name="file-text"
-                              data-lucide="file-text"
-                              className="lucide lucide-file-text w-4 h-4 mr-2"
-                            >
-                              <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
-                              <polyline points="14 2 14 8 20 8"></polyline>
-                              <line x1="16" y1="13" x2="8" y2="13"></line>
-                              <line x1="16" y1="17" x2="8" y2="17"></line>
-                              <line x1="10" y1="9" x2="8" y2="9"></line>
-                            </svg>
-                            Export to PDF
-                          </a>
-                        </li>
-                      </ul>
+                              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                      <div className="dropdown-menu w-40">
+                        <ul className="dropdown-content">
+                          <li>
+                            <a href="" className="dropdown-item">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                icon-name="printer"
+                                data-lucide="printer"
+                                className="lucide lucide-printer w-4 h-4 mr-2"
+                              >
+                                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path>
+                                <rect x="6" y="14" width="12" height="8"></rect>
+                              </svg>
+                              Print
+                            </a>
+                          </li>
+                          <li>
+                            <a href="" className="dropdown-item">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                icon-name="file-text"
+                                data-lucide="file-text"
+                                className="lucide lucide-file-text w-4 h-4 mr-2"
+                              >
+                                <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <line x1="10" y1="9" x2="8" y2="9"></line>
+                              </svg>
+                              Export to Excel
+                            </a>
+                          </li>
+                          <li>
+                            <a href="" className="dropdown-item">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                icon-name="file-text"
+                                data-lucide="file-text"
+                                className="lucide lucide-file-text w-4 h-4 mr-2"
+                              >
+                                <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <line x1="10" y1="9" x2="8" y2="9"></line>
+                              </svg>
+                              Export to PDF
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
+                  </td> */}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
         {/* table end */}
 
         {/* pagination start */}
-        <div className="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
+        {/* <div className="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
           <nav className="w-full sm:w-auto sm:mr-auto">
             <ul className="pagination">
               <li className="page-item">
@@ -739,7 +728,7 @@ const HospitalsTable = ({ type }) => {
             <option>35</option>
             <option>50</option>
           </select>
-        </div>
+        </div> */}
         {/* pagination end */}
       </div>
     </>

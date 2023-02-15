@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
@@ -19,7 +19,6 @@ import PatientRequests from "./pages/PatientRequests";
 import HospitalDetails from "./pages/HospitalDetails";
 
 const App = () => {
-  const location = window.location.pathname;
   const user = useContext(AppContext);
 
   return (

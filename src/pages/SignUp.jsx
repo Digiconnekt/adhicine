@@ -40,7 +40,7 @@ const SignUp = () => {
           email: values.email,
           password: values.password,
           device_name: "web",
-          userType: values.userType,
+          role: values.userType,
         });
 
         console.log("🚀 ~ file: SignUp.jsx:24 ~ SignUp ~ values̥", values̥);
