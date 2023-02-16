@@ -1,9 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { AxiosGet } from "../API";
 import HospitalDoctorsTable from "../components/HospitalDoctorsTable";
 import HospitalPatientsTable from "../components/HospitalPatientsTable";
 import { AppContext } from "../provider";
 
 const HospitalDetails = () => {
+  const { id } = useParams();
   const user = useContext(AppContext);
   const [type, setType] = useState("doctor");
 
@@ -25,6 +28,46 @@ const HospitalDetails = () => {
     borderBottomLeftRadius: "0px",
     borderBottomRightRadius: "0px",
   };
+
+  const header = {
+    headers: { Authorization: `Bearer ${user.accessToken}` },
+  };
+
+  // doctor
+  const [hospitalDoctorsData, setHospitalDoctorsData] = useState([]);
+
+  const getHospitalDoctorsData = async (url, headers) => {
+    try {
+      const { data } = await AxiosGet(url, headers);
+      setHospitalDoctorsData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // patient
+  const [hospitalPatientsData, setHospitalPatientsData] = useState([]);
+
+  const getHospitalPatientsData = async (url, headers) => {
+    try {
+      const { data } = await AxiosGet(url, headers);
+      setHospitalPatientsData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getHospitalDoctorsData(`doctors?device_name=web&hospital_id=${id}`, header);
+    getHospitalPatientsData(
+      `patients?device_name=web&hospital_id=${id}`,
+      header
+    );
+  }, []);
+
+  // console.log("hospitalDoctorsData: ", hospitalDoctorsData);
+
+  // console.log("hospitalPatientsData: ", hospitalPatientsData);
 
   return (
     <>
@@ -78,7 +121,7 @@ const HospitalDetails = () => {
                               Total Doctors
                             </div>
                             <div className="text-3xl font-medium leading-8 mt-3">
-                              00
+                              {hospitalDoctorsData.length}
                             </div>
                           </div>
                           <img
@@ -112,7 +155,7 @@ const HospitalDetails = () => {
                               Total Patients
                             </div>
                             <div className="text-3xl font-medium leading-8  mt-3">
-                              00
+                              {hospitalPatientsData.length}
                             </div>
                           </div>
                           <img

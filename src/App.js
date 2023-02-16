@@ -17,6 +17,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import { AppContext } from "./provider";
 import PatientRequests from "./pages/PatientRequests";
 import HospitalDetails from "./pages/HospitalDetails";
+import HospitalAdd from "./pages/HospitalAdd";
+import Settings from "./pages/Settings";
 
 const App = () => {
   const user = useContext(AppContext);
@@ -39,6 +41,8 @@ const App = () => {
           <Route path="/machine-logs" element={<MachineLogs />} />
           <Route path="/patient-requests" element={<PatientRequests />} />
           <Route path="/hospital/:id" element={<HospitalDetails />} />
+          <Route path="/hospital/:id/add/:type" element={<HospitalAdd />} />
+          <Route path="/account" element={<Settings />} />
         </Route>
 
         <Route path="*" element={<Error />} />

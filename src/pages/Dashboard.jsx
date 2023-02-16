@@ -24,6 +24,8 @@ const Dashboard = () => {
           <NavLink to="/machine-logs" />
           <NavLink to="/patient-requests" />
           <NavLink to="/hospital/:id" />
+          <NavLink to="/hospital/:id/add/:type" />
+          <NavLink to="/account" />
 
           <Outlet />
         </div>

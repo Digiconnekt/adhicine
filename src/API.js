@@ -10,6 +10,7 @@ export const AxiosPost = (url, data) => {
       const userData = {
         name: res.data.data.name,
         email: res.data.data.email,
+        phone: res.data.data.phone,
         accessToken: res.data.data.accessToken,
         profilePhotoUrl: res.data.data.profilePhotoUrl,
       };
@@ -17,6 +18,7 @@ export const AxiosPost = (url, data) => {
       if (userData.accessToken) {
         localStorage.setItem("name", userData.name);
         localStorage.setItem("email", userData.email);
+        localStorage.setItem("phone", userData.phone);
         localStorage.setItem("accessToken", userData.accessToken);
         localStorage.setItem("profilePhotoUrl", userData.profilePhotoUrl);
         window.location.href = "/";

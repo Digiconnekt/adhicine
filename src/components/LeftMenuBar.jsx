@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { AxiosGet } from "../API";
 import { AppContext } from "../provider";
 
@@ -33,12 +34,19 @@ const LeftMenuBar = () => {
     localStorage.removeItem("accessToken");
   };
 
+  const location = window.location.pathname;
+
   return (
     <>
       <nav className="side-nav">
         <ul>
           <li>
-            <a href="/" className="side-menu side-menu--active">
+            <a
+              href="/"
+              className={`${
+                location === "/" ? "side-menu side-menu--active" : "side-menu"
+              } `}
+            >
               <div className="side-menu__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +72,6 @@ const LeftMenuBar = () => {
             </a>
           </li>
           <li>
-            {/* <a href="" className="side-menu"> */}
             <div className="side-menu cursor-pointer" onClick={dropDownHandler}>
               <div className="side-menu__icon">
                 <svg
@@ -119,7 +126,6 @@ const LeftMenuBar = () => {
                 </div>
               </div>
             </div>
-            {/* </a> */}
             <ul className="" style={isDropDown ? dropDownStyle : null}>
               {hospitalsData.map((curElem) => (
                 <li key={curElem.id}>
@@ -134,7 +140,14 @@ const LeftMenuBar = () => {
             </ul>
           </li>
           <li>
-            <a href="/report" className="side-menu">
+            <a
+              href="/report"
+              className={`${
+                location === "/report"
+                  ? "side-menu side-menu--active"
+                  : "side-menu"
+              } `}
+            >
               <div className="side-menu__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +173,14 @@ const LeftMenuBar = () => {
             </a>
           </li>
           <li>
-            <a href="/machine-logs" className="side-menu">
+            <a
+              href="/machine-logs"
+              className={`${
+                location === "/machine-logs"
+                  ? "side-menu side-menu--active"
+                  : "side-menu"
+              } `}
+            >
               <div className="side-menu__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -181,24 +201,15 @@ const LeftMenuBar = () => {
             </a>
           </li>
 
-          {/* space start */}
-          <li className="side-nav__devider my-6"></li>
-          <li className="side-nav__devider my-6"></li>
-          <li className="side-nav__devider my-6"></li>
-          <li className="side-nav__devider my-6"></li>
-          <li className="side-nav__devider my-6"></li>
-          <li className="side-nav__devider my-6"></li>
-          <li className="side-nav__devider my-6"></li>
-          <li className="side-nav__devider my-6"></li>
-          {/* space end */}
-
           <li>
-            <a href="side-menu-light-chat.html" className="side-menu">
-              <div className="side-menu__title">ACCOUNT</div>
-            </a>
-          </li>
-          <li>
-            <a href="side-menu-light-chat.html" className="side-menu">
+            <a
+              href="/account"
+              className={`${
+                location === "/account"
+                  ? "side-menu side-menu--active"
+                  : "side-menu"
+              } `}
+            >
               <div className="side-menu__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

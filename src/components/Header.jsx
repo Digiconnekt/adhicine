@@ -19,7 +19,7 @@ const Header = () => {
             <img
               alt="Midone - HTML Admin Template"
               className="logo__image w-6"
-              src="../dist/images/logo.svg"
+              src="../../../dist/images/logo.svg"
             />
             <span className="logo__text text-white text-lg ml-3">Adhicine</span>
           </NavLink>

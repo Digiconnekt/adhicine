@@ -1,12 +1,37 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AxiosGet } from "../API";
+import { AppContext } from "../provider";
 
 const HospitalDoctorsTable = ({ type }) => {
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const user = useContext(AppContext);
 
+  const navigate = useNavigate();
   const redirect = () => {
-    navigate(`/add/${type}`);
+    navigate(`/hospital/${id}/add/${type}`);
   };
+
+  const header = {
+    headers: { Authorization: `Bearer ${user.accessToken}` },
+  };
+
+  const [hospitalDoctorsData, setHospitalDoctorsData] = useState([]);
+
+  const getHospitalDoctorsData = async (url, headers) => {
+    try {
+      const { data } = await AxiosGet(url, headers);
+      setHospitalDoctorsData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getHospitalDoctorsData(`doctors?device_name=web&hospital_id=${id}`, header);
+  }, []);
+
+  // console.log("hospitalDoctorsData: ", hospitalDoctorsData);
 
   return (
     <>
@@ -40,413 +65,6 @@ const HospitalDoctorsTable = ({ type }) => {
             Add {type}
           </button>
           {/* add buttun end */}
-
-          {/* search block start */}
-          <div
-            className="hidden md:block mx-auto text-slate-500"
-            style={{ width: "70%", paddingRight: "8px" }}
-          >
-            <div className="relative text-slate-500">
-              <input
-                type="text"
-                className="form-control w-full box pr-10"
-                placeholder="Search..."
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                icon-name="search"
-                className="lucide lucide-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
-                data-lucide="search"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </div>
-          </div>
-          {/* search block end */}
-
-          <div className="w-full xl:w-auto flex items-center mt-3 xl:mt-0">
-            {/* right single block start */}
-            <div className="intro-x dropdown sm:mr-6">
-              <div
-                className="btn btn-primary dropdown-toggle notification cursor-pointer"
-                role="button"
-                aria-expanded="false"
-                data-tw-toggle="dropdown"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
-                  />
-                </svg>
-              </div>
-              <div className="notification-content pt-2 dropdown-menu pb-2">
-                <div className="notification-content__box dropdown-content">
-                  <div className="notification-content__title">Requests</div>
-                  <div className="cursor-pointer relative flex items-center">
-                    <div className="w-12 h-12 flex-none image-fit mr-5">
-                      <img
-                        alt="Midone - HTML Admin Template"
-                        className="rounded-full"
-                        src="../dist/images/profile-15.jpg"
-                      />
-                    </div>
-                    <div className="overflow-hidden flex items-center pr-1">
-                      <div className="flex flex-col mr-6">
-                        <a href="#" className="font-medium truncate mb-1">
-                          Christian Bale
-                        </a>
-                        <div className="text-xs text-slate-400 whitespace-nowrap">
-                          28 Minutes ago
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn btn-primary w-34 mr-2 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        type="button"
-                        className="btn w-34 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="cursor-pointer relative flex items-center mt-5">
-                    <div className="w-12 h-12 flex-none image-fit mr-5">
-                      <img
-                        alt="Midone - HTML Admin Template"
-                        className="rounded-full"
-                        src="../dist/images/profile-15.jpg"
-                      />
-                    </div>
-                    <div className="overflow-hidden flex items-center pr-1">
-                      <div className="flex flex-col mr-6">
-                        <a href="#" className="font-medium truncate mb-1">
-                          Christian Bale
-                        </a>
-                        <div className="text-xs text-slate-400 whitespace-nowrap">
-                          28 Minutes ago
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn btn-primary w-34 mr-2 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        type="button"
-                        className="btn w-34 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="cursor-pointer relative flex items-center mt-5">
-                    <div className="w-12 h-12 flex-none image-fit mr-5">
-                      <img
-                        alt="Midone - HTML Admin Template"
-                        className="rounded-full"
-                        src="../dist/images/profile-15.jpg"
-                      />
-                    </div>
-                    <div className="overflow-hidden flex items-center pr-1">
-                      <div className="flex flex-col mr-6">
-                        <a href="#" className="font-medium truncate mb-1">
-                          Christian Bale
-                        </a>
-                        <div className="text-xs text-slate-400 whitespace-nowrap">
-                          28 Minutes ago
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn btn-primary w-34 mr-2 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        type="button"
-                        className="btn w-34 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="cursor-pointer relative flex items-center mt-5">
-                    <div className="w-12 h-12 flex-none image-fit mr-5">
-                      <img
-                        alt="Midone - HTML Admin Template"
-                        className="rounded-full"
-                        src="../dist/images/profile-15.jpg"
-                      />
-                    </div>
-                    <div className="overflow-hidden flex items-center pr-1">
-                      <div className="flex flex-col mr-6">
-                        <a href="#" className="font-medium truncate mb-1">
-                          Christian Bale
-                        </a>
-                        <div className="text-xs text-slate-400 whitespace-nowrap">
-                          28 Minutes ago
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn btn-primary w-34 mr-2 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        type="button"
-                        className="btn w-34 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="cursor-pointer relative flex items-center mt-5">
-                    <div className="w-12 h-12 flex-none image-fit mr-5">
-                      <img
-                        alt="Midone - HTML Admin Template"
-                        className="rounded-full"
-                        src="../dist/images/profile-15.jpg"
-                      />
-                    </div>
-                    <div className="overflow-hidden flex items-center pr-1">
-                      <div className="flex flex-col mr-6">
-                        <a href="#" className="font-medium truncate mb-1">
-                          Christian Bale
-                        </a>
-                        <div className="text-xs text-slate-400 whitespace-nowrap">
-                          28 Minutes ago
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn btn-primary w-34 mr-2 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        type="button"
-                        className="btn w-34 p-1"
-                        fdprocessedid="rzq8ho"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* right single block end */}
-
-            {/* right 2blocks start */}
-            <button
-              className="btn btn-secondary shadow-md"
-              style={{
-                borderTopRightRadius: "0px",
-                borderBottomRightRadius: "0px",
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-                />
-              </svg>
-            </button>
-            <button
-              className="btn btn-primary shadow-md"
-              style={{
-                borderTopLeftRadius: "0px",
-                borderBottomLeftRadius: "0px",
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                />
-              </svg>
-            </button>
-          </div>
-          {/* right 2blocks end */}
         </div>
 
         {/* table start */}
@@ -457,145 +75,135 @@ const HospitalDoctorsTable = ({ type }) => {
                 <th className="whitespace-nowrap">{type} Name</th>
                 <th className="whitespace-nowrap">Email</th>
                 <th className="text-center whitespace-nowrap">Contact</th>
-                <th className="text-center whitespace-nowrap">Total Doctors</th>
-                <th className="text-center whitespace-nowrap">
-                  Total Patients
-                </th>
+
                 <th className="text-center whitespace-nowrap">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="intro-x">
-                <td className="w-40">
-                  <a href="" className="font-medium whitespace-nowrap">
-                    name
-                  </a>
-                  {/* <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                              Sport &amp; Outdoor
-                            </div> */}
-                </td>
-                <td className="w-40">
-                  <a href="" className="font-medium whitespace-nowrap">
-                    email
-                  </a>
-                </td>
-                <td className="text-center">phone</td>
-                <td className="w-40 text-center">401</td>
-                <td className="w-40 text-center">5671</td>
-                <td
-                  className="table-report__action w-56"
-                  style={{ textAlign: "center" }}
-                >
-                  <div className="dropdown">
-                    <button
-                      className="dropdown-toggle btn px-2 box"
-                      aria-expanded="false"
-                      data-tw-toggle="dropdown"
-                    >
-                      <span className="w-5 h-5 flex items-center justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                    <div className="dropdown-menu w-40">
-                      <ul className="dropdown-content">
-                        <li>
-                          <a href="" className="dropdown-item">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
+              {hospitalDoctorsData.map((curElem) => (
+                <tr className="intro-x" key={curElem.id}>
+                  <td className="">
+                    <a href="#" className="font-medium whitespace-nowrap">
+                      {curElem.name}
+                    </a>
+                  </td>
+                  <td className="">{curElem.email}</td>
+                  <td className="text-center">{curElem.phone}</td>
+                  <td
+                    className="table-report__action w-56"
+                    style={{ textAlign: "center" }}
+                  >
+                    <div className="dropdown">
+                      <button
+                        className="dropdown-toggle btn px-2 box"
+                        aria-expanded="false"
+                        data-tw-toggle="dropdown"
+                      >
+                        <span className="w-5 h-5 flex items-center justify-center">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              icon-name="printer"
-                              data-lucide="printer"
-                              className="lucide lucide-printer w-4 h-4 mr-2"
-                            >
-                              <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                              <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path>
-                              <rect x="6" y="14" width="12" height="8"></rect>
-                            </svg>
-                            Print
-                          </a>
-                        </li>
-                        <li>
-                          <a href="" className="dropdown-item">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              icon-name="file-text"
-                              data-lucide="file-text"
-                              className="lucide lucide-file-text w-4 h-4 mr-2"
-                            >
-                              <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
-                              <polyline points="14 2 14 8 20 8"></polyline>
-                              <line x1="16" y1="13" x2="8" y2="13"></line>
-                              <line x1="16" y1="17" x2="8" y2="17"></line>
-                              <line x1="10" y1="9" x2="8" y2="9"></line>
-                            </svg>
-                            Export to Excel
-                          </a>
-                        </li>
-                        <li>
-                          <a href="" className="dropdown-item">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              icon-name="file-text"
-                              data-lucide="file-text"
-                              className="lucide lucide-file-text w-4 h-4 mr-2"
-                            >
-                              <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
-                              <polyline points="14 2 14 8 20 8"></polyline>
-                              <line x1="16" y1="13" x2="8" y2="13"></line>
-                              <line x1="16" y1="17" x2="8" y2="17"></line>
-                              <line x1="10" y1="9" x2="8" y2="9"></line>
-                            </svg>
-                            Export to PDF
-                          </a>
-                        </li>
-                      </ul>
+                              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                      <div className="dropdown-menu w-40">
+                        <ul className="dropdown-content">
+                          <li>
+                            <a href="" className="dropdown-item">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                icon-name="printer"
+                                data-lucide="printer"
+                                className="lucide lucide-printer w-4 h-4 mr-2"
+                              >
+                                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path>
+                                <rect x="6" y="14" width="12" height="8"></rect>
+                              </svg>
+                              Print
+                            </a>
+                          </li>
+                          <li>
+                            <a href="" className="dropdown-item">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                icon-name="file-text"
+                                data-lucide="file-text"
+                                className="lucide lucide-file-text w-4 h-4 mr-2"
+                              >
+                                <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <line x1="10" y1="9" x2="8" y2="9"></line>
+                              </svg>
+                              Export to Excel
+                            </a>
+                          </li>
+                          <li>
+                            <a href="" className="dropdown-item">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                icon-name="file-text"
+                                data-lucide="file-text"
+                                className="lucide lucide-file-text w-4 h-4 mr-2"
+                              >
+                                <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <line x1="10" y1="9" x2="8" y2="9"></line>
+                              </svg>
+                              Export to PDF
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
         {/* table end */}
 
         {/* pagination start */}
-        <div className="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
+        {/* <div className="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
           <nav className="w-full sm:w-auto sm:mr-auto">
             <ul className="pagination">
               <li className="page-item">
@@ -713,7 +321,7 @@ const HospitalDoctorsTable = ({ type }) => {
             <option>35</option>
             <option>50</option>
           </select>
-        </div>
+        </div> */}
         {/* pagination end */}
       </div>
     </>

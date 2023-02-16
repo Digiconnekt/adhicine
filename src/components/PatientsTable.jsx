@@ -35,7 +35,10 @@ const PatientsTable = ({ type }) => {
             Patients
           </h2>
         </div>
-        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+        <div
+          className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2"
+          style={{ justifyContent: "space-between" }}
+        >
           {/* add buttun start */}
           <button
             className="btn btn-primary shadow-md mr-2 capitalize"
@@ -61,7 +64,7 @@ const PatientsTable = ({ type }) => {
           {/* add buttun end */}
 
           {/* search block start */}
-          <div
+          {/* <div
             className="hidden md:block mx-auto text-slate-500"
             style={{ width: "70%", paddingRight: "8px" }}
           >
@@ -89,7 +92,7 @@ const PatientsTable = ({ type }) => {
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
             </div>
-          </div>
+          </div> */}
           {/* search block end */}
 
           <div className="w-full xl:w-auto flex items-center mt-3 xl:mt-0">
@@ -117,7 +120,7 @@ const PatientsTable = ({ type }) => {
             {/* right single block end */}
 
             {/* right 2blocks start */}
-            <button
+            {/* <button
               className="btn btn-secondary shadow-md"
               style={{
                 borderTopRightRadius: "0px",
@@ -160,7 +163,7 @@ const PatientsTable = ({ type }) => {
                   d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                 />
               </svg>
-            </button>
+            </button> */}
           </div>
           {/* right 2blocks end */}
         </div>
@@ -315,7 +318,7 @@ const PatientsTable = ({ type }) => {
         {/* table end */}
 
         {/* pagination start */}
-        <div className="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
+        {/* <div className="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
           <nav className="w-full sm:w-auto sm:mr-auto">
             <ul className="pagination">
               <li className="page-item">
@@ -433,7 +436,7 @@ const PatientsTable = ({ type }) => {
             <option>35</option>
             <option>50</option>
           </select>
-        </div>
+        </div> */}
         {/* pagination end */}
       </div>
     </>
