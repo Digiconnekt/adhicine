@@ -84,11 +84,13 @@ const HospitalsTable = ({ type }) => {
                       href={`/hospital/${curElem.id}`}
                       className="font-medium whitespace-nowrap capitalize"
                     >
-                      {curElem.name}
+                      {!curElem.name ? "NA" : curElem.name}
                     </a>
                   </td>
-                  <td className="">email</td>
-                  <td className="text-center">phone</td>
+                  <td className="">{!curElem.email ? "NA" : curElem.email}</td>
+                  <td className="text-center">
+                    {!curElem.phone ? "NA" : curElem.phone}
+                  </td>
                   {/* <td
                     className="table-report__action w-56"
                     style={{ textAlign: "center" }}

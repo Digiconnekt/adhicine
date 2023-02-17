@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AxiosGet } from "../API";
 import { AppContext } from "../provider";
 import DoctorsTable from "./DoctorsTable ";
 import HospitalsTable from "./HospitalsTable ";
@@ -7,6 +8,55 @@ import PatientsTable from "./PatientsTable";
 const DashboardContent = () => {
   const user = useContext(AppContext);
   const [type, setType] = useState("hospital");
+
+  const header = {
+    headers: { Authorization: `Bearer ${user.accessToken}` },
+  };
+
+  // hospitals data
+  const [hospitalsData, setHospitalsData] = useState([]);
+  const getHospitalsData = async (url, headers) => {
+    try {
+      const { data } = await AxiosGet(url, headers);
+      setHospitalsData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // doctors data
+  const [doctorsData, setDoctorsData] = useState([]);
+
+  const getDoctorsData = async (url, headers) => {
+    try {
+      const { data } = await AxiosGet(url, headers);
+      setDoctorsData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // patients data
+  const [patientsData, setPatientsData] = useState([]);
+
+  const getPatientsData = async (url, headers) => {
+    try {
+      const { data } = await AxiosGet(url, headers);
+      setPatientsData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getHospitalsData(`hospitals?device_name=web`, header);
+    getDoctorsData(`doctors?device_name=web`, header);
+    getPatientsData(`patients?device_name=web`, header);
+  }, []);
+
+  // console.log("hospitalsData: ", hospitalsData);
+  // console.log("doctorsData: ", doctorsData);
+  // console.log("patientsData: ", patientsData);
 
   const typeClick = (name) => {
     setType(name);
@@ -81,7 +131,7 @@ const DashboardContent = () => {
                               Total Hospitals
                             </div>
                             <div className="text-3xl font-medium leading-8 mt-3">
-                              23
+                              {hospitalsData.length}
                             </div>
                           </div>
                           <img
@@ -115,7 +165,7 @@ const DashboardContent = () => {
                               Total Doctors
                             </div>
                             <div className="text-3xl font-medium leading-8 mt-3">
-                              25
+                              {doctorsData.length}
                             </div>
                           </div>
                           <img
@@ -149,7 +199,7 @@ const DashboardContent = () => {
                               Total Patients
                             </div>
                             <div className="text-3xl font-medium leading-8  mt-3">
-                              33
+                              {patientsData.length}
                             </div>
                           </div>
                           <img

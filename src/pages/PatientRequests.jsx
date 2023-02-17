@@ -62,11 +62,11 @@ const PatientRequests = () => {
                     />
                   </div>
                   <div className="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                    <a href="" className="font-medium">
-                      {curElem.name}
+                    <a href="#" className="font-medium capitalize">
+                      {!curElem.name ? "NA" : curElem.name}
                     </a>
                     <div className="text-slate-500 text-xs mt-0.5">
-                      {curElem.email}
+                      {!curElem.email ? "NA" : curElem.email}
                     </div>
                   </div>
                   <div className="flex mt-4 lg:mt-0">
@@ -76,9 +76,9 @@ const PatientRequests = () => {
                     >
                       Accept
                     </button>
-                    <button className="btn btn-outline-secondary py-1 px-2">
+                    {/* <button className="btn btn-outline-secondary py-1 px-2">
                       Reject
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>

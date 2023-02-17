@@ -172,7 +172,7 @@ const LeftMenuBar = () => {
               </div>
             </a>
           </li>
-          <li>
+          {/* <li>
             <a
               href="/machine-logs"
               className={`${
@@ -199,7 +199,7 @@ const LeftMenuBar = () => {
               </div>
               <div className="side-menu__title">Machine Logs</div>
             </a>
-          </li>
+          </li> */}
 
           <li>
             <a

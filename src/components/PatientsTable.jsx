@@ -6,10 +6,10 @@ import { AppContext } from "../provider";
 const PatientsTable = ({ type }) => {
   const user = useContext(AppContext);
   const navigate = useNavigate();
-  const [patientsData, setPatientsData] = useState([]);
   const header = {
     headers: { Authorization: `Bearer ${user.accessToken}` },
   };
+  const [patientsData, setPatientsData] = useState([]);
 
   const getPatientsData = async (url, headers) => {
     try {
@@ -179,26 +179,26 @@ const PatientsTable = ({ type }) => {
                 <th className="text-center whitespace-nowrap">
                   Total Medicines
                 </th>
-                <th className="text-center whitespace-nowrap">Actions</th>
+                {/* <th className="text-center whitespace-nowrap">Actions</th> */}
               </tr>
             </thead>
             <tbody>
               {patientsData.map((curElem) => {
                 return (
                   <tr className="intro-x" key={curElem.id}>
-                    <td className="w-40">
+                    <td className="">
                       <a href="#" className="font-medium whitespace-nowrap">
-                        {curElem.name}
+                        {!curElem.name ? "NA" : curElem.name}
                       </a>
                     </td>
-                    <td className="w-40">
+                    <td className="">
                       <a href="" className="font-medium whitespace-nowrap">
-                        {curElem.email}
+                        {!curElem.email ? "NA" : curElem.email}
                       </a>
                     </td>
                     <td className="text-center">00</td>
-                    <td className="w-40 text-center">00</td>
-                    <td
+                    <td className="text-center">00</td>
+                    {/* <td
                       className="table-report__action w-56"
                       style={{ textAlign: "center" }}
                     >
@@ -308,7 +308,7 @@ const PatientsTable = ({ type }) => {
                           </ul>
                         </div>
                       </div>
-                    </td>
+                    </td> */}
                   </tr>
                 );
               })}

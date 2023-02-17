@@ -30,7 +30,7 @@ const HospitalPatientsTable = ({ type }) => {
     getPatientsData(`patients?device_name=web&hospital_id=${id}`, header);
   }, []);
 
-  console.log("hospitalPatientsData: ", hospitalPatientsData);
+  // console.log("hospitalPatientsData: ", hospitalPatientsData);
 
   return (
     <>
@@ -138,26 +138,29 @@ const HospitalPatientsTable = ({ type }) => {
                 <th className="text-center whitespace-nowrap">
                   Total Medicines
                 </th>
-                <th className="text-center whitespace-nowrap">Actions</th>
+                {/* <th className="text-center whitespace-nowrap">Actions</th> */}
               </tr>
             </thead>
             <tbody>
               {hospitalPatientsData.map((curElem) => {
                 return (
                   <tr className="intro-x" key={curElem.id}>
-                    <td className="w-40">
-                      <a href="#" className="font-medium whitespace-nowrap">
-                        {curElem.name}
+                    <td className="">
+                      <a
+                        href="#"
+                        className="font-medium whitespace-nowrap capitalize"
+                      >
+                        {!curElem.name ? "NA" : curElem.name}
                       </a>
                     </td>
-                    <td className="w-40">
+                    <td className="">
                       <a href="" className="font-medium whitespace-nowrap">
-                        {curElem.email}
+                        {!curElem.email ? "NA" : curElem.email}
                       </a>
                     </td>
                     <td className="text-center">00</td>
-                    <td className="w-40 text-center">00</td>
-                    <td
+                    <td className="text-center">00</td>
+                    {/* <td
                       className="table-report__action w-56"
                       style={{ textAlign: "center" }}
                     >
@@ -267,7 +270,7 @@ const HospitalPatientsTable = ({ type }) => {
                           </ul>
                         </div>
                       </div>
-                    </td>
+                    </td> */}
                   </tr>
                 );
               })}

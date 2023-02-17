@@ -75,8 +75,7 @@ const HospitalDoctorsTable = ({ type }) => {
                 <th className="whitespace-nowrap">{type} Name</th>
                 <th className="whitespace-nowrap">Email</th>
                 <th className="text-center whitespace-nowrap">Contact</th>
-
-                <th className="text-center whitespace-nowrap">Actions</th>
+                {/* <th className="text-center whitespace-nowrap">Actions</th> */}
               </tr>
             </thead>
             <tbody>
@@ -84,12 +83,14 @@ const HospitalDoctorsTable = ({ type }) => {
                 <tr className="intro-x" key={curElem.id}>
                   <td className="">
                     <a href="#" className="font-medium whitespace-nowrap">
-                      {curElem.name}
+                      {!curElem.name ? "NA" : curElem.name}
                     </a>
                   </td>
-                  <td className="">{curElem.email}</td>
-                  <td className="text-center">{curElem.phone}</td>
-                  <td
+                  <td className="">{!curElem.email ? "NA" : curElem.email}</td>
+                  <td className="text-center">
+                    {!curElem.phone ? "NA" : curElem.phone}
+                  </td>
+                  {/* <td
                     className="table-report__action w-56"
                     style={{ textAlign: "center" }}
                   >
@@ -194,7 +195,7 @@ const HospitalDoctorsTable = ({ type }) => {
                         </ul>
                       </div>
                     </div>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
