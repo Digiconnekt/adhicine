@@ -19,6 +19,7 @@ import PatientRequests from "./pages/PatientRequests";
 import HospitalDetails from "./pages/HospitalDetails";
 import HospitalAdd from "./pages/HospitalAdd";
 import Settings from "./pages/Settings";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   const user = useContext(AppContext);
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         <Route path="/" element={<Dashboard />}>
           <Route path="/" element={<DashboardContent />} />
