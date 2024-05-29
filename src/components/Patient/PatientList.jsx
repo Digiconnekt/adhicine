@@ -8,52 +8,15 @@ import { Link, useNavigate } from "react-router-dom";
 import FilterPatient from "./Filter";
 import { useSelector } from "react-redux";
 
-import useAllPatients from "../../apis/patient/patients";
-
-const PatientList = ({ reFetchCard }) => {
+const PatientList = ({
+  dataAllPatients,
+  isLoadingAllPatients,
+  errorAllPatients,
+}) => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
-  const fakePatientData = {
-    data: [
-      {
-        id: "1",
-        name: "Patient 1",
-        email: "patient1@gmail.com",
-        contact: "896595968",
-        doctor_name: "Doctor 1",
-        medicines: "95",
-        status: true,
-      },
-      {
-        id: "2",
-        name: "Patient 2",
-        email: "patient2@gmail.com",
-        contact: "896595968",
-        doctor_name: "Doctor 2",
-        medicines: "95",
-        status: false,
-      },
-    ],
-  };
-
-  const {
-    allPatientsReq,
-    data: dataAllPatients,
-    isLoading: isLoadingAllPatients,
-    reFetch: reFetchAllPatients,
-  } = useAllPatients();
-
   const [showFilter, setShowFilter] = useState(false);
-
-  useEffect(() => {
-    allPatientsReq();
-  }, []);
-
-  const reFetch = () => {
-    reFetchAllPatients();
-    reFetchCard();
-  };
 
   return (
     <>
@@ -62,21 +25,19 @@ const PatientList = ({ reFetchCard }) => {
           <div className="w-56 text-slate-500">
             <h2 className="text-lg font-semibold">
               Total Patients -{" "}
-              {isLoadingAllPatients ? (
-                <>loading...</>
-              ) : (
-                dataAllPatients?.data?.length
-              )}
+              {isLoadingAllPatients ? <>loading...</> : dataAllPatients?.length}
             </h2>
           </div>
           <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
-            <Button
-              variant="primary"
-              className="mr-2 shadow-md"
-              onClick={() => navigate("/patient/create")}
-            >
-              Add New Patient
-            </Button>
+            {user?.role === "doctor" && (
+              <Button
+                variant="primary"
+                className="mr-2 shadow-md"
+                onClick={() => navigate("/patient/create")}
+              >
+                Add New Patient
+              </Button>
+            )}
             <Button
               variant="outline-primary"
               onClick={() => setShowFilter(!showFilter)}
@@ -87,19 +48,21 @@ const PatientList = ({ reFetchCard }) => {
         </div>
 
         <div className="border-b pb-5">
-          {showFilter && (
-            <FilterPatient reFetchAllPatients={reFetchAllPatients} />
-          )}
+          {showFilter && <FilterPatient reFetchAllPatients={""} />}
         </div>
 
         {isLoadingAllPatients ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>
+        ) : errorAllPatients ? (
+          <p className="text-center mt-5 bg-white p-5 text-md text-red-500">
+            failed to load
+          </p>
         ) : (
           <div
             className="mt-8 overflow-auto intro-y lg:overflow-visible sm:mt-0"
             style={{ overflowX: "auto" }}
           >
-            {fakePatientData?.data?.length > 0 && (
+            {dataAllPatients?.length > 0 && (
               <div className="overflow-x-auto">
                 <Table className="border-spacing-y-[10px] border-separate sm:mt-2">
                   <Table.Thead>
@@ -131,7 +94,7 @@ const PatientList = ({ reFetchCard }) => {
                     </Table.Tr>
                   </Table.Thead>
                   <Table.Tbody>
-                    {fakePatientData?.data?.map((patient, i) => (
+                    {dataAllPatients?.map((patient, i) => (
                       <Table.Tr key={i} className="intro-x">
                         <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           <Link
@@ -197,9 +160,9 @@ const PatientList = ({ reFetchCard }) => {
               </div>
             )}
 
-            {dataAllPatients?.data?.length === 0 && (
+            {dataAllPatients?.length === 0 && (
               <p className="text-center mt-5 bg-white p-5 text-md">
-                No Companies Found
+                No Patients Found
               </p>
             )}
           </div>

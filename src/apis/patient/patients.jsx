@@ -19,13 +19,10 @@ const useAllPatients = () => {
           `/patients?device_name=web${query ? `${query}` : ""}`,
           headers
         );
-        setData(res?.data);
-        console.log("all patients res", res);
+        setData(res?.data?.data);
+        // console.log("all patients res", res);
       } catch (error) {
         setError(error?.response?.data);
-        toast.error(
-          error.response.data.message || "Failed to fetch all patients"
-        );
         console.log("all patients error", error);
       } finally {
         setIsLoading(false);

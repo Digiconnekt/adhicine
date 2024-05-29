@@ -14,25 +14,22 @@ const useCreateDoctor = () => {
   const createDoctorReq = async (payload) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post(`/doctor`, payload, headers);
+      const res = await axiosInstance.post(
+        "/register?device_name=web",
+        payload
+      );
 
-      console.log("create doctor res", res);
-
-      if (res.data.status) {
-        setData(res?.data);
-        toast.success(res?.data?.msg || "doctor created successfully");
-      } else {
-        setError(res?.data?.error_msg);
-        toast.error(
-          typeof res?.data?.error_msg === "string"
-            ? res?.data?.error_msg
-            : "Failed to create doctor"
-        );
-      }
+      setData(res?.data?.data);
+      toast.success("Successfully Registered");
+      console.log("register res", res?.data?.data);
     } catch (error) {
       setError(error?.response?.data);
-      toast.error(error.response.data.message || "Failed to create doctor");
-      console.log("create doctor error", error);
+      toast.error(
+        typeof error.response.data.msg === "string"
+          ? error.response.data.msg
+          : "Failed to register"
+      );
+      console.log("register error", error?.response?.data);
     } finally {
       setIsLoading(false);
     }

@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import Lucide from "../../base-components/Lucide";
 
 const index = ({ cards, cardType, setCardType, isLoading }) => {
   return (

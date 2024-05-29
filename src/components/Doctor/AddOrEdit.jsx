@@ -18,10 +18,9 @@ const AddOrEditDoctor = ({
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    contact: "",
-    location: "",
+    phone: "",
     password: "",
-    status: "1",
+    role: "doctor",
   });
 
   useEffect(() => {
@@ -30,10 +29,8 @@ const AddOrEditDoctor = ({
         ...prevData,
         name: inputData?.name || "",
         email: inputData?.email || "",
-        contact: inputData?.contact || "",
-        location: inputData?.location || "",
+        phone: inputData?.phone || "",
         password: inputData?.password || "",
-        status: inputData?.status || "",
       }));
     }
   }, []);
@@ -86,29 +83,16 @@ const AddOrEditDoctor = ({
         />
       </div>
       <div className="mt-3">
-        <FormLabel htmlFor="contact">Contact *</FormLabel>
+        <FormLabel htmlFor="phone">Phone</FormLabel>
         <FormInput
-          id="contact"
+          id="phone"
           type="number"
           className="w-full"
           placeholder="9856985969"
-          name="contact"
-          value={formData.contact}
+          name="phone"
+          value={formData.phone}
           onChange={onChangeHandler}
-          error={error?.contact ? error?.contact[0] : undefined}
-        />
-      </div>
-      <div className="mt-3">
-        <FormLabel htmlFor="location">Location *</FormLabel>
-        <FormInput
-          id="location"
-          type="text"
-          className="w-full"
-          placeholder="Mumbai"
-          name="location"
-          value={formData.location}
-          onChange={onChangeHandler}
-          error={error?.location ? error?.location[0] : undefined}
+          error={error?.phone ? error?.phone[0] : undefined}
         />
       </div>
       <div className="mt-3">
@@ -123,18 +107,6 @@ const AddOrEditDoctor = ({
           onChange={onChangeHandler}
           error={error?.password ? error?.password[0] : undefined}
         />
-      </div>
-      <div className="mt-3">
-        <label>Active Status *</label>
-        <FormSelect
-          className="mt-2 sm:mr-2"
-          name="status"
-          value={formData.status}
-          onChange={onChangeHandler}
-        >
-          <option value="1">Active</option>
-          <option value="2">Inactive</option>
-        </FormSelect>
       </div>
       <div className="mt-5 text-right">
         {type === "edit" && (

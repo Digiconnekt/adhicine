@@ -10,6 +10,8 @@ import CreateDoctor from "../pages/Doctor/Create";
 import Patient from "../pages/Patient";
 import CreatePatient from "../pages/Patient/Create";
 import Login from "../pages/Login";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 
 import Error404 from "../pages/Error404";
 
@@ -24,13 +26,13 @@ function Router() {
           element: <Admin />,
         },
         {
-          path: "/hospital/:hospitalId?",
+          path: "/hospital",
           element: <Hospital />,
         },
-        {
-          path: "/hospital/create",
-          element: <CreateHospital />,
-        },
+        // {
+        //   path: "/hospital/create",
+        //   element: <CreateHospital />,
+        // },
         {
           path: "/doctor/:doctorId?",
           element: <Doctor />,
@@ -52,6 +54,14 @@ function Router() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/reset-password/:token",
+      element: <ResetPassword />,
     },
     {
       path: "*",

@@ -10,9 +10,8 @@ const FilterDoctor = ({ reFetchAllCompanies }) => {
   const [startDateFilter, setStartDateFilter] = useState("");
   const [endDateFilter, setEndDateFilter] = useState("");
   const [filterData, setFilterData] = useState({
-    name: "",
-    company_email: "",
-    location: "",
+    id: "",
+    email: "",
   });
 
   const onChangeFilterHandler = (e) => {
@@ -39,16 +38,15 @@ const FilterDoctor = ({ reFetchAllCompanies }) => {
 
   const filterHandler = () => {
     reFetchAllCompanies(
-      `name=${filterData.name}&company_email=${filterData.company_email}&location=${filterData.location}&start_date=${startDateFilter}&end_date=${endDateFilter}`
+      `id=${filterData.id}&email=${filterData.email}&start_date=${startDateFilter}&end_date=${endDateFilter}`
     );
   };
 
   const resetFilterHandler = () => {
     reFetchAllCompanies();
     setFilterData({
-      name: "",
-      company_email: "",
-      location: "",
+      id: "",
+      email: "",
     });
     setDateFilter();
   };
@@ -59,31 +57,21 @@ const FilterDoctor = ({ reFetchAllCompanies }) => {
         <div className="grid grid-cols-12 items-center gap-5">
           <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
             <FormInput
-              id="manager-name"
+              id="id"
               type="text"
-              placeholder="Manager Name"
-              name="name"
-              value={filterData.name}
+              placeholder="Doctor ID"
+              name="id"
+              value={filterData.id}
               onChange={onChangeFilterHandler}
             />
           </div>
           <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
             <FormInput
-              id="company-email"
-              type="text"
-              placeholder="Company Email"
-              name="company_email"
-              value={filterData.company_email}
-              onChange={onChangeFilterHandler}
-            />
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-            <FormInput
-              id="location"
-              type="text"
-              placeholder="Location"
-              name="location"
-              value={filterData.location}
+              id="email"
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={filterData.email}
               onChange={onChangeFilterHandler}
             />
           </div>

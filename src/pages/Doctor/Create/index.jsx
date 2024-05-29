@@ -3,7 +3,7 @@ import AddOrEditDoctor from "../../../components/Doctor/AddOrEdit";
 import { OnlyHospital } from "../../../dashboards/Hospital";
 
 function Main() {
-  const { createDoctorReq, data, error, isLoading } = useCreateDoctor();
+  const { data, error, isLoading, createDoctorReq } = useCreateDoctor();
 
   return (
     <OnlyHospital>
@@ -18,7 +18,7 @@ function Main() {
               type={"add"}
               isLoading={isLoading}
               data={data}
-              error={error}
+              error={error?.errors}
               submitReq={createDoctorReq}
             />
           </div>

@@ -18,6 +18,19 @@ const useLogin = () => {
     try {
       setIsLoading(true);
       const res = await axiosInstance.post("/login", payload);
+
+      if (
+        res?.data?.data?.role !== "hospital" &&
+        res?.data?.data?.role !== "doctor"
+      ) {
+        console.log(
+          "check: ",
+          res?.data?.data?.role !== "hospital" &&
+            res?.data?.data?.role !== "doctor"
+        );
+        return toast.error("Only hospital and doctor can login");
+      }
+
       setData(res?.data);
       dispatch(
         login({
@@ -25,8 +38,8 @@ const useLogin = () => {
           name: res?.data?.data?.name,
           email: res?.data?.data?.email,
           phone: res?.data?.data?.phone,
-          // role: res?.data?.data?.role,
-          role: "admin",
+          role: res?.data?.data?.role,
+          // role: "admin",
           token: res?.data?.data?.accessToken,
           profileImg: res?.data?.data?.profilePhotoUrl,
         })
@@ -34,7 +47,18 @@ const useLogin = () => {
       toast.success("Logged in successfully");
       console.log("login res", res);
 
-      navigate(`/`);
+      switch (res?.data?.data?.role) {
+        case "hospital":
+          navigate(`/hospital`);
+          break;
+        case "doctor":
+          navigate(`/doctor`);
+          break;
+
+        default:
+          navigate(`/`);
+          break;
+      }
     } catch (error) {
       setError(error?.response?.data);
       toast.error(

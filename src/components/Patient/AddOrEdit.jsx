@@ -4,7 +4,7 @@ import Button from "../../base-components/Button";
 import LoadingIcon from "../../base-components/LoadingIcon";
 import { useNavigate } from "react-router-dom";
 
-const AddOrEditHospital = ({
+const AddOrEditPatient = ({
   type,
   data,
   error,
@@ -16,22 +16,16 @@ const AddOrEditHospital = ({
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
-    contact: "",
-    location: "",
-    status: "1",
+    password: "",
   });
 
   useEffect(() => {
     if (inputData) {
       setFormData((prevData) => ({
         ...prevData,
-        name: inputData?.name || "",
         email: inputData?.email || "",
-        contact: inputData?.contact || "",
-        location: inputData?.location || "",
-        status: inputData?.status || "",
+        password: inputData?.password || "",
       }));
     }
   }, []);
@@ -57,19 +51,6 @@ const AddOrEditHospital = ({
 
   return (
     <>
-      <div>
-        <FormLabel htmlFor="name">Name *</FormLabel>
-        <FormInput
-          id="name"
-          type="text"
-          className="w-full"
-          placeholder="John Doe"
-          name="name"
-          value={formData.name}
-          onChange={onChangeHandler}
-          error={error?.name ? error?.name[0] : undefined}
-        />
-      </div>
       <div className="mt-3">
         <FormLabel htmlFor="email">Email *</FormLabel>
         <FormInput
@@ -84,42 +65,17 @@ const AddOrEditHospital = ({
         />
       </div>
       <div className="mt-3">
-        <FormLabel htmlFor="contact">Contact *</FormLabel>
+        <FormLabel htmlFor="password">Password *</FormLabel>
         <FormInput
-          id="contact"
-          type="number"
+          id="password"
+          type="password"
           className="w-full"
-          placeholder="9856985969"
-          name="contact"
-          value={formData.contact}
+          placeholder="********"
+          name="password"
+          value={formData.password}
           onChange={onChangeHandler}
-          error={error?.contact ? error?.contact[0] : undefined}
+          error={error?.password ? error?.password[0] : undefined}
         />
-      </div>
-      <div className="mt-3">
-        <FormLabel htmlFor="location">Location *</FormLabel>
-        <FormInput
-          id="location"
-          type="text"
-          className="w-full"
-          placeholder="Mumbai"
-          name="location"
-          value={formData.location}
-          onChange={onChangeHandler}
-          error={error?.location ? error?.location[0] : undefined}
-        />
-      </div>
-      <div className="mt-3">
-        <label>Active Status *</label>
-        <FormSelect
-          className="mt-2 sm:mr-2"
-          name="status"
-          value={formData.status}
-          onChange={onChangeHandler}
-        >
-          <option value="1">Active</option>
-          <option value="2">Inactive</option>
-        </FormSelect>
       </div>
       <div className="mt-5 text-right">
         {type === "edit" && (
@@ -149,4 +105,4 @@ const AddOrEditHospital = ({
   );
 };
 
-export default AddOrEditHospital;
+export default AddOrEditPatient;
