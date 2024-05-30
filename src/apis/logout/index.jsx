@@ -4,11 +4,13 @@ import { logout } from "../../stores/authSlice";
 import { useNavigate } from "react-router-dom";
 import useAxios from "..";
 import toast from "react-hot-toast";
+import useAuthHeader from "../authHeader";
 
 const useLogout = () => {
   const axiosInstance = useAxios();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const headers = useAuthHeader();
 
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
@@ -17,14 +19,12 @@ const useLogout = () => {
   const logoutReq = async () => {
     try {
       setIsLoading(true);
-      // const res = await axiosInstance.get("/logout");
+      // const res = await axiosInstance.get("/logout", headers);
 
-      // if (res) {
-      //   setData(res?.data);
-      //   console.log("Logout success res", res);
+      // setData(res?.data);
+      // console.log("Logout success res", res);
       dispatch(logout());
       navigate("/login");
-      // }
     } catch (error) {
       setError(error?.response?.data);
       toast.error(error?.response?.data?.message || "Failed to Logout");

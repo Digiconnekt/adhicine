@@ -1,6 +1,4 @@
-import clsx from "clsx";
-import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Table from "../../base-components/Table";
 import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
@@ -36,18 +34,18 @@ const DoctorList = ({
             >
               Add New Doctor
             </Button>
-            <Button
+            {/* <Button
               variant="outline-primary"
               onClick={() => setShowFilter(!showFilter)}
             >
               <Lucide icon={showFilter ? "X" : "Filter"} className="w-5 h-5" />
-            </Button>
+            </Button> */}
           </div>
         </div>
 
-        <div className="border-b pb-5">
+        {/* <div className="border-b pb-5">
           {showFilter && <FilterDoctor reFetchAllDoctors={""} />}
-        </div>
+        </div> */}
 
         {isLoadingAllDoctors ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>

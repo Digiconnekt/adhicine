@@ -1,59 +1,20 @@
 import clsx from "clsx";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Table from "../../base-components/Table";
 import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
 import { Link, useNavigate } from "react-router-dom";
 import FilterHospital from "./Filter";
 
-import useAllHospitals from "../../apis/hospital/hospitals";
-
-const HospitalList = ({ reFetchCard }) => {
+const HospitalList = ({
+  dataAllHospitals,
+  errorAllHospitals,
+  isLoadingAllHospitals,
+}) => {
   const navigate = useNavigate();
 
-  const fakeHospitalData = {
-    data: [
-      {
-        id: "1",
-        name: "Hospital 1",
-        email: "hospital1@gmail.com",
-        contact: "896595968",
-        location: "Mumbai",
-        doctors: "20",
-        patients: "95",
-        status: true,
-      },
-      {
-        id: "2",
-        name: "Hospital 2",
-        email: "hospital2@gmail.com",
-        contact: "896595968",
-        location: "Delhi",
-        doctors: "20",
-        patients: "95",
-        status: false,
-      },
-    ],
-  };
-
-  const {
-    allHospitalsReq,
-    data: dataAllHospitals,
-    isLoading: isLoadingAllHospitals,
-    reFetch: reFetchAllHospitals,
-  } = useAllHospitals();
-
   const [showFilter, setShowFilter] = useState(false);
-
-  useEffect(() => {
-    allHospitalsReq();
-  }, []);
-
-  const reFetch = () => {
-    reFetchAllHospitals();
-    reFetchCard();
-  };
 
   return (
     <>
@@ -65,11 +26,11 @@ const HospitalList = ({ reFetchCard }) => {
               {isLoadingAllHospitals ? (
                 <>loading...</>
               ) : (
-                dataAllHospitals?.data?.length
+                dataAllHospitals?.length
               )}
             </h2>
           </div>
-          <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
+          {/* <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
             <Button
               variant="primary"
               className="mr-2 shadow-md"
@@ -83,14 +44,14 @@ const HospitalList = ({ reFetchCard }) => {
             >
               <Lucide icon={showFilter ? "X" : "Filter"} className="w-5 h-5" />
             </Button>
-          </div>
+          </div> */}
         </div>
 
-        <div className="border-b pb-5">
+        {/* <div className="border-b pb-5">
           {showFilter && (
             <FilterHospital reFetchAllHospitals={reFetchAllHospitals} />
           )}
-        </div>
+        </div> */}
 
         {isLoadingAllHospitals ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>
@@ -99,7 +60,7 @@ const HospitalList = ({ reFetchCard }) => {
             className="mt-8 overflow-auto intro-y lg:overflow-visible sm:mt-0"
             style={{ overflowX: "auto" }}
           >
-            {fakeHospitalData?.data?.length > 0 && (
+            {dataAllHospitals?.length > 0 && (
               <div className="overflow-x-auto">
                 <Table className="border-spacing-y-[10px] border-separate sm:mt-2">
                   <Table.Thead>
@@ -134,7 +95,7 @@ const HospitalList = ({ reFetchCard }) => {
                     </Table.Tr>
                   </Table.Thead>
                   <Table.Tbody>
-                    {fakeHospitalData?.data?.map((hospital, i) => (
+                    {dataAllHospitals?.map((hospital, i) => (
                       <Table.Tr key={i} className="intro-x">
                         <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           <Link
@@ -203,9 +164,9 @@ const HospitalList = ({ reFetchCard }) => {
               </div>
             )}
 
-            {dataAllHospitals?.data?.length === 0 && (
+            {dataAllHospitals?.length === 0 && (
               <p className="text-center mt-5 bg-white p-5 text-md">
-                No Companies Found
+                No Hospitals Found
               </p>
             )}
           </div>

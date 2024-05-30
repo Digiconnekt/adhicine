@@ -38,18 +38,18 @@ const PatientList = ({
                 Add New Patient
               </Button>
             )}
-            <Button
+            {/* <Button
               variant="outline-primary"
               onClick={() => setShowFilter(!showFilter)}
             >
               <Lucide icon={showFilter ? "X" : "Filter"} className="w-5 h-5" />
-            </Button>
+            </Button> */}
           </div>
         </div>
 
-        <div className="border-b pb-5">
+        {/* <div className="border-b pb-5">
           {showFilter && <FilterPatient reFetchAllPatients={""} />}
-        </div>
+        </div> */}
 
         {isLoadingAllPatients ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>

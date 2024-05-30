@@ -4,12 +4,20 @@ import { useEffect, useState } from "react";
 import HospitalDashboard from "../../dashboards/Hospital";
 import DoctorList from "../../components/Doctor/DoctorList";
 import PatientList from "../../components/Patient/PatientList";
+import HospitalList from "../../components/Hospital/HospitalList";
 import { useParams } from "react-router-dom";
 import useAllDoctors from "../../apis/doctor/doctors";
 import useAllPatients from "../../apis/patient/patients";
+import useAllHospitals from "../../apis/hospital/hospitals";
 
 const index = () => {
   const { hospitalId } = useParams();
+  const {
+    data: dataAllHospitals,
+    error: errorAllHospitals,
+    isLoading: isLoadingAllHospitals,
+    allHospitalsReq,
+  } = useAllHospitals();
   const {
     allDoctorsReq,
     data: dataAllDoctors,
@@ -23,11 +31,18 @@ const index = () => {
     isLoading: isLoadingAllPatients,
   } = useAllPatients();
 
-  const [cardType, setCardType] = useState("doctor");
+  const [cardType, setCardType] = useState("hospital");
+  const [hospitalCount, setHospitalCount] = useState(0);
   const [doctorCount, setDoctorCount] = useState(0);
   const [patientCount, setPatientCount] = useState(0);
 
   const cardsData = [
+    {
+      title: "Hospitals",
+      img: "../../../images/hospital-icon.png",
+      cardType: "hospital",
+      count: hospitalCount,
+    },
     {
       title: "Doctors",
       img: "../../../images/doctor-icon.png",
@@ -43,9 +58,16 @@ const index = () => {
   ];
 
   useEffect(() => {
+    allHospitalsReq();
     allDoctorsReq();
     allPatientsReq();
   }, []);
+
+  useEffect(() => {
+    if (dataAllHospitals) {
+      setHospitalCount(dataAllHospitals?.length);
+    }
+  }, [dataAllHospitals]);
 
   useEffect(() => {
     if (dataAllDoctors) {
@@ -76,6 +98,16 @@ const index = () => {
               </div>
             </div>
             {/* END: Cards */}
+
+            {/* BEGIN: Hospitals Table */}
+            {cardType === "hospital" && (
+              <HospitalList
+                dataAllHospitals={dataAllHospitals}
+                errorAllHospitals={errorAllHospitals}
+                isLoadingAllHospitals={isLoadingAllHospitals}
+              />
+            )}
+            {/* END: Hospitals Table */}
 
             {/* BEGIN: Doctors Table */}
             {cardType === "doctor" && (
