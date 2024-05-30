@@ -32,6 +32,16 @@ const initialState = {
         doctor: true,
       },
     },
+    {
+      icon: "Settings",
+      pathname: "/settings",
+      title: "Settings",
+      show: {
+        admin: true,
+        hospital: true,
+        doctor: true,
+      },
+    },
   ],
 };
 

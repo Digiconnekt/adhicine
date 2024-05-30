@@ -72,10 +72,7 @@ const DoctorList = ({
                         EMAIL
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                        CONTACT
-                      </Table.Th>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                        SPEALIZATION
+                        Phone
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         TOTAL PATIENTS
@@ -103,10 +100,7 @@ const DoctorList = ({
                           {doctor?.email ? doctor?.email : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {doctor?.contact ? doctor?.contact : "-"}
-                        </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {doctor?.spealization ? doctor?.spealization : "-"}
+                          {doctor?.phone ? doctor?.phone : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {doctor?.patients ? doctor?.patients : "-"}

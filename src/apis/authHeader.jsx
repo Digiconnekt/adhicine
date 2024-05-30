@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 
 const useAuthHeader = (contentType = "application/json") => {
-  const userAccessToken = useSelector((state) => state.auth?.user?.token);
+  const user = useSelector((state) => state.auth?.user);
 
   const headers = {
     headers: {
-      Authorization: `Bearer ${userAccessToken}`,
+      Authorization: `Bearer ${user?.token}`,
       "Content-Type": contentType,
     },
   };

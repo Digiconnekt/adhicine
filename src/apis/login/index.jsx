@@ -39,7 +39,6 @@ const useLogin = () => {
           email: res?.data?.data?.email,
           phone: res?.data?.data?.phone,
           role: res?.data?.data?.role,
-          // role: "admin",
           token: res?.data?.data?.accessToken,
           profileImg: res?.data?.data?.profilePhotoUrl,
         })

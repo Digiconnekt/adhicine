@@ -81,10 +81,6 @@ function Main() {
                 <h2 className="text-2xl font-bold text-center intro-x xl:text-3xl xl:text-left">
                   Sign In
                 </h2>
-                <div className="mt-2 text-center intro-x text-slate-400 xl:hidden">
-                  A few more clicks to sign in to your account. Manage all your
-                  e-commerce accounts in one place
-                </div>
                 <div className="mt-8 intro-x">
                   <FormInput
                     type="text"

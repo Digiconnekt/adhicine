@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FormInput, FormLabel, FormSelect } from "../../base-components/Form";
+import { FormInput, FormLabel } from "../../base-components/Form";
 import Button from "../../base-components/Button";
 import LoadingIcon from "../../base-components/LoadingIcon";
 import { useNavigate } from "react-router-dom";

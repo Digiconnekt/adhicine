@@ -105,7 +105,7 @@ function Main(props) {
           {/* END: Breadcrumb */}
 
           {/* BEGIN: Notifications */}
-          <Popover className="mr-4 intro-x sm:mr-6">
+          {/* <Popover className="mr-4 intro-x sm:mr-6">
             <Popover.Button
               className="
               relative text-white/70 outline-none block
@@ -114,7 +114,7 @@ function Main(props) {
             >
               <Lucide icon="Bell" className="w-5 h-5 dark:text-slate-500" />
             </Popover.Button>
-            {/* <Popover.Panel className="w-[280px] sm:w-[350px] p-5 mt-2">
+            <Popover.Panel className="w-[280px] sm:w-[350px] p-5 mt-2">
               <div className="mb-5 font-medium">Notifications</div>
               {_.take(fakerData, 5).map((faker, fakerKey) => (
                 <div
@@ -147,8 +147,8 @@ function Main(props) {
                   </div>
                 </div>
               ))}
-            </Popover.Panel> */}
-          </Popover>
+            </Popover.Panel>
+          </Popover> */}
           {/* END: Notifications */}
 
           {/* BEGIN: Account Menu */}
@@ -169,9 +169,9 @@ function Main(props) {
               <Menu.Divider className="bg-white/[0.08]" />
               <Menu.Item
                 className="hover:bg-white/5"
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate("/settings")}
               >
-                <Lucide icon="User" className="w-4 h-4 mr-2" /> Profile
+                <Lucide icon="Settings" className="w-4 h-4 mr-2" /> Settings
               </Menu.Item>
               <Menu.Item className="hover:bg-white/5" onClick={logoutReq}>
                 {isLoading ? (

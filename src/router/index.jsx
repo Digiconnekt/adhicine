@@ -14,6 +14,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 
 import Error404 from "../pages/Error404";
+import Settings from "../pages/Settings";
 
 function Router() {
   const routes = [
@@ -48,6 +49,10 @@ function Router() {
         {
           path: "/patient/create",
           element: <CreatePatient />,
+        },
+        {
+          path: "/settings",
+          element: <Settings />,
         },
       ],
     },
