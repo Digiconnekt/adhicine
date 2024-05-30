@@ -10,7 +10,7 @@ import { Menu, Tab } from "../../base-components/Headless";
 import { Tab as HeadlessTab } from "@headlessui/react";
 import { useSelector } from "react-redux";
 import { FormInput, FormLabel } from "../../base-components/Form";
-import useProfileUpdate from "../../apis/profile/update";
+import useProfileUpdate from "../../apis/profile/Update";
 import LoadingIcon from "../../base-components/LoadingIcon";
 import toast from "react-hot-toast";
 
