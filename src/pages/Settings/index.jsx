@@ -1,22 +1,21 @@
 import _ from "lodash";
-import { useRef, useState } from "react";
-import fakerData from "../../utils/faker";
+import { useEffect, useState } from "react";
 import Button from "../../base-components/Button";
-import { FormSwitch } from "../../base-components/Form";
-import Progress from "../../base-components/Progress";
 import Lucide from "../../base-components/Lucide";
-import FileIcon from "../../base-components/FileIcon";
-import { Menu, Tab } from "../../base-components/Headless";
-import { Tab as HeadlessTab } from "@headlessui/react";
-import { useSelector } from "react-redux";
+import { Tab } from "../../base-components/Headless";
 import { FormInput, FormLabel } from "../../base-components/Form";
 import useProfileUpdate from "../../apis/profile/Update";
+import useProfileShow from "../../apis/profile/show";
 import LoadingIcon from "../../base-components/LoadingIcon";
 import toast from "react-hot-toast";
 
 const Settings = () => {
-  const user = useSelector((state) => state.auth.user);
-
+  const {
+    data: dataProfileShow,
+    error: errorProfileShow,
+    isLoading: isLoadingProfileShow,
+    profileShowReq,
+  } = useProfileShow();
   const {
     data: dataProfileUpdate,
     error: errorProfileUpdate,
@@ -24,10 +23,14 @@ const Settings = () => {
     profileUpdateReq,
   } = useProfileUpdate();
 
+  useEffect(() => {
+    profileShowReq();
+  }, [dataProfileUpdate]);
+
   const [profileFormData, setProfileFormData] = useState({
-    name: user?.name ?? "",
-    email: user?.email ?? "",
-    phone: user?.phone ?? "",
+    name: "",
+    email: "",
+    phone: "",
     device_name: "web",
   });
   const [passwordFormData, setPasswordFormData] = useState({
@@ -36,6 +39,17 @@ const Settings = () => {
     password_confirmation: "",
     device_name: "web",
   });
+
+  useEffect(() => {
+    if (dataProfileShow) {
+      setProfileFormData({
+        name: dataProfileShow?.name ?? "",
+        email: dataProfileShow?.email ?? "",
+        phone: dataProfileShow?.phone ?? "",
+        device_name: "web",
+      });
+    }
+  }, [dataProfileShow]);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -68,6 +82,14 @@ const Settings = () => {
 
   console.log("dataProfileUpdate: ", dataProfileUpdate);
 
+  if (isLoadingProfileShow) {
+    return <p>loading...</p>;
+  }
+
+  if (errorProfileShow) {
+    return <p>failed to load</p>;
+  }
+
   return (
     <>
       <Tab.Group>
@@ -78,16 +100,16 @@ const Settings = () => {
                 <img
                   alt="Midone Tailwind HTML Admin Template"
                   className="rounded-full"
-                  src={user?.profileImg}
+                  src={dataProfileShow?.profilePhotoUrl}
                 />
               </div>
               <div className="ml-5">
                 <div className="w-24 text-lg font-medium truncate sm:w-40 sm:whitespace-normal">
-                  {user?.name ?? "-"}
+                  {dataProfileShow?.name ?? "-"}
                 </div>
-                <div className="text-slate-500">
+                <div className="text-slate-500 mt-2">
                   <b>Role: </b>
-                  <span className="uppercase">{user?.role}</span>
+                  <span className="uppercase">{dataProfileShow?.role}</span>
                 </div>
               </div>
             </div>
@@ -98,11 +120,11 @@ const Settings = () => {
               <div className="flex flex-col items-center justify-center mt-4 lg:items-start">
                 <div className="flex items-center truncate sm:whitespace-normal">
                   <Lucide icon="Mail" className="w-4 h-4 mr-2" />
-                  {user?.email ?? "-"}
+                  {dataProfileShow?.email ?? "-"}
                 </div>
                 <div className="flex items-center mt-3 truncate sm:whitespace-normal">
                   <Lucide icon="Phone" className="w-4 h-4 mr-2" />
-                  {user?.phone ?? "-"}
+                  {dataProfileShow?.phone ?? "-"}
                 </div>
               </div>
             </div>

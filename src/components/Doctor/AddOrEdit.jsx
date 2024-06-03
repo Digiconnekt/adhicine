@@ -95,19 +95,21 @@ const AddOrEditDoctor = ({
           error={error?.phone ? error?.phone[0] : undefined}
         />
       </div>
-      <div className="mt-3">
-        <FormLabel htmlFor="password">Password *</FormLabel>
-        <FormInput
-          id="password"
-          type="password"
-          className="w-full"
-          placeholder="******"
-          name="password"
-          value={formData.password}
-          onChange={onChangeHandler}
-          error={error?.password ? error?.password[0] : undefined}
-        />
-      </div>
+      {type === "add" && (
+        <div className="mt-3">
+          <FormLabel htmlFor="password">Password *</FormLabel>
+          <FormInput
+            id="password"
+            type="password"
+            className="w-full"
+            placeholder="******"
+            name="password"
+            value={formData.password}
+            onChange={onChangeHandler}
+            error={error?.password ? error?.password[0] : undefined}
+          />
+        </div>
+      )}
       <div className="mt-5 text-right">
         {type === "edit" && (
           <Button

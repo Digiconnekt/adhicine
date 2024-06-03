@@ -12,7 +12,7 @@ const HospitalDashboard = ({ children, hospitalId }) => {
     }
   }
 
-  if (user && user.role === "hospital") {
+  if (user && user.role === "hospital-admin") {
     if (hospitalId) {
       return <Navigate to={`/hospital`} />;
     } else {
@@ -28,7 +28,7 @@ const HospitalDashboard = ({ children, hospitalId }) => {
 export const OnlyHospital = ({ children }) => {
   const user = useSelector((state) => state.auth.user);
 
-  if (user && user.role === "hospital") {
+  if (user && user.role === "hospital-admin") {
     return <>{children}</>;
   } else {
     return <Navigate to={`/`} />;

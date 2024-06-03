@@ -20,14 +20,9 @@ const useLogin = () => {
       const res = await axiosInstance.post("/login", payload);
 
       if (
-        res?.data?.data?.role !== "hospital" &&
-        res?.data?.data?.role !== "doctor"
+        res?.data?.data?.role !== "doctor" &&
+        res?.data?.data?.role !== "hospital-admin"
       ) {
-        console.log(
-          "check: ",
-          res?.data?.data?.role !== "hospital" &&
-            res?.data?.data?.role !== "doctor"
-        );
         return toast.error("Only hospital and doctor can login");
       }
 
@@ -47,7 +42,7 @@ const useLogin = () => {
       console.log("login res", res);
 
       switch (res?.data?.data?.role) {
-        case "hospital":
+        case "hospital-admin":
           navigate(`/hospital`);
           break;
         case "doctor":

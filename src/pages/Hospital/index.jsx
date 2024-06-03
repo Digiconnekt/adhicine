@@ -16,6 +16,7 @@ const index = () => {
     data: dataAllHospitals,
     error: errorAllHospitals,
     isLoading: isLoadingAllHospitals,
+    reFetch: reFetchAllHospitals,
     allHospitalsReq,
   } = useAllHospitals();
   const {
@@ -23,6 +24,7 @@ const index = () => {
     data: dataAllDoctors,
     error: errorAllDoctors,
     isLoading: isLoadingAllDoctors,
+    reFetch: reFetchAllDoctors,
   } = useAllDoctors();
   const {
     allPatientsReq,
@@ -105,6 +107,7 @@ const index = () => {
                 dataAllHospitals={dataAllHospitals}
                 errorAllHospitals={errorAllHospitals}
                 isLoadingAllHospitals={isLoadingAllHospitals}
+                reFetchAllHospitals={reFetchAllHospitals}
               />
             )}
             {/* END: Hospitals Table */}
@@ -115,6 +118,7 @@ const index = () => {
                 dataAllDoctors={dataAllDoctors}
                 errorAllDoctors={errorAllDoctors}
                 isLoadingAllDoctors={isLoadingAllDoctors}
+                reFetchAllDoctors={reFetchAllDoctors}
               />
             )}
             {/* END: Doctors Table */}

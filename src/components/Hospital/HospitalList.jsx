@@ -6,15 +6,46 @@ import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
 import { Link, useNavigate } from "react-router-dom";
 import FilterHospital from "./Filter";
+import EditModal from "../../components/Modals/Edit";
+import AddOrEditHospital from "./AddOrEdit";
+import useShowHospital from "../../apis/hospital/show";
+import useUpdateHospital from "../../apis/hospital/update";
 
 const HospitalList = ({
   dataAllHospitals,
   errorAllHospitals,
   isLoadingAllHospitals,
+  reFetchAllHospitals,
 }) => {
   const navigate = useNavigate();
 
+  const {
+    showHospitalReq,
+    data: dataShowHospital,
+    isLoading: isLoadingShowHospital,
+  } = useShowHospital();
+
+  const {
+    updateHospitalReq,
+    data: dataUpdateHospital,
+    error: errorUpdateHospital,
+    isLoading: isLoadingUpdateHospital,
+  } = useUpdateHospital();
+
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
+
+  const deleteHandler = (id) => {
+    setShowDeleteAlert(true);
+    setSelectedId(id);
+  };
+
+  const editModalHandler = (id) => {
+    setShowEditModal(true);
+    setSelectedId(id);
+  };
 
   return (
     <>
@@ -55,6 +86,10 @@ const HospitalList = ({
 
         {isLoadingAllHospitals ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>
+        ) : errorAllHospitals ? (
+          <p className="text-center mt-5 bg-white p-5 text-md text-red-500">
+            failed to load
+          </p>
         ) : (
           <div
             className="mt-8 overflow-auto intro-y lg:overflow-visible sm:mt-0"
@@ -72,23 +107,17 @@ const HospitalList = ({
                         EMAIL
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                        CONTACT
+                        PHONE
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         LOCATION
                       </Table.Th>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                      {/* <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         TOTAL DOCTORS
-                      </Table.Th>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                      </Table.Th> */}
+                      {/* <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         TOTAL PATIENTS
-                      </Table.Th>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                        STATUS
-                      </Table.Th>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                        CREATED AT
-                      </Table.Th>
+                      </Table.Th> */}
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         ACTIONS
                       </Table.Th>
@@ -98,12 +127,12 @@ const HospitalList = ({
                     {dataAllHospitals?.map((hospital, i) => (
                       <Table.Tr key={i} className="intro-x">
                         <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          <Link
+                          {/* <Link
                             to={`/hospital/${hospital?.id}`}
                             className="font-medium whitespace-nowrap"
-                          >
-                            {hospital?.name ? hospital?.name : "-"}
-                          </Link>
+                          > */}
+                          {hospital?.name ? hospital?.name : "-"}
+                          {/* </Link> */}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {hospital?.email ? hospital?.email : "-"}
@@ -114,28 +143,12 @@ const HospitalList = ({
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {hospital?.location ? hospital?.location : "-"}
                         </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                        {/* <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {hospital?.doctors ? hospital?.doctors : "-"}
-                        </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                        </Table.Td> */}
+                        {/* <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {hospital?.patients ? hospital?.patients : "-"}
-                        </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          <div
-                            className={clsx([
-                              "flex items-center justify-center",
-                              { "text-success": hospital?.status },
-                              { "text-danger": !hospital?.status },
-                            ])}
-                          >
-                            {hospital?.status ? "Active" : "Inactive"}
-                          </div>
-                        </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {hospital.created_at
-                            ? moment(hospital.created_at).format("DD/MM/YYYY")
-                            : "-"}
-                        </Table.Td>
+                        </Table.Td> */}
                         <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
                           <div className="flex items-center justify-center">
                             <div
@@ -148,13 +161,13 @@ const HospitalList = ({
                               />
                               Edit
                             </div>
-                            <div
+                            {/* <div
                               className="flex items-center text-danger cursor-pointer"
                               onClick={() => deleteHandler(hospital?.id)}
                             >
                               <Lucide icon="Trash2" className="w-4 h-4 mr-1" />
                               Delete
-                            </div>
+                            </div> */}
                           </div>
                         </Table.Td>
                       </Table.Tr>
@@ -172,6 +185,22 @@ const HospitalList = ({
           </div>
         )}
       </div>
+
+      <EditModal
+        Component={AddOrEditHospital}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        open={showEditModal}
+        setOpen={setShowEditModal}
+        isLoadingShow={isLoadingShowHospital}
+        dataShow={dataShowHospital?.data}
+        showReq={showHospitalReq}
+        isLoading={isLoadingUpdateHospital}
+        data={dataUpdateHospital}
+        error={errorUpdateHospital}
+        submitReq={updateHospitalReq}
+        reFetch={reFetchAllHospitals}
+      />
     </>
   );
 };

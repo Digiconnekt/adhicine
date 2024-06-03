@@ -12,7 +12,7 @@ const DoctorDashboard = ({ children, doctorId }) => {
     }
   }
 
-  if (user && user.role === "hospital") {
+  if (user && user.role === "hospital-admin") {
     if (!doctorId) {
       return <Navigate to={`/hospital`} />;
     } else {

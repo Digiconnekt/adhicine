@@ -8,7 +8,7 @@ const AdminDashboard = ({ children }) => {
     return <>{children}</>;
   }
 
-  if (user && user.role === "hospital") {
+  if (user && user.role === "hospital-admin") {
     return <Navigate to={`/hospital`} />;
   }
 

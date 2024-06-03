@@ -5,16 +5,47 @@ import Lucide from "../../base-components/Lucide";
 import { Link, useNavigate } from "react-router-dom";
 import FilterDoctor from "./Filter";
 import { useSelector } from "react-redux";
+import AddOrEditDoctor from "./AddOrEdit";
+import useShowDoctor from "../../apis/doctor/show";
+import useUpdateDoctor from "../../apis/doctor/update";
+import EditModal from "../../components/Modals/Edit";
 
 const DoctorList = ({
   dataAllDoctors,
   isLoadingAllDoctors,
   errorAllDoctors,
+  reFetchAllDoctors,
 }) => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
+  const {
+    showDoctorReq,
+    data: dataShowDoctor,
+    isLoading: isLoadingShowDoctor,
+  } = useShowDoctor();
+
+  const {
+    updateDoctorReq,
+    data: dataUpdateDoctor,
+    error: errorUpdateDoctor,
+    isLoading: isLoadingUpdateDoctor,
+  } = useUpdateDoctor();
+
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
+
+  const deleteHandler = (id) => {
+    setShowDeleteAlert(true);
+    setSelectedId(id);
+  };
+
+  const editModalHandler = (id) => {
+    setShowEditModal(true);
+    setSelectedId(id);
+  };
 
   return (
     <>
@@ -63,18 +94,18 @@ const DoctorList = ({
                 <Table className="border-spacing-y-[10px] border-separate sm:mt-2">
                   <Table.Thead>
                     <Table.Tr>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                      <Table.Th className="border-b-0 whitespace-nowrap">
                         DOCTOR NAME
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         EMAIL
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                        Phone
+                        PHONE
                       </Table.Th>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                      {/* <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         TOTAL PATIENTS
-                      </Table.Th>
+                      </Table.Th> */}
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         CREATED AT
                       </Table.Th>
@@ -87,12 +118,12 @@ const DoctorList = ({
                     {dataAllDoctors?.map((doctor, i) => (
                       <Table.Tr key={i} className="intro-x">
                         <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          <Link
+                          {/* <Link
                             to={`/doctor/${doctor?.id}`}
                             className="font-medium whitespace-nowrap"
-                          >
-                            {doctor?.name ? doctor?.name : "-"}
-                          </Link>
+                          > */}
+                          {doctor?.name ? doctor?.name : "-"}
+                          {/* </Link> */}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {doctor?.email ? doctor?.email : "-"}
@@ -100,9 +131,9 @@ const DoctorList = ({
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {doctor?.phone ? doctor?.phone : "-"}
                         </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                        {/* <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {doctor?.patients ? doctor?.patients : "-"}
-                        </Table.Td>
+                        </Table.Td> */}
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {doctor.createdAt ? doctor.createdAt : "-"}
                         </Table.Td>
@@ -118,13 +149,13 @@ const DoctorList = ({
                               />
                               Edit
                             </div>
-                            <div
+                            {/* <div
                               className="flex items-center text-danger cursor-pointer"
                               onClick={() => deleteHandler(doctor?.id)}
                             >
                               <Lucide icon="Trash2" className="w-4 h-4 mr-1" />
                               Delete
-                            </div>
+                            </div> */}
                           </div>
                         </Table.Td>
                       </Table.Tr>
@@ -142,6 +173,22 @@ const DoctorList = ({
           </div>
         )}
       </div>
+
+      <EditModal
+        Component={AddOrEditDoctor}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        open={showEditModal}
+        setOpen={setShowEditModal}
+        isLoadingShow={isLoadingShowDoctor}
+        dataShow={dataShowDoctor?.data}
+        showReq={showDoctorReq}
+        isLoading={isLoadingUpdateDoctor}
+        data={dataUpdateDoctor}
+        error={errorUpdateDoctor}
+        submitReq={updateDoctorReq}
+        reFetch={reFetchAllDoctors}
+      />
     </>
   );
 };

@@ -14,7 +14,7 @@ const useCreateHospital = () => {
   const createHospitalReq = async (payload) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post(`/hospital`, payload, headers);
+      const res = await axiosInstance.post(`/hospitals`, payload, headers);
 
       console.log("create hospital res", res);
 

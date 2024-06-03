@@ -8,7 +8,7 @@ const initialState = {
       title: "Dashboard",
       show: {
         admin: true,
-        hospital: false,
+        "hospital-admin": false,
         doctor: false,
       },
     },
@@ -18,7 +18,7 @@ const initialState = {
       title: "Dashboard",
       show: {
         admin: false,
-        hospital: true,
+        "hospital-admin": true,
         doctor: false,
       },
     },
@@ -28,7 +28,7 @@ const initialState = {
       title: "Dashboard",
       show: {
         admin: false,
-        hospital: false,
+        "hospital-admin": false,
         doctor: true,
       },
     },
@@ -38,7 +38,7 @@ const initialState = {
       title: "Settings",
       show: {
         admin: true,
-        hospital: true,
+        "hospital-admin": true,
         doctor: true,
       },
     },
