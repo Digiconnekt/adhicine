@@ -29,7 +29,7 @@ const PatientList = ({
             </h2>
           </div>
           <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
-            {user?.role === "doctor" && (
+            {/* {user?.role === "doctor" && (
               <Button
                 variant="primary"
                 className="mr-2 shadow-md"
@@ -37,7 +37,7 @@ const PatientList = ({
               >
                 Add New Patient
               </Button>
-            )}
+            )} */}
             {/* <Button
               variant="outline-primary"
               onClick={() => setShowFilter(!showFilter)}
