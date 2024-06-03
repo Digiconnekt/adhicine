@@ -8,9 +8,9 @@ import Lucide from "../../base-components/Lucide";
 import clsx from "clsx";
 import TopBar from "../../components/TopBar";
 import MobileMenu from "../../components/MobileMenu";
-import DarkModeSwitcher from "../../components/DarkModeSwitcher";
 import SideMenuTooltip from "../../components/SideMenuTooltip";
 import { useSelector } from "react-redux";
+import OtpVerification from "../../components/OtpVerification";
 
 function Main() {
   const location = useLocation();
@@ -21,6 +21,10 @@ function Main() {
 
   if (!user) {
     return <Navigate to="/login" />;
+  }
+
+  if (!user?.otpVerifiedAt) {
+    return <OtpVerification />;
   }
 
   useEffect(() => {

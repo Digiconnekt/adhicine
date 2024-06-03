@@ -36,6 +36,7 @@ const useLogin = () => {
           role: res?.data?.data?.role,
           token: res?.data?.data?.accessToken,
           profileImg: res?.data?.data?.profilePhotoUrl,
+          otpVerifiedAt: res?.data?.data?.otpVerifiedAt,
         })
       );
       toast.success("Logged in successfully");
