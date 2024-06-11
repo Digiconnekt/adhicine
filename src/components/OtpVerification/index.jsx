@@ -76,18 +76,17 @@ const OtpVerification = () => {
           </div>
         </form>
 
-        {/* <Button
+        <button
           type="button"
-          variant="outline"
-          className="w-60 px-4 py-3 align-top border-none mt-5"
+          className="w-60 px-4 py-3 align-top mt-5 hover:underline"
           onClick={() => logoutReq()}
           disabled={isLoadingLogout}
         >
-          Logout
+          Go Back
           {isLoadingLogout && (
             <LoadingIcon icon="oval" color="white" className="w-4 h-4 ml-2" />
           )}
-        </Button> */}
+        </button>
       </div>
     </>
   );

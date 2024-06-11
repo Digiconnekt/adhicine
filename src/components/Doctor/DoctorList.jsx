@@ -1,41 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "../../base-components/Table";
 import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
-import { Link, useNavigate } from "react-router-dom";
-import FilterDoctor from "./Filter";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AddOrEditDoctor from "./AddOrEdit";
 import useShowDoctor from "../../apis/doctor/show";
 import useUpdateDoctor from "../../apis/doctor/update";
 import EditModal from "../../components/Modals/Edit";
+import useAllDoctors from "../../apis/doctor/doctors";
+import useDeleteDoctor from "../../apis/doctor/delete";
+import DeleteAlert from "../../components/Modals/DeleteAlert";
 
-const DoctorList = ({
-  dataAllDoctors,
-  isLoadingAllDoctors,
-  errorAllDoctors,
-  reFetchAllDoctors,
-}) => {
+const DoctorList = () => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
+  const {
+    allDoctorsReq,
+    data: dataAllDoctors,
+    error: errorAllDoctors,
+    isLoading: isLoadingAllDoctors,
+    reFetch: reFetchAllDoctors,
+  } = useAllDoctors();
   const {
     showDoctorReq,
     data: dataShowDoctor,
     isLoading: isLoadingShowDoctor,
   } = useShowDoctor();
-
   const {
     updateDoctorReq,
     data: dataUpdateDoctor,
     error: errorUpdateDoctor,
     isLoading: isLoadingUpdateDoctor,
   } = useUpdateDoctor();
+  const {
+    data: dataDeleteDoctor,
+    isLoading: isLoadingDeleteDoctor,
+    deleteDoctorReq,
+  } = useDeleteDoctor();
 
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
+
+  useEffect(() => {
+    allDoctorsReq();
+  }, []);
 
   const deleteHandler = (id) => {
     setShowDeleteAlert(true);
@@ -149,13 +161,13 @@ const DoctorList = ({
                               />
                               Edit
                             </div>
-                            {/* <div
+                            <div
                               className="flex items-center text-danger cursor-pointer"
                               onClick={() => deleteHandler(doctor?.id)}
                             >
                               <Lucide icon="Trash2" className="w-4 h-4 mr-1" />
                               Delete
-                            </div> */}
+                            </div>
                           </div>
                         </Table.Td>
                       </Table.Tr>
@@ -188,6 +200,21 @@ const DoctorList = ({
         error={errorUpdateDoctor}
         submitReq={updateDoctorReq}
         reFetch={reFetchAllDoctors}
+      />
+
+      <DeleteAlert
+        open={showDeleteAlert}
+        setOpen={setShowDeleteAlert}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        data={dataDeleteDoctor}
+        deleteReq={deleteDoctorReq}
+        reFetch={reFetchAllDoctors}
+        isLoading={isLoadingDeleteDoctor}
+        title={"Delete Doctor"}
+        subTitle={
+          "Are you sure that you want to delete this Doctor? All of your data will be permanently removed. This action cannot be undone."
+        }
       />
     </>
   );

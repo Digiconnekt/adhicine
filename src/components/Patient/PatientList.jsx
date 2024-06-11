@@ -7,14 +7,22 @@ import Lucide from "../../base-components/Lucide";
 import { Link, useNavigate } from "react-router-dom";
 import FilterPatient from "./Filter";
 import { useSelector } from "react-redux";
+import useAllPatients from "../../apis/patient/patients";
 
-const PatientList = ({
-  dataAllPatients,
-  isLoadingAllPatients,
-  errorAllPatients,
-}) => {
+const PatientList = () => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
+
+  const {
+    allPatientsReq,
+    data: dataAllPatients,
+    error: errorAllPatients,
+    isLoading: isLoadingAllPatients,
+  } = useAllPatients();
+
+  useEffect(() => {
+    allPatientsReq();
+  }, []);
 
   const [showFilter, setShowFilter] = useState(false);
 

@@ -6,32 +6,17 @@ import DoctorList from "../../components/Doctor/DoctorList";
 import PatientList from "../../components/Patient/PatientList";
 import HospitalList from "../../components/Hospital/HospitalList";
 import { useParams } from "react-router-dom";
-import useAllDoctors from "../../apis/doctor/doctors";
-import useAllPatients from "../../apis/patient/patients";
-import useAllHospitals from "../../apis/hospital/hospitals";
+import useTopCards from "../../apis/topCards";
 
 const index = () => {
   const { hospitalId } = useParams();
   const {
-    data: dataAllHospitals,
-    error: errorAllHospitals,
-    isLoading: isLoadingAllHospitals,
-    reFetch: reFetchAllHospitals,
-    allHospitalsReq,
-  } = useAllHospitals();
-  const {
-    allDoctorsReq,
-    data: dataAllDoctors,
-    error: errorAllDoctors,
-    isLoading: isLoadingAllDoctors,
-    reFetch: reFetchAllDoctors,
-  } = useAllDoctors();
-  const {
-    allPatientsReq,
-    data: dataAllPatients,
-    error: errorAllPatients,
-    isLoading: isLoadingAllPatients,
-  } = useAllPatients();
+    data: dataTopCards,
+    error: errorTopCards,
+    isLoading: isLoadingTopCards,
+    reFetch: reFetchTopCards,
+    topCardsReq,
+  } = useTopCards();
 
   const [cardType, setCardType] = useState("hospital");
   const [hospitalCount, setHospitalCount] = useState(0);
@@ -60,28 +45,16 @@ const index = () => {
   ];
 
   useEffect(() => {
-    allHospitalsReq();
-    allDoctorsReq();
-    allPatientsReq();
+    topCardsReq();
   }, []);
 
   useEffect(() => {
-    if (dataAllHospitals) {
-      setHospitalCount(dataAllHospitals?.length);
+    if (dataTopCards) {
+      setHospitalCount(dataTopCards?.hospitals ?? 0);
+      setDoctorCount(dataTopCards?.doctors ?? 0);
+      setPatientCount(dataTopCards?.patients ?? 0);
     }
-  }, [dataAllHospitals]);
-
-  useEffect(() => {
-    if (dataAllDoctors) {
-      setDoctorCount(dataAllDoctors?.length);
-    }
-  }, [dataAllDoctors]);
-
-  useEffect(() => {
-    if (dataAllPatients) {
-      setPatientCount(dataAllPatients?.length);
-    }
-  }, [dataAllPatients]);
+  }, [dataTopCards]);
 
   return (
     <HospitalDashboard hospitalId={hospitalId}>
@@ -91,46 +64,32 @@ const index = () => {
             {/* BEGIN: General Report */}
             <div className="col-span-12 mt-8">
               <div className="grid grid-cols-12 gap-6 mt-5">
-                <Card
-                  cards={cardsData}
-                  cardType={cardType}
-                  setCardType={setCardType}
-                  isLoading={false}
-                />
+                {errorTopCards ? (
+                  <p className="col-span-12 box p-3 text-danger text-sm text-center">
+                    failed to load total Hospitals, doctors and patients
+                  </p>
+                ) : (
+                  <Card
+                    cards={cardsData}
+                    cardType={cardType}
+                    setCardType={setCardType}
+                    isLoading={isLoadingTopCards}
+                  />
+                )}
               </div>
             </div>
             {/* END: Cards */}
 
             {/* BEGIN: Hospitals Table */}
-            {cardType === "hospital" && (
-              <HospitalList
-                dataAllHospitals={dataAllHospitals}
-                errorAllHospitals={errorAllHospitals}
-                isLoadingAllHospitals={isLoadingAllHospitals}
-                reFetchAllHospitals={reFetchAllHospitals}
-              />
-            )}
+            {cardType === "hospital" && <HospitalList />}
             {/* END: Hospitals Table */}
 
             {/* BEGIN: Doctors Table */}
-            {cardType === "doctor" && (
-              <DoctorList
-                dataAllDoctors={dataAllDoctors}
-                errorAllDoctors={errorAllDoctors}
-                isLoadingAllDoctors={isLoadingAllDoctors}
-                reFetchAllDoctors={reFetchAllDoctors}
-              />
-            )}
+            {cardType === "doctor" && <DoctorList />}
             {/* END: Doctors Table */}
 
             {/* BEGIN: Patients Table */}
-            {cardType === "patient" && (
-              <PatientList
-                dataAllPatients={dataAllPatients}
-                errorAllPatients={errorAllPatients}
-                isLoadingAllPatients={isLoadingAllPatients}
-              />
-            )}
+            {cardType === "patient" && <PatientList />}
             {/* END: Patients Table */}
           </div>
         </div>

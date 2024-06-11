@@ -21,6 +21,7 @@ const AddOrEditDoctor = ({
     phone: "",
     password: "",
     role: "doctor",
+    device_name: "web",
   });
 
   useEffect(() => {

@@ -1,9 +1,9 @@
 import { useState, useCallback } from "react";
-import useAxios from "..";
+import useAxios from ".";
 import toast from "react-hot-toast";
-import useAuthHeader from "../authHeader";
+import useAuthHeader from "./authHeader";
 
-const useAllHospitals = () => {
+const useTopCards = () => {
   const axiosInstance = useAxios();
   const headers = useAuthHeader();
 
@@ -11,19 +11,19 @@ const useAllHospitals = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const allHospitalsReq = useCallback(
+  const topCardsReq = useCallback(
     async (query) => {
       try {
         setIsLoading(true);
         const res = await axiosInstance.get(
-          `/hospitals?device_name=web${query ? query : ""}`,
+          `/cards${query ? query : ""}`,
           headers
         );
         setData(res?.data?.data);
-        console.log("all hospitals res", res);
+        // console.log("top cards res", res);
       } catch (error) {
         setError(error?.response?.data);
-        console.log("all hospitals error", error);
+        // console.log("top cards error", error);
       } finally {
         setIsLoading(false);
       }
@@ -33,12 +33,12 @@ const useAllHospitals = () => {
 
   const reFetch = useCallback(
     async (query) => {
-      await allHospitalsReq(query);
+      await topCardsReq(query);
     },
-    [allHospitalsReq]
+    [topCardsReq]
   );
 
-  return { isLoading, data, error, allHospitalsReq, reFetch };
+  return { isLoading, data, error, topCardsReq, reFetch };
 };
 
-export default useAllHospitals;
+export default useTopCards;

@@ -1,41 +1,50 @@
-import clsx from "clsx";
-import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "../../base-components/Table";
-import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
-import { Link, useNavigate } from "react-router-dom";
-import FilterHospital from "./Filter";
+import { useNavigate } from "react-router-dom";
 import EditModal from "../../components/Modals/Edit";
+import DeleteAlert from "../../components/Modals/DeleteAlert";
 import AddOrEditHospital from "./AddOrEdit";
 import useShowHospital from "../../apis/hospital/show";
 import useUpdateHospital from "../../apis/hospital/update";
+import useAllHospitals from "../../apis/hospital/hospitals";
+import useDeleteHospital from "../../apis/hospital/delete";
 
-const HospitalList = ({
-  dataAllHospitals,
-  errorAllHospitals,
-  isLoadingAllHospitals,
-  reFetchAllHospitals,
-}) => {
+const HospitalList = () => {
   const navigate = useNavigate();
 
+  const {
+    data: dataAllHospitals,
+    error: errorAllHospitals,
+    isLoading: isLoadingAllHospitals,
+    reFetch: reFetchAllHospitals,
+    allHospitalsReq,
+  } = useAllHospitals();
   const {
     showHospitalReq,
     data: dataShowHospital,
     isLoading: isLoadingShowHospital,
   } = useShowHospital();
-
   const {
     updateHospitalReq,
     data: dataUpdateHospital,
     error: errorUpdateHospital,
     isLoading: isLoadingUpdateHospital,
   } = useUpdateHospital();
+  const {
+    data: dataDeleteHospital,
+    isLoading: isLoadingDeleteHospital,
+    deleteHospitalReq,
+  } = useDeleteHospital();
 
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
+
+  useEffect(() => {
+    allHospitalsReq();
+  }, []);
 
   const deleteHandler = (id) => {
     setShowDeleteAlert(true);
@@ -138,7 +147,7 @@ const HospitalList = ({
                           {hospital?.email ? hospital?.email : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {hospital?.contact ? hospital?.contact : "-"}
+                          {hospital?.phone ? hospital?.phone : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {hospital?.location ? hospital?.location : "-"}
@@ -161,13 +170,13 @@ const HospitalList = ({
                               />
                               Edit
                             </div>
-                            {/* <div
+                            <div
                               className="flex items-center text-danger cursor-pointer"
                               onClick={() => deleteHandler(hospital?.id)}
                             >
                               <Lucide icon="Trash2" className="w-4 h-4 mr-1" />
                               Delete
-                            </div> */}
+                            </div>
                           </div>
                         </Table.Td>
                       </Table.Tr>
@@ -200,6 +209,21 @@ const HospitalList = ({
         error={errorUpdateHospital}
         submitReq={updateHospitalReq}
         reFetch={reFetchAllHospitals}
+      />
+
+      <DeleteAlert
+        open={showDeleteAlert}
+        setOpen={setShowDeleteAlert}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        data={dataDeleteHospital}
+        deleteReq={deleteHospitalReq}
+        reFetch={reFetchAllHospitals}
+        isLoading={isLoadingDeleteHospital}
+        title={"Delete Hospital"}
+        subTitle={
+          "Are you sure that you want to delete this hospital? All of your data will be permanently removed. This action cannot be undone."
+        }
       />
     </>
   );
