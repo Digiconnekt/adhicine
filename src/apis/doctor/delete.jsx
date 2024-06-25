@@ -18,7 +18,7 @@ const useDeleteDoctor = () => {
 
       toast.success(res?.data?.msg || "doctor deleted successfully");
       console.log("delete doctor res", res);
-      setData(res?.data);
+      setData(res);
     } catch (error) {
       setError(error?.response?.data);
       toast.error(error.response.data.message || "Failed to delete doctor");

@@ -85,7 +85,9 @@ const index = () => {
             {/* END: Hospitals Table */}
 
             {/* BEGIN: Doctors Table */}
-            {cardType === "doctor" && <DoctorList />}
+            {cardType === "doctor" && (
+              <DoctorList reFetchTopCards={reFetchTopCards} />
+            )}
             {/* END: Doctors Table */}
 
             {/* BEGIN: Patients Table */}

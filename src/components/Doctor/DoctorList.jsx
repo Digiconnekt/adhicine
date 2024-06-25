@@ -12,7 +12,7 @@ import useAllDoctors from "../../apis/doctor/doctors";
 import useDeleteDoctor from "../../apis/doctor/delete";
 import DeleteAlert from "../../components/Modals/DeleteAlert";
 
-const DoctorList = () => {
+const DoctorList = ({ reFetchTopCards }) => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
@@ -209,7 +209,10 @@ const DoctorList = () => {
         setSelectedId={setSelectedId}
         data={dataDeleteDoctor}
         deleteReq={deleteDoctorReq}
-        reFetch={reFetchAllDoctors}
+        reFetch={() => {
+          reFetchAllDoctors();
+          reFetchTopCards();
+        }}
         isLoading={isLoadingDeleteDoctor}
         title={"Delete Doctor"}
         subTitle={

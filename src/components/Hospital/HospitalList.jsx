@@ -170,13 +170,13 @@ const HospitalList = () => {
                               />
                               Edit
                             </div>
-                            <div
+                            {/* <div
                               className="flex items-center text-danger cursor-pointer"
                               onClick={() => deleteHandler(hospital?.id)}
                             >
                               <Lucide icon="Trash2" className="w-4 h-4 mr-1" />
                               Delete
-                            </div>
+                            </div> */}
                           </div>
                         </Table.Td>
                       </Table.Tr>
