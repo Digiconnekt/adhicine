@@ -26,7 +26,7 @@ const HospitalDashboard = ({ children, hospitalId }) => {
 };
 
 export const OnlyHospital = ({ children }) => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state?.authUser?.user);
 
   if (user && user.role === "hospital-admin") {
     return <>{children}</>;

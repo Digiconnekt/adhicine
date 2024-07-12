@@ -30,7 +30,7 @@ const DoctorDashboard = ({ children, doctorId }) => {
 };
 
 export const OnlyDoctor = ({ children }) => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state?.authUser?.user);
 
   if (user && user.role === "doctor") {
     return <>{children}</>;

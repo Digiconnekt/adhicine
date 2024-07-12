@@ -18,7 +18,7 @@ const AdminDashboard = ({ children }) => {
 };
 
 export const OnlyAdmin = ({ children }) => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state?.authUser?.user);
 
   if (user && user.role === "admin") {
     return <>{children}</>;
