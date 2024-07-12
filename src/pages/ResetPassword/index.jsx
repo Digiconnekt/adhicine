@@ -6,8 +6,12 @@ import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import LoadingIcon from "../../base-components/LoadingIcon";
-import { NavLink, Navigate, useParams } from "react-router-dom";
+import { NavLink, Navigate, useLocation, useParams } from "react-router-dom";
 import useResetPassword from "../../apis/reset-password";
+
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 function Main() {
   const user = useSelector((state) => state.auth.user);
@@ -19,7 +23,7 @@ function Main() {
   const { error, isLoading, resetPasswordReq } = useResetPassword();
 
   const [formData, setFormData] = useState({
-    email: "",
+    email: useQuery().get("email") || "",
     password: "",
     password_confirmation: "",
     token,
@@ -82,6 +86,7 @@ function Main() {
                     error={
                       error?.errors?.email ? error?.errors?.email[0] : undefined
                     }
+                    disabled
                   />
                   <FormInput
                     type="password"

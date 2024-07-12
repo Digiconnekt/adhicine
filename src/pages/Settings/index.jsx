@@ -40,6 +40,15 @@ const Settings = () => {
     device_name: "web",
   });
 
+  const emptyPasswordFormData = () => {
+    setPasswordFormData({
+      current_password: "",
+      password: "",
+      password_confirmation: "",
+      device_name: "web",
+    });
+  };
+
   useEffect(() => {
     if (dataProfileShow) {
       setProfileFormData({
@@ -65,7 +74,12 @@ const Settings = () => {
 
   const submitProfileHandler = (e) => {
     e.preventDefault();
-    profileUpdateReq(profileFormData);
+    profileUpdateReq({
+      name: profileFormData?.name,
+      email: profileFormData?.email,
+      phone: profileFormData?.phone,
+      device_name: "web",
+    });
   };
 
   const submitPasswordHandler = (e) => {
@@ -77,10 +91,13 @@ const Settings = () => {
     ) {
       return toast.error("Please enter all fields");
     }
-    profileUpdateReq(passwordFormData);
+    profileUpdateReq({
+      current_password: passwordFormData?.current_password,
+      password: passwordFormData?.password,
+      password_confirmation: passwordFormData?.password_confirmation,
+      device_name: "web",
+    });
   };
-
-  console.log("dataProfileUpdate: ", dataProfileUpdate);
 
   if (isLoadingProfileShow) {
     return <p>loading...</p>;
@@ -134,7 +151,7 @@ const Settings = () => {
             variant="link-tabs"
             className="flex-col justify-center text-center sm:flex-row lg:justify-start"
           >
-            <Tab fullWidth={false}>
+            <Tab fullWidth={false} onClick={emptyPasswordFormData}>
               <Tab.Button className="flex items-center py-4 cursor-pointer">
                 <Lucide icon="User" className="w-4 h-4 mr-2" /> Profile
               </Tab.Button>
@@ -240,7 +257,7 @@ const Settings = () => {
                   </FormLabel>
                   <FormInput
                     id="current-password"
-                    type="text"
+                    type="password"
                     className="w-full"
                     placeholder="********"
                     name="current_password"
@@ -257,7 +274,7 @@ const Settings = () => {
                   <FormLabel htmlFor="password">New Password *</FormLabel>
                   <FormInput
                     id="password"
-                    type="text"
+                    type="password"
                     className="w-full"
                     placeholder="********"
                     name="password"
@@ -276,7 +293,7 @@ const Settings = () => {
                   </FormLabel>
                   <FormInput
                     id="password-confirmation"
-                    type="text"
+                    type="password"
                     className="w-full"
                     placeholder="********"
                     name="password_confirmation"

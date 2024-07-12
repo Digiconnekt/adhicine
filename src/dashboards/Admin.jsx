@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const AdminDashboard = ({ children }) => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state?.authUser?.user);
 
   if (user && user.role === "admin") {
     return <>{children}</>;

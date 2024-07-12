@@ -12,7 +12,7 @@ import LoadingIcon from "../../base-components/LoadingIcon";
 import { NavLink, Navigate } from "react-router-dom";
 
 function Main() {
-  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state?.authToken?.token);
   const { error, isLoading, loginReq } = useLogin();
 
   const [formData, setFormData] = useState({
@@ -34,7 +34,7 @@ function Main() {
     loginReq(formData);
   };
 
-  if (user) {
+  if (token) {
     return <Navigate to="/" />;
   }
 

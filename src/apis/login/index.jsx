@@ -2,7 +2,8 @@ import useAxios from "..";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { login } from "../../stores/authSlice";
+import { login } from "../../stores/authTokenSlice";
+import { addUser } from "../../stores/authUserSlice";
 import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
@@ -29,12 +30,16 @@ const useLogin = () => {
       setData(res?.data);
       dispatch(
         login({
+          token: res?.data?.data?.accessToken,
+        })
+      );
+      dispatch(
+        addUser({
           userId: res?.data?.data?.id,
           name: res?.data?.data?.name,
           email: res?.data?.data?.email,
           phone: res?.data?.data?.phone,
           role: res?.data?.data?.role,
-          token: res?.data?.data?.accessToken,
           profileImg: res?.data?.data?.profilePhotoUrl,
           otpVerifiedAt: res?.data?.data?.otpVerifiedAt,
         })
@@ -51,7 +56,7 @@ const useLogin = () => {
           break;
 
         default:
-          navigate(`/`);
+          navigate(`/login`);
           break;
       }
     } catch (error) {

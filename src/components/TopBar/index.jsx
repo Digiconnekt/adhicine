@@ -14,7 +14,7 @@ function Main(props) {
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoading, logoutReq } = useLogout();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state?.authUser?.user);
 
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 

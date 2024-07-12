@@ -3,7 +3,7 @@ import useAxios from "..";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import useAuthHeader from "../authHeader";
-import { login } from "../../stores/authSlice";
+import { addUser } from "../../stores/authUserSlice";
 
 const useProfileUpdate = () => {
   const axiosInstance = useAxios();
@@ -21,14 +21,14 @@ const useProfileUpdate = () => {
 
       setData(res?.data?.data);
       dispatch(
-        login({
+        addUser({
           userId: res?.data?.data?.id,
           name: res?.data?.data?.name,
           email: res?.data?.data?.email,
           phone: res?.data?.data?.phone,
           role: res?.data?.data?.role,
-          token: res?.data?.data?.accessToken,
           profileImg: res?.data?.data?.profilePhotoUrl,
+          otpVerifiedAt: res?.data?.data?.otpVerifiedAt,
         })
       );
       toast.success(res?.data?.message || "Successfully Updated Your Profile");

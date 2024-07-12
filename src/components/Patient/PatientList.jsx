@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import useAllPatients from "../../apis/patient/patients";
 
 const PatientList = () => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state?.authUser?.user);
   const navigate = useNavigate();
 
   const {

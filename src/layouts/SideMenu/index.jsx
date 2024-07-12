@@ -14,12 +14,13 @@ import OtpVerification from "../../components/OtpVerification";
 
 function Main() {
   const location = useLocation();
-  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state?.authToken?.token);
+  const user = useSelector((state) => state?.authUser?.user);
   const [formattedMenu, setFormattedMenu] = useState([]);
   const sideMenuStore = useAppSelector(selectSideMenu);
   const sideMenu = () => nestedMenu(sideMenuStore, location);
 
-  if (!user) {
+  if (!token) {
     return <Navigate to="/login" />;
   }
 

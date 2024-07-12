@@ -4,7 +4,8 @@ import colorSchemeReducer from "./colorSchemeSlice";
 import sideMenuReducer from "./sideMenuSlice";
 import simpleMenuReducer from "./simpleMenuSlice";
 import topMenuReducer from "./topMenuSlice";
-import authReducer from "./authSlice";
+import authUserReducer from "./authUserSlice";
+import authTokenReducer from "./authTokenSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     sideMenu: sideMenuReducer,
     simpleMenu: simpleMenuReducer,
     topMenu: topMenuReducer,
-    auth: authReducer,
+    authToken: authTokenReducer,
+    authUser: authUserReducer,
   },
 });

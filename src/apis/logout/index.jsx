@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "../../stores/authSlice";
+import { logout } from "../../stores/authTokenSlice";
 import { useNavigate } from "react-router-dom";
 import useAxios from "..";
 import toast from "react-hot-toast";

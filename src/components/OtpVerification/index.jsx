@@ -20,7 +20,6 @@ const OtpVerification = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     verifyOtpReq({ otp });
-    console.log("otp: ", otp);
   };
 
   return (

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import useAxios from "..";
 import toast from "react-hot-toast";
 import useAuthHeader from "../authHeader";
-import { logout } from "../../stores/authSlice";
+import { logout } from "../../stores/authTokenSlice";
 
 const useVerifyOtp = () => {
   const axiosInstance = useAxios();
