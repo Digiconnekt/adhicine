@@ -10,8 +10,8 @@ import { NavLink, Navigate } from "react-router-dom";
 import useForgotPassword from "../../apis/forgot-password";
 
 function Main() {
-  const user = useSelector((state) => state.auth.user);
-  if (user) {
+  const token = useSelector((state) => state?.authToken?.token);
+  if (token) {
     return <Navigate to="/" />;
   }
 

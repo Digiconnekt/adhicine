@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useAxios from "..";
 import toast from "react-hot-toast";
 import useAuthHeader from "../authHeader";
+import { removeUser } from "../../stores/authUserSlice";
 
 const useLogout = () => {
   const axiosInstance = useAxios();
@@ -24,6 +25,7 @@ const useLogout = () => {
       // setData(res?.data);
       // console.log("Logout success res", res);
       dispatch(logout());
+      dispatch(removeUser());
       navigate("/login");
     } catch (error) {
       setError(error?.response?.data);
