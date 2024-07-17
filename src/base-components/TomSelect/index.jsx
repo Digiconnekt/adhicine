@@ -89,20 +89,34 @@ function TomSelect(props) {
     }
   }, [tomSelectRef, props.value, props.className]);
 
-  const { options, value, onOptionAdd, onChange, getRef, ...computedProps } =
-    props;
+  const {
+    options,
+    value,
+    onOptionAdd,
+    onChange,
+    getRef,
+    error,
+    ...computedProps
+  } = props;
   return (
-    <select
-      {...computedProps}
-      ref={tomSelectRef}
-      value={props.value}
-      onChange={(event) => {
-        props.onChange(event.target.value);
-      }}
-      className={clsx(["tom-select", props.className])}
-    >
-      {props.children}
-    </select>
+    <>
+      <select
+        {...computedProps}
+        ref={tomSelectRef}
+        value={props.value}
+        onChange={(event) => {
+          props.onChange(event.target.value);
+        }}
+        className={clsx([
+          "tom-select",
+          error && "border-red-500 focus:border-red-500 focus:ring-red-500",
+          props.className,
+        ])}
+      >
+        {props.children}
+      </select>
+      {error && <span className="text-red-500 mt-1 ms-1 block">{error}</span>}
+    </>
   );
 }
 

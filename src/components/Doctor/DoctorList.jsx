@@ -109,6 +109,9 @@ const DoctorList = ({ reFetchTopCards }) => {
                       <Table.Th className="border-b-0 whitespace-nowrap">
                         DOCTOR NAME
                       </Table.Th>
+                      <Table.Th className="border-b-0 whitespace-nowrap">
+                        HOSPITAL NAME
+                      </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         EMAIL
                       </Table.Th>
@@ -136,6 +139,9 @@ const DoctorList = ({ reFetchTopCards }) => {
                           > */}
                           {doctor?.name ? doctor?.name : "-"}
                           {/* </Link> */}
+                        </Table.Td>
+                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                          {doctor?.hospital ? doctor?.hospital : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {doctor?.email ? doctor?.email : "-"}

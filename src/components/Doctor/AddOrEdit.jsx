@@ -1,8 +1,11 @@
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { FormInput, FormLabel } from "../../base-components/Form";
+import { useNavigate } from "react-router-dom";
 import Button from "../../base-components/Button";
 import LoadingIcon from "../../base-components/LoadingIcon";
-import { useNavigate } from "react-router-dom";
+import { FormInput, FormLabel } from "../../base-components/Form";
+import TomSelect from "../../base-components/TomSelect";
+import useAllHospitals from "../../apis/hospital/hospitals";
 
 const AddOrEditDoctor = ({
   type,
@@ -14,7 +17,9 @@ const AddOrEditDoctor = ({
   setModalOpen,
 }) => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state?.authUser?.user);
 
+  const [selectedHospital, setSelectedHospital] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,6 +28,18 @@ const AddOrEditDoctor = ({
     role: "doctor",
     device_name: "web",
   });
+
+  const {
+    data: dataAllHospitals,
+    error: errorAllHospitals,
+    isLoading: isLoadingAllHospitals,
+    reFetch: reFetchAllHospitals,
+    allHospitalsReq,
+  } = useAllHospitals();
+
+  useEffect(() => {
+    allHospitalsReq();
+  }, []);
 
   useEffect(() => {
     if (inputData) {
@@ -46,7 +63,12 @@ const AddOrEditDoctor = ({
 
   const submitHandler = (e) => {
     e.preventDefault();
-    type === "add" ? submitReq(formData) : submitReq(inputData?.id, formData);
+    type === "add"
+      ? submitReq({ ...formData, hospital_id: selectedHospital })
+      : submitReq(inputData?.id, {
+          ...formData,
+          hospital_id: selectedHospital,
+        });
   };
 
   useEffect(() => {
@@ -55,9 +77,36 @@ const AddOrEditDoctor = ({
     }
   }, [data]);
 
+  console.log("selectedHospital", selectedHospital);
+
   return (
     <>
-      <div>
+      {isLoadingAllHospitals ? (
+        <p>loading hospitals...</p>
+      ) : errorAllHospitals ? (
+        <p>failed to load hospitals</p>
+      ) : (
+        <div>
+          <FormLabel htmlFor="hospital_id">Select Hospital *</FormLabel>
+          <TomSelect
+            value={selectedHospital}
+            onChange={setSelectedHospital}
+            options={{
+              placeholder: "Select Hospital",
+            }}
+            className="w-full"
+            error={error?.hospital_id ? error?.hospital_id[0] : undefined}
+          >
+            {dataAllHospitals?.map((hospital, i) => (
+              <option value={hospital?.id} key={i}>
+                {hospital?.name}
+              </option>
+            ))}
+          </TomSelect>
+        </div>
+      )}
+
+      <div className="mt-3">
         <FormLabel htmlFor="name">Name *</FormLabel>
         <FormInput
           id="name"

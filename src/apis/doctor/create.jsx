@@ -2,10 +2,12 @@ import { useState } from "react";
 import useAxios from "..";
 import toast from "react-hot-toast";
 import useAuthHeader from "../authHeader";
+import { useNavigate } from "react-router-dom";
 
 const useCreateDoctor = () => {
   const axiosInstance = useAxios();
   const headers = useAuthHeader();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
@@ -15,19 +17,23 @@ const useCreateDoctor = () => {
     try {
       setIsLoading(true);
       const res = await axiosInstance.post(
-        "/register?device_name=web",
-        payload
+        "/invite/doctor?device_name=web",
+        payload,
+        headers
       );
 
       setData(res?.data?.data);
-      toast.success("Successfully Registered");
+      toast.success("Successfully Created Doctor");
+
+      navigate("/");
+
       console.log("register res", res?.data?.data);
     } catch (error) {
       setError(error?.response?.data);
       toast.error(
         typeof error.response.data.msg === "string"
           ? error.response.data.msg
-          : "Failed to register"
+          : "Failed to create Doctor"
       );
       console.log("register error", error?.response?.data);
     } finally {
