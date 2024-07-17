@@ -56,7 +56,7 @@ Breadcrumb.Link = ({
           "before:content-[''] before:w-[14px] before:h-[14px] before:bg-bredcrumb-chevron-dark before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0",
         breadcrumb.light &&
           key > 0 &&
-          "before:content-[''] before:w-[14px] before:h-[14px] before:bg-bredcrumb-chevron-light before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0",
+          "before:content-[''] before:w-[14px] before:h-[14px] before:bg-bredcrumb-chevron-light text-black before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0",
         key > 0 && "dark:before:bg-bredcrumb-chevron-darkmode",
         !breadcrumb.light &&
           active &&

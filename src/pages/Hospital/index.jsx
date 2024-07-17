@@ -7,6 +7,7 @@ import PatientList from "../../components/Patient/PatientList";
 import HospitalList from "../../components/Hospital/HospitalList";
 import { useParams } from "react-router-dom";
 import useTopCards from "../../apis/topCards";
+import Greeting from "../../components/Greeting";
 
 const index = () => {
   const { hospitalId } = useParams();
@@ -58,11 +59,14 @@ const index = () => {
 
   return (
     <HospitalDashboard hospitalId={hospitalId}>
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12">
+        <div className="col-span-12">
+          <Greeting />
+        </div>
         <div className="col-span-12">
           <div className="grid grid-cols-12 gap-6">
             {/* BEGIN: General Report */}
-            <div className="col-span-12 mt-8">
+            <div className="col-span-12 mt-5">
               <div className="grid grid-cols-12 gap-6 mt-5">
                 {errorTopCards ? (
                   <p className="col-span-12 box p-3 text-danger text-sm text-center">

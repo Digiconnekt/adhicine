@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Lucide from "../../base-components/Lucide";
-import logoUrl from "../../assets/images/logo.svg";
 import Breadcrumb from "../../base-components/Breadcrumb";
 import { Menu, Popover } from "../../base-components/Headless";
 import _ from "lodash";
@@ -43,10 +42,10 @@ function Main(props) {
     <>
       <div
         className={clsx([
-          "h-[70px] md:h-[65px] z-[51] border-b border-white/[0.08] mt-12 md:mt-0 -mx-3 sm:-mx-8 md:-mx-0 px-3 md:border-b-0 relative md:fixed md:inset-x-0 md:top-0 sm:px-8 md:px-10 md:pt-10 md:bg-gradient-to-b md:from-slate-100 md:to-transparent dark:md:from-darkmode-700",
+          "hidden md:block h-[70px] md:h-[65px] z-[51] border-b border-white/[0.08] mt-12 md:mt-0 -mx-3 sm:-mx-8 md:-mx-0 px-3 md:border-b-0 relative md:fixed md:inset-x-0 md:top-0 sm:px-8 md:px-10 md:pt-10 md:bg-gradient-to-b bg-white",
           props.layout == "top-menu" && "dark:md:from-darkmode-800",
-          "before:content-[''] before:absolute before:h-[65px] before:inset-0 before:top-0 before:mx-7 before:bg-primary/30 before:mt-3 before:rounded-xl before:hidden before:md:block before:dark:bg-darkmode-600/30",
-          "after:content-[''] after:absolute after:inset-0 after:h-[65px] after:mx-3 after:bg-primary after:mt-5 after:rounded-xl after:shadow-md after:hidden after:md:block after:dark:bg-darkmode-600",
+          // "before:content-[''] before:absolute before:h-[65px] before:inset-0 before:top-0 before:mx-7 before:bg-primary/30 before:mt-3 before:rounded-xl before:hidden before:md:block before:dark:bg-darkmode-600/30",
+          "after:content-[''] after:absolute after:inset-0 after:h-[65px] after:mx-3 after:bg-white after:mt-5 after:rounded-xl after:shadow-sm after:hidden after:md:block after:dark:bg-darkmode-600",
         ])}
       >
         <div className="flex items-center h-full">
@@ -54,27 +53,23 @@ function Main(props) {
           <Link
             to="/"
             className={clsx([
-              "-intro-x hidden md:flex",
+              "-intro-x hidden md:flex md:items-center md:gap-x-2",
               props.layout == "side-menu" && "xl:w-[180px]",
               props.layout == "simple-menu" && "xl:w-auto",
               props.layout == "top-menu" && "w-auto",
             ])}
           >
-            <img alt="Adhicine" className="w-6" src={logoUrl} />
-            <span
-              className={clsx([
-                "ml-3 text-lg text-white",
-                props.layout == "side-menu" && "hidden xl:block",
-                props.layout == "simple-menu" && "hidden",
-              ])}
-            >
-              Adhicine
-            </span>
+            <img alt="Adhicine" src={"../../../images/logo.png"} />
+            <img
+              alt="Adhicine"
+              src={"../../../images/logo-only-name.png"}
+              className="max-w-32 h-7 mb-1"
+            />
           </Link>
           {/* END: Logo */}
 
           {/* BEGIN: Breadcrumb */}
-          <Breadcrumb
+          {/* <Breadcrumb
             light
             className={clsx([
               "h-[45px] md:ml-10 md:border-l border-white/[0.08] dark:border-white/[0.08] mr-auto -intro-x",
@@ -88,33 +83,33 @@ function Main(props) {
                 key={i}
                 className={`${
                   breadcrumb?.active
-                    ? "text-white hover:text-gray-200"
-                    : "text-gray-200 hover:text-gray-200"
+                    ? "text-black hover:text-gray-700"
+                    : "text-black hover:text-gray-700"
                 }`}
               >
                 {i === 0 && (
                   <Lucide
                     icon="Home"
-                    className="w-4 h-4 me-1 inline-block mb-1"
+                    className="w-4 h-4 me-1 inline-block mb-1 text-black"
                   />
                 )}
                 {breadcrumb?.title}
               </Breadcrumb.Link>
             ))}
-          </Breadcrumb>
+          </Breadcrumb> */}
           {/* END: Breadcrumb */}
 
           {/* BEGIN: Notifications */}
-          {/* <Popover className="mr-4 intro-x sm:mr-6">
+          <Popover className="ml-auto mr-4 intro-x sm:mr-6">
             <Popover.Button
               className="
-              relative text-white/70 outline-none block
+              relative text-black outline-none block
               before:content-[''] before:w-[8px] before:h-[8px] before:rounded-full before:absolute before:top-[-2px] before:right-0 before:bg-danger
             "
             >
-              <Lucide icon="Bell" className="w-5 h-5 dark:text-slate-500" />
+              <Lucide icon="Bell" className="w-6 h-6 dark:text-slate-500" />
             </Popover.Button>
-            <Popover.Panel className="w-[280px] sm:w-[350px] p-5 mt-2">
+            {/* <Popover.Panel className="w-[280px] sm:w-[350px] p-5 mt-2">
               <div className="mb-5 font-medium">Notifications</div>
               {_.take(fakerData, 5).map((faker, fakerKey) => (
                 <div
@@ -147,17 +142,14 @@ function Main(props) {
                   </div>
                 </div>
               ))}
-            </Popover.Panel>
-          </Popover> */}
+            </Popover.Panel> */}
+          </Popover>
           {/* END: Notifications */}
 
           {/* BEGIN: Account Menu */}
           <Menu>
-            <Menu.Button className="block w-8 h-8 overflow-hidden rounded-full shadow-lg image-fit zoom-in intro-x">
-              <img
-                alt="Midone Tailwind HTML Admin Template"
-                src={user?.profileImg}
-              />
+            <Menu.Button className="block w-10 h-10 overflow-hidden rounded-full shadow-lg image-fit zoom-in intro-x">
+              <img alt="User Image" src={user?.profileImg} />
             </Menu.Button>
             <Menu.Items className="w-56 mt-px relative bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
               <Menu.Header className="font-normal">

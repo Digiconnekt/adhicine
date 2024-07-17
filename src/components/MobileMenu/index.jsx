@@ -1,6 +1,6 @@
 import { Transition } from "react-transition-group";
 import { useState, useEffect, createRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toRaw } from "../../utils/helper";
 import { selectSideMenu } from "../../stores/sideMenuSlice";
 import { useAppSelector } from "../../stores/hooks";
@@ -10,14 +10,19 @@ import Lucide from "../../base-components/Lucide";
 import logoUrl from "../../assets/images/logo.svg";
 import clsx from "clsx";
 import SimpleBar from "simplebar";
+import { useSelector } from "react-redux";
+import { Popover, Menu } from "../../base-components/Headless";
+import useLogout from "../../apis/logout";
 
 function Main() {
   const location = useLocation();
+  const user = useSelector((state) => state?.authUser?.user);
   const [formattedMenu, setFormattedMenu] = useState([]);
   const sideMenuStore = useAppSelector(selectSideMenu);
   const mobileMenu = () => nestedMenu(toRaw(sideMenuStore), location);
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const scrollableRef = createRef();
+  const { isLoading, logoutReq } = useLogout();
 
   useEffect(() => {
     if (scrollableRef.current) {
@@ -38,22 +43,106 @@ function Main() {
         ])}
       >
         <div className="h-[70px] px-3 sm:px-8 flex items-center">
-          <a href="" className="flex mr-auto">
+          <Link to="/" className="flex mr-auto">
             <img
-              alt="Midone Tailwind HTML Admin Template"
-              className="w-6"
-              src={logoUrl}
+              alt="Adhicine"
+              src={"../../../images/logo.png"}
+              className="w-10"
             />
-          </a>
-          <a href="#" onClick={(e) => e.preventDefault()}>
-            <Lucide
-              icon="BarChart2"
-              className="w-8 h-8 text-white transform -rotate-90"
-              onClick={() => {
-                setActiveMobileMenu(!activeMobileMenu);
-              }}
-            />
-          </a>
+          </Link>
+          <div className="flex items-center gap-5">
+            {/* BEGIN: Notifications */}
+            <Popover className="ml-auto intro-x">
+              <Popover.Button
+                className="
+              relative text-white outline-none block
+              before:content-[''] before:w-[8px] before:h-[8px] before:rounded-full before:absolute before:top-[-2px] before:right-0 before:bg-danger
+            "
+              >
+                <Lucide icon="Bell" className="w-6 h-6 dark:text-slate-500" />
+              </Popover.Button>
+              {/* <Popover.Panel className="w-[280px] sm:w-[350px] p-5 mt-2">
+              <div className="mb-5 font-medium">Notifications</div>
+              {_.take(fakerData, 5).map((faker, fakerKey) => (
+                <div
+                  key={fakerKey}
+                  className={clsx([
+                    "cursor-pointer relative flex items-center",
+                    { "mt-5": fakerKey },
+                  ])}
+                >
+                  <div className="relative flex-none w-12 h-12 mr-1 image-fit">
+                    <img
+                      alt="Midone Tailwind HTML Admin Template"
+                      className="rounded-full"
+                      src={faker.photos[0]}
+                    />
+                    <div className="absolute bottom-0 right-0 w-3 h-3 border-2 border-white rounded-full bg-success dark:border-darkmode-600"></div>
+                  </div>
+                  <div className="ml-2 overflow-hidden">
+                    <div className="flex items-center">
+                      <a href="" className="mr-5 font-medium truncate">
+                        {faker.users[0].name}
+                      </a>
+                      <div className="ml-auto text-xs text-slate-400 whitespace-nowrap">
+                        {faker.times[0]}
+                      </div>
+                    </div>
+                    <div className="w-full truncate text-slate-500 mt-0.5">
+                      {faker.news[0].shortContent}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Popover.Panel> */}
+            </Popover>
+            {/* END: Notifications */}
+
+            {/* BEGIN: Account Menu */}
+            <Menu>
+              <Menu.Button className="block w-10 h-10 overflow-hidden rounded-full shadow-lg image-fit zoom-in intro-x">
+                <img alt="User Image" src={user?.profileImg} />
+              </Menu.Button>
+              <Menu.Items className="w-56 mt-px relative bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
+                <Menu.Header className="font-normal">
+                  <div className="font-medium">{user?.name}</div>
+                  <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
+                    {user?.role}
+                  </div>
+                </Menu.Header>
+                <Menu.Divider className="bg-white/[0.08]" />
+                <Menu.Item
+                  className="hover:bg-white/5"
+                  onClick={() => navigate("/settings")}
+                >
+                  <Lucide icon="Settings" className="w-4 h-4 mr-2" /> Settings
+                </Menu.Item>
+                <Menu.Item className="hover:bg-white/5" onClick={logoutReq}>
+                  {isLoading ? (
+                    <LoadingIcon
+                      icon="oval"
+                      color="white"
+                      className="w-4 h-4 mr-2"
+                    />
+                  ) : (
+                    <Lucide icon="ToggleRight" className="w-4 h-4 mr-2" />
+                  )}
+                  Logout
+                </Menu.Item>
+              </Menu.Items>
+            </Menu>
+            {/* END: Account Menu */}
+
+            <a href="#" onClick={(e) => e.preventDefault()}>
+              <Lucide
+                icon="BarChart2"
+                className="w-8 h-8 text-white transform -rotate-90"
+                onClick={() => {
+                  setActiveMobileMenu(!activeMobileMenu);
+                }}
+              />
+            </a>
+          </div>
         </div>
         <div
           ref={scrollableRef}
@@ -82,94 +171,96 @@ function Main() {
           </a>
           <ul className="py-2">
             {/* BEGIN: First Child */}
-            {formattedMenu.map((menu, menuKey) =>
-              menu == "divider" ? (
-                <Divider as="li" className="my-6" key={menuKey}></Divider>
-              ) : (
-                <li key={menuKey}>
-                  <Menu
-                    menu={menu}
-                    formattedMenuState={[formattedMenu, setFormattedMenu]}
-                    level="first"
-                    setActiveMobileMenu={setActiveMobileMenu}
-                  ></Menu>
-                  {/* BEGIN: Second Child */}
-                  {menu.subMenu && (
-                    <Transition
-                      in={menu.activeDropdown}
-                      onEnter={enter}
-                      onExit={leave}
-                      timeout={300}
-                    >
-                      <ul
-                        className={clsx([
-                          "bg-black/10 rounded-lg mx-4 my-1 dark:bg-darkmode-700",
-                          !menu.activeDropdown && "hidden",
-                          menu.activeDropdown && "block",
-                        ])}
+            {formattedMenu
+              .filter((menu) => menu.show[user.role])
+              .map((menu, menuKey) =>
+                menu == "divider" ? (
+                  <Divider as="li" className="my-6" key={menuKey}></Divider>
+                ) : (
+                  <li key={menuKey}>
+                    <MenuComp
+                      menu={menu}
+                      formattedMenuState={[formattedMenu, setFormattedMenu]}
+                      level="first"
+                      setActiveMobileMenu={setActiveMobileMenu}
+                    ></MenuComp>
+                    {/* BEGIN: Second Child */}
+                    {menu.subMenu && (
+                      <Transition
+                        in={menu.activeDropdown}
+                        onEnter={enter}
+                        onExit={leave}
+                        timeout={300}
                       >
-                        {menu.subMenu.map((subMenu, subMenuKey) => (
-                          <li
-                            className="max-w-[1280px] w-full mx-auto"
-                            key={subMenuKey}
-                          >
-                            <Menu
-                              menu={subMenu}
-                              formattedMenuState={[
-                                formattedMenu,
-                                setFormattedMenu,
-                              ]}
-                              level="second"
-                              setActiveMobileMenu={setActiveMobileMenu}
-                            ></Menu>
-                            {/* BEGIN: Third Child */}
-                            {subMenu.subMenu && (
-                              <Transition
-                                in={subMenu.activeDropdown}
-                                onEnter={enter}
-                                onExit={leave}
-                                timeout={300}
-                              >
-                                <ul
-                                  className={clsx([
-                                    "bg-black/10 rounded-lg my-1 dark:bg-darkmode-600",
-                                    !subMenu.activeDropdown && "hidden",
-                                    subMenu.activeDropdown && "block",
-                                  ])}
+                        <ul
+                          className={clsx([
+                            "bg-black/10 rounded-lg mx-4 my-1 dark:bg-darkmode-700",
+                            !menu.activeDropdown && "hidden",
+                            menu.activeDropdown && "block",
+                          ])}
+                        >
+                          {menu.subMenu.map((subMenu, subMenuKey) => (
+                            <li
+                              className="max-w-[1280px] w-full mx-auto"
+                              key={subMenuKey}
+                            >
+                              <Menu
+                                menu={subMenu}
+                                formattedMenuState={[
+                                  formattedMenu,
+                                  setFormattedMenu,
+                                ]}
+                                level="second"
+                                setActiveMobileMenu={setActiveMobileMenu}
+                              ></Menu>
+                              {/* BEGIN: Third Child */}
+                              {subMenu.subMenu && (
+                                <Transition
+                                  in={subMenu.activeDropdown}
+                                  onEnter={enter}
+                                  onExit={leave}
+                                  timeout={300}
                                 >
-                                  {subMenu.subMenu.map(
-                                    (lastSubMenu, lastSubMenuKey) => (
-                                      <li
-                                        className="max-w-[1280px] w-full mx-auto"
-                                        key={lastSubMenuKey}
-                                      >
-                                        <Menu
-                                          menu={lastSubMenu}
-                                          formattedMenuState={[
-                                            formattedMenu,
-                                            setFormattedMenu,
-                                          ]}
-                                          level="third"
-                                          setActiveMobileMenu={
-                                            setActiveMobileMenu
-                                          }
-                                        ></Menu>
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                              </Transition>
-                            )}
-                            {/* END: Third Child */}
-                          </li>
-                        ))}
-                      </ul>
-                    </Transition>
-                  )}
-                  {/* END: Second Child */}
-                </li>
-              )
-            )}
+                                  <ul
+                                    className={clsx([
+                                      "bg-black/10 rounded-lg my-1 dark:bg-darkmode-600",
+                                      !subMenu.activeDropdown && "hidden",
+                                      subMenu.activeDropdown && "block",
+                                    ])}
+                                  >
+                                    {subMenu.subMenu.map(
+                                      (lastSubMenu, lastSubMenuKey) => (
+                                        <li
+                                          className="max-w-[1280px] w-full mx-auto"
+                                          key={lastSubMenuKey}
+                                        >
+                                          <Menu
+                                            menu={lastSubMenu}
+                                            formattedMenuState={[
+                                              formattedMenu,
+                                              setFormattedMenu,
+                                            ]}
+                                            level="third"
+                                            setActiveMobileMenu={
+                                              setActiveMobileMenu
+                                            }
+                                          ></Menu>
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                </Transition>
+                              )}
+                              {/* END: Third Child */}
+                            </li>
+                          ))}
+                        </ul>
+                      </Transition>
+                    )}
+                    {/* END: Second Child */}
+                  </li>
+                )
+              )}
             {/* END: First Child */}
           </ul>
         </div>
@@ -179,7 +270,7 @@ function Main() {
   );
 }
 
-function Menu(props) {
+function MenuComp(props) {
   const navigate = useNavigate();
   const [formattedMenu, setFormattedMenu] = props.formattedMenuState;
 
