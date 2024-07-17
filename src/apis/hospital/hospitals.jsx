@@ -20,7 +20,7 @@ const useAllHospitals = () => {
           headers
         );
         setData(res?.data?.data);
-        console.log("all hospitals res", res);
+        // console.log("all hospitals res", res);
       } catch (error) {
         setError(error?.response?.data);
         console.log("all hospitals error", error);
