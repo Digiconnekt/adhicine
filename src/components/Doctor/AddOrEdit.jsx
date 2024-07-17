@@ -77,8 +77,6 @@ const AddOrEditDoctor = ({
     }
   }, [data]);
 
-  console.log("selectedHospital", selectedHospital);
-
   return (
     <>
       {isLoadingAllHospitals ? (
