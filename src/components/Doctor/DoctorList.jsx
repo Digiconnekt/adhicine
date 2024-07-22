@@ -63,10 +63,10 @@ const DoctorList = ({ reFetchTopCards }) => {
     <>
       <div className="col-span-12 mt-6">
         <div className="flex flex-wrap items-center justify-between col-span-12 mt-2 intro-y sm:flex-nowrap">
-          <div className="w-56 text-slate-500">
-            <h2 className="text-lg font-semibold">
-              Total Doctors -{" "}
-              {isLoadingAllDoctors ? <>loading...</> : dataAllDoctors?.length}
+          <div className="w-56 text-black">
+            <h2 className="text-xl font-semibold">
+              Doctors{" "}
+              {/* {isLoadingAllDoctors ? <>loading...</> : dataAllDoctors?.length} */}
             </h2>
           </div>
           <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
@@ -109,7 +109,7 @@ const DoctorList = ({ reFetchTopCards }) => {
                       <Table.Th className="border-b-0 whitespace-nowrap">
                         DOCTOR NAME
                       </Table.Th>
-                      <Table.Th className="border-b-0 whitespace-nowrap">
+                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         HOSPITAL NAME
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">

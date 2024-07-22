@@ -15,6 +15,7 @@ const AddOrEditDoctor = ({
   submitReq,
   inputData,
   setModalOpen,
+  selectedId,
 }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.authUser?.user);
@@ -38,7 +39,9 @@ const AddOrEditDoctor = ({
   } = useAllHospitals();
 
   useEffect(() => {
-    allHospitalsReq();
+    if (type === "add") {
+      allHospitalsReq();
+    }
   }, []);
 
   useEffect(() => {
@@ -65,7 +68,7 @@ const AddOrEditDoctor = ({
     e.preventDefault();
     type === "add"
       ? submitReq({ ...formData, hospital_id: selectedHospital })
-      : submitReq(inputData?.id, {
+      : submitReq(selectedId, {
           ...formData,
           hospital_id: selectedHospital,
         });
@@ -79,30 +82,31 @@ const AddOrEditDoctor = ({
 
   return (
     <>
-      {isLoadingAllHospitals ? (
-        <p>loading hospitals...</p>
-      ) : errorAllHospitals ? (
-        <p>failed to load hospitals</p>
-      ) : (
-        <div>
-          <FormLabel htmlFor="hospital_id">Select Hospital *</FormLabel>
-          <TomSelect
-            value={selectedHospital}
-            onChange={setSelectedHospital}
-            options={{
-              placeholder: "Select Hospital",
-            }}
-            className="w-full"
-            error={error?.hospital_id ? error?.hospital_id[0] : undefined}
-          >
-            {dataAllHospitals?.map((hospital, i) => (
-              <option value={hospital?.id} key={i}>
-                {hospital?.name}
-              </option>
-            ))}
-          </TomSelect>
-        </div>
-      )}
+      {type === "add" &&
+        (isLoadingAllHospitals ? (
+          <p>loading hospitals...</p>
+        ) : errorAllHospitals ? (
+          <p>failed to load hospitals</p>
+        ) : (
+          <div>
+            <FormLabel htmlFor="hospital_id">Select Hospital *</FormLabel>
+            <TomSelect
+              value={selectedHospital}
+              onChange={setSelectedHospital}
+              options={{
+                placeholder: "Select Hospital",
+              }}
+              className="w-full"
+              error={error?.hospital_id ? error?.hospital_id[0] : undefined}
+            >
+              {dataAllHospitals?.map((hospital, i) => (
+                <option value={hospital?.id} key={i}>
+                  {hospital?.name}
+                </option>
+              ))}
+            </TomSelect>
+          </div>
+        ))}
 
       <div className="mt-3">
         <FormLabel htmlFor="name">Name *</FormLabel>

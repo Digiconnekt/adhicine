@@ -79,6 +79,7 @@ const index = ({
                         submitReq={submitReq}
                         inputData={dataShow}
                         setModalOpen={setOpen}
+                        selectedId={selectedId}
                       />
                     )}
                   </div>

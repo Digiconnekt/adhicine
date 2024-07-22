@@ -60,14 +60,14 @@ const HospitalList = () => {
     <>
       <div className="col-span-12 mt-6">
         <div className="flex flex-wrap items-center justify-between col-span-12 mt-2 intro-y sm:flex-nowrap">
-          <div className="w-56 text-slate-500">
-            <h2 className="text-lg font-semibold">
-              Total Hospitals -{" "}
-              {isLoadingAllHospitals ? (
+          <div className="w-56 text-black">
+            <h2 className="text-xl font-semibold">
+              Hospitals
+              {/* {isLoadingAllHospitals ? (
                 <>loading...</>
               ) : (
                 dataAllHospitals?.length
-              )}
+              )} */}
             </h2>
           </div>
           {/* <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
@@ -121,12 +121,12 @@ const HospitalList = () => {
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         LOCATION
                       </Table.Th>
-                      {/* <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         TOTAL DOCTORS
-                      </Table.Th> */}
-                      {/* <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                      </Table.Th>
+                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         TOTAL PATIENTS
-                      </Table.Th> */}
+                      </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         ACTIONS
                       </Table.Th>
@@ -152,12 +152,16 @@ const HospitalList = () => {
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {hospital?.location ? hospital?.location : "-"}
                         </Table.Td>
-                        {/* <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {hospital?.doctors ? hospital?.doctors : "-"}
-                        </Table.Td> */}
-                        {/* <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {hospital?.patients ? hospital?.patients : "-"}
-                        </Table.Td> */}
+                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                          {hospital?.doctors
+                            ? hospital?.doctors
+                            : "10 (static)"}
+                        </Table.Td>
+                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                          {hospital?.patients
+                            ? hospital?.patients
+                            : "10 (static)"}
+                        </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
                           <div className="flex items-center justify-center">
                             <div
