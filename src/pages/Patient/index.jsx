@@ -7,40 +7,31 @@ import { useState } from "react";
 import Lucide from "../../base-components/Lucide";
 
 const Patient = () => {
-  const [select, setSelect] = useState("1");
   const [daterange, setDaterange] = useState("");
 
   const cardsData = [
     {
       title: "Total Medicines",
       icon: "ShoppingCart",
-      text: "text-gray-800",
       medType: "total",
-      img: "../../../images/medicine-icon.png",
       // count: companyCount,
     },
     {
       title: "Taken Medicines",
       icon: "CreditCard",
-      text: "text-gray-800",
       medType: "taken",
-      img: "../../../images/medicine-icon.png",
       // count: storeCount,
     },
     {
       title: "Missed Medicines",
       icon: "CreditCard",
-      text: "text-gray-800",
       medType: "missed",
-      img: "../../../images/medicine-icon.png",
       // count: revenueCount,
     },
     {
       title: "Snoozed Medicines",
       icon: "CreditCard",
-      text: "text-gray-800",
       medType: "snoozed",
-      img: "../../../images/medicine-icon.png",
       // count: revenueCount,
     },
   ];
@@ -106,21 +97,6 @@ const Patient = () => {
             {/* BEGIN: Medicine Chart */}
             <div className="col-span-12 intro-y box p-5 mt-10">
               <div className="flex items-center flex-col md:flex-row gap-5 border-b pb-5 mb-5">
-                <div className="w-full md:w-[50%]">
-                  <TomSelect
-                    value={select}
-                    onChange={setSelect}
-                    options={{
-                      placeholder: "Select Medicine",
-                    }}
-                    className="w-full"
-                  >
-                    <option value="1">Paracetamole 1</option>
-                    <option value="2">Paracetamole 2</option>
-                    <option value="3">Paracetamole 3</option>
-                  </TomSelect>
-                </div>
-
                 <div className="relative w-full md:w-[50%] mx-auto">
                   <div className="absolute flex items-center justify-center w-10 h-full border rounded-l bg-slate-100 text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400">
                     <Lucide icon="Calendar" className="w-4 h-4" />
@@ -151,7 +127,7 @@ const Patient = () => {
             {/* END: Medicine Chart */}
 
             {/* BEGIN: Medicines List */}
-            <MedicineList reFetchCard={""} />
+            {/* <MedicineList reFetchCard={""} /> */}
             {/* END: Medicines List */}
           </div>
         </div>

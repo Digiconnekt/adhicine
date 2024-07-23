@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { FormInput, FormLabel, FormSelect } from "../../base-components/Form";
+import { FormInput, FormLabel } from "../../base-components/Form";
 import Button from "../../base-components/Button";
 import LoadingIcon from "../../base-components/LoadingIcon";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AddOrEditPatient = ({
   type,
@@ -17,7 +18,6 @@ const AddOrEditPatient = ({
 
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
   });
 
   useEffect(() => {
@@ -25,7 +25,6 @@ const AddOrEditPatient = ({
       setFormData((prevData) => ({
         ...prevData,
         email: inputData?.email || "",
-        password: inputData?.password || "",
       }));
     }
   }, []);
@@ -40,6 +39,11 @@ const AddOrEditPatient = ({
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (formData.email === "") {
+      return toast.error("Email is required");
+    }
+
     type === "add" ? submitReq(formData) : submitReq(inputData?.id, formData);
   };
 
@@ -62,19 +66,6 @@ const AddOrEditPatient = ({
           value={formData.email}
           onChange={onChangeHandler}
           error={error?.email ? error?.email[0] : undefined}
-        />
-      </div>
-      <div className="mt-3">
-        <FormLabel htmlFor="password">Password *</FormLabel>
-        <FormInput
-          id="password"
-          type="password"
-          className="w-full"
-          placeholder="********"
-          name="password"
-          value={formData.password}
-          onChange={onChangeHandler}
-          error={error?.password ? error?.password[0] : undefined}
         />
       </div>
       <div className="mt-5 text-right">

@@ -25,7 +25,7 @@ const index = () => {
 
   const cardsData = [
     {
-      title: "Patients",
+      title: "Total Patients",
       img: "../../../images/patient-icon.png",
       cardType: "patient",
       count: patientCount,

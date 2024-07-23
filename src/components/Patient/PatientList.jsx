@@ -32,12 +32,12 @@ const PatientList = () => {
         <div className="flex flex-wrap items-center justify-between col-span-12 mt-2 intro-y sm:flex-nowrap">
           <div className="w-56 text-black">
             <h2 className="text-xl font-semibold">
-              Patients -{" "}
+              Patients
               {/* {isLoadingAllPatients ? <>loading...</> : dataAllPatients?.length} */}
             </h2>
           </div>
           <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
-            {/* {user?.role === "doctor" && (
+            {user?.role === "doctor" && (
               <Button
                 variant="primary"
                 className="mr-2 shadow-md"
@@ -45,7 +45,7 @@ const PatientList = () => {
               >
                 Add New Patient
               </Button>
-            )} */}
+            )}
             {/* <Button
               variant="outline-primary"
               onClick={() => setShowFilter(!showFilter)}
@@ -82,7 +82,7 @@ const PatientList = () => {
                         EMAIL
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                        CONTACT
+                        PHONE
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         DOCTOR NAME
@@ -90,15 +90,15 @@ const PatientList = () => {
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         TOTAL MEDICINES
                       </Table.Th>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                      {/* <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         STATUS
-                      </Table.Th>
+                      </Table.Th> */}
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         CREATED AT
                       </Table.Th>
-                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                      {/* <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         ACTIONS
-                      </Table.Th>
+                      </Table.Th> */}
                     </Table.Tr>
                   </Table.Thead>
                   <Table.Tbody>
@@ -116,7 +116,7 @@ const PatientList = () => {
                           {patient?.email ? patient?.email : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {patient?.contact ? patient?.contact : "-"}
+                          {patient?.phone ? patient?.phone : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {patient?.doctor_name ? patient?.doctor_name : "-"}
@@ -124,7 +124,7 @@ const PatientList = () => {
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {patient?.medicines ? patient?.medicines : "-"}
                         </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                        {/* <Table.Td className="first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           <div
                             className={clsx([
                               "flex items-center justify-center",
@@ -134,13 +134,11 @@ const PatientList = () => {
                           >
                             {patient?.status ? "Active" : "Inactive"}
                           </div>
-                        </Table.Td>
+                        </Table.Td> */}
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {patient.created_at
-                            ? moment(patient.created_at).format("DD/MM/YYYY")
-                            : "-"}
+                          {patient.createdAt ? patient.createdAt : "-"}
                         </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
+                        {/* <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
                           <div className="flex items-center justify-center">
                             <div
                               className="flex items-center mr-3 cursor-pointer"
@@ -160,7 +158,7 @@ const PatientList = () => {
                               Delete
                             </div>
                           </div>
-                        </Table.Td>
+                        </Table.Td> */}
                       </Table.Tr>
                     ))}
                   </Table.Tbody>
